@@ -498,4 +498,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Tapi kita bisa tambahkan helper di sini jika diperlukan
         console.log('Halaman input siap digunakan.');
     }
+    // ===== NAVIGASI SCROLL EFFECT =====
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.nav-top');
+    if (nav) {
+        if (window.scrollY > 10) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+});
 });
