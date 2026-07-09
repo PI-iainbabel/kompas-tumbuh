@@ -77,14 +77,195 @@
             from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* ===== NAVIGASI GLOBAL YANG DIPERBAIKI ===== */
+        .nav-top {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .dark .nav-top {
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-link {
+            position: relative;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .dark .nav-link {
+            color: #cbd5e1;
+        }
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #06b6d4;
+        }
+        .dark .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #22d3ee;
+        }
+        .nav-link.active {
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+        }
+        .dark .nav-link.active {
+            background: rgba(6, 182, 212, 0.2);
+            color: #22d3ee;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: #06b6d4;
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(-6px);
+            background: inherit;
+            backdrop-filter: inherit;
+            -webkit-backdrop-filter: inherit;
+            border-bottom: 1px solid transparent;
+        }
+        #mobile-menu.open {
+            max-height: 600px;
+            opacity: 1;
+            transform: translateY(0);
+            border-bottom-color: rgba(255, 255, 255, 0.15);
+        }
+        .dark #mobile-menu.open {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+        #mobile-menu a {
+            display: block;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #334155;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dark #mobile-menu a {
+            color: #e2e8f0;
+        }
+        #mobile-menu a:hover {
+            background: rgba(6, 182, 212, 0.08);
+            color: #06b6d4;
+        }
+        #mobile-menu a.active-mobile {
+            background: rgba(6, 182, 212, 0.12);
+            color: #06b6d4;
+        }
+
+        /* Hamburger animation */
+        .hamburger {
+            width: 28px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .hamburger span {
+            display: block;
+            height: 2.5px;
+            border-radius: 4px;
+            background: #475569;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .dark .hamburger span {
+            background: #cbd5e1;
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Tombol aksi di kanan */
+        .nav-action-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.3);
+            color: #475569;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .dark .nav-action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+        .nav-action-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #06b6d4;
+        }
+        .dark .nav-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #22d3ee;
+        }
+        .nav-action-btn.logout-btn:hover {
+            color: #f43f5e;
+            background: rgba(244, 63, 94, 0.1);
+        }
+        .dark .nav-action-btn.logout-btn:hover {
+            color: #fb7185;
+            background: rgba(244, 63, 94, 0.15);
+        }
+
+        /* Responsive fine-tune */
+        @media (max-width: 768px) {
+            .nav-top .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .nav-link-desktop {
+                display: none;
+            }
+        }
+        @media (min-width: 769px) {
+            #mobile-menu {
+                display: none !important;
+            }
+            .hamburger {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 py-0 md:py-0 px-0 relative overflow-x-hidden">
 
-    <!-- ===== NAVIGASI GLOBAL ===== -->
+    <!-- ===== NAVIGASI GLOBAL YANG DIPERBAIKI ===== -->
     <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2 relative">
 
+            <!-- Kiri: Logo & Brand -->
             <div class="flex items-center gap-3 flex-shrink-0">
                 <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
                     <span class="text-xl">🧭</span>
@@ -97,32 +278,42 @@
                 </div>
             </div>
 
+            <!-- Tengah: Menu Desktop -->
             <div class="hidden md:flex items-center gap-1 flex-1 justify-center">
-                <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🏠 Beranda</a>
-                <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📝 Input</a>
-                <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/20 text-cyan-500 dark:text-cyan-400 transition-all">📊 Dashboard</a>
-                <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🧾 Profil</a>
-                <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📘 Buku Saku</a>
+                <a href="index.html" class="nav-link">🏠 Beranda</a>
+                <a href="input.html" class="nav-link">📝 Input</a>
+                <a href="dashboard.html" class="nav-link active">📊 Dashboard</a>
+                <a href="profil.html" class="nav-link">🧾 Profil</a>
+                <a href="buku-saku.html" class="nav-link">📘 Buku Saku</a>
             </div>
 
-            <div class="flex items-center gap-2 flex-shrink-0">
-                <button onclick="window.toggleTheme && toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
+            <!-- Kanan: Tombol Aksi + Hamburger -->
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+                <!-- Theme toggle -->
+                <button onclick="window.toggleTheme && toggleTheme()" class="nav-action-btn" title="Ganti Mode">
                     <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                 </button>
-                <button onclick="window.logout && logout()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 transition-all active:scale-95" title="Logout">
+                <!-- Logout -->
+                <button onclick="window.logout && logout()" class="nav-action-btn logout-btn" title="Logout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
+                <!-- Hamburger (mobile) -->
+                <div id="hamburger-btn" class="hamburger md:hidden" aria-label="Toggle menu" role="button" tabindex="0">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-
         </div>
 
-        <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
-            <a href="index.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">🏠</span> Beranda</a>
-            <a href="input.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">📝</span> Input</a>
-            <a href="dashboard.html" class="flex flex-col items-center text-[10px] text-cyan-500 transition-all"><span class="text-lg">📊</span> Dashboard</a>
-            <a href="profil.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">🧾</span> Profil</a>
-            <a href="buku-saku.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">📘</span> Buku</a>
+        <!-- Menu Mobile (dropdown) -->
+        <div id="mobile-menu" class="md:hidden px-4 pb-3 space-y-0.5">
+            <a href="index.html">🏠 Beranda</a>
+            <a href="input.html">📝 Input</a>
+            <a href="dashboard.html" class="active-mobile">📊 Dashboard</a>
+            <a href="profil.html">🧾 Profil</a>
+            <a href="buku-saku.html">📘 Buku Saku</a>
         </div>
     </nav>
 
@@ -582,7 +773,8 @@
                 sumGm += gmScore;
 
                 const isGmHigh = (gmScore >= 13);
-                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length + (item.komitmen || '').length;
+                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '')
+                    .length + (item.komitmen || '').length;
                 const isTpbKuat = (totalTextLength > 40);
 
                 if (isGmHigh && isTpbKuat) pionirCount++;
@@ -606,8 +798,13 @@
             const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
             const labelColor = isDark ? '#94a3b8' : '#475569';
 
-            let countTinggi = 0, countSedang = 0, countRendah = 0;
-            let pionir = 0, pencari = 0, pejuang = 0, terluka = 0;
+            let countTinggi = 0,
+                countSedang = 0,
+                countRendah = 0;
+            let pionir = 0,
+                pencari = 0,
+                pejuang = 0,
+                terluka = 0;
 
             data.forEach(item => {
                 const score = item.g1 + item.g2 + item.g3 + item.g4;
@@ -616,7 +813,8 @@
                 else countRendah++;
 
                 const isGmHigh = (score >= 13);
-                const textLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length + (item.komitmen || '').length;
+                const textLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length +
+                    (item.komitmen || '').length;
                 const isTpbKuat = (textLength > 40);
 
                 if (isGmHigh && isTpbKuat) pionir++;
@@ -635,7 +833,9 @@
                     datasets: [{
                         label: 'Jumlah Responden',
                         data: [countTinggi, countSedang, countRendah],
-                        backgroundColor: ['rgba(16, 185, 129, 0.75)', 'rgba(245, 158, 11, 0.75)', 'rgba(244, 63, 94, 0.75)'],
+                        backgroundColor: ['rgba(16, 185, 129, 0.75)', 'rgba(245, 158, 11, 0.75)',
+                            'rgba(244, 63, 94, 0.75)'
+                        ],
                         borderColor: ['#10b981', '#f59e0b', '#f43f5e'],
                         borderWidth: 1.5,
                         borderRadius: 8
@@ -661,7 +861,9 @@
                     labels: ['Pionir 🟢', 'Pencari 🟠', 'Pejuang 🔵', 'Terluka 🔴'],
                     datasets: [{
                         data: [pionir, pencari, pejuang, terluka],
-                        backgroundColor: ['rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)', 'rgba(59, 130, 246, 0.7)', 'rgba(244, 63, 94, 0.7)'],
+                        backgroundColor: ['rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)',
+                            'rgba(59, 130, 246, 0.7)', 'rgba(244, 63, 94, 0.7)'
+                        ],
                         borderColor: isDark ? '#0f172a' : '#ffffff',
                         borderWidth: 2
                     }]
@@ -685,7 +887,8 @@
             body.innerHTML = '';
 
             if (data.length === 0) {
-                body.innerHTML = `<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Belum ada responden terekam dalam database lokal.</td></tr>`;
+                body.innerHTML =
+                    `<tr><td colspan="6" class="px-4 py-8 text-center text-slate-400">Belum ada responden terekam dalam database lokal.</td></tr>`;
                 return;
             }
 
@@ -703,10 +906,12 @@
                 }
 
                 const isGmHigh = (score >= 13);
-                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length + (item.komitmen || '').length;
+                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '')
+                    .length + (item.komitmen || '').length;
                 const isTpbKuat = (totalTextLength > 40);
 
-                let stageLabel = '', stageBadgeClass = '';
+                let stageLabel = '',
+                    stageBadgeClass = '';
                 if (isGmHigh && isTpbKuat) {
                     stageLabel = '🟢 PIONIR';
                     stageBadgeClass = 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
@@ -744,7 +949,8 @@
             const filtered = allRespondents.filter(item => {
                 const score = item.g1 + item.g2 + item.g3 + item.g4;
                 const isGmHigh = (score >= 13);
-                const textLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length + (item.komitmen || '').length;
+                const textLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '')
+                    .length + (item.komitmen || '').length;
                 const isTpbKuat = (textLength > 40);
 
                 let stage = 'TERLUKA';
@@ -753,7 +959,8 @@
                 else if (isGmHigh && !isTpbKuat) stage = 'PEJUANG';
 
                 const matchesStage = (stageFilter === 'ALL' || stage === stageFilter);
-                const matchesQuery = (item.kode.toLowerCase().includes(query) || (item.sikap || '').toLowerCase().includes(query) || (item.harapan || '').toLowerCase().includes(query));
+                const matchesQuery = (item.kode.toLowerCase().includes(query) || (item.sikap || '').toLowerCase().includes(
+                    query) || (item.harapan || '').toLowerCase().includes(query));
                 return matchesStage && matchesQuery;
             });
 
@@ -772,7 +979,8 @@
             else gmCategory = 'Sedang 🟠';
 
             const isGmHigh = (score >= 13);
-            const textLength = (respondent.sikap || '').length + (respondent.harapan || '').length + (respondent.kontrol || '').length + (respondent.komitmen || '').length;
+            const textLength = (respondent.sikap || '').length + (respondent.harapan || '').length + (respondent.kontrol ||
+                '').length + (respondent.komitmen || '').length;
             const isTpbKuat = (textLength > 40);
 
             let stageLabel = '🔴 TERLUKA';
@@ -796,7 +1004,8 @@
             document.getElementById('modal-harapan').innerText = respondent.harapan || 'Tidak ada catatan harapan.';
             document.getElementById('modal-kontrol').innerText = respondent.kontrol || 'Tidak ada catatan kontrol.';
             document.getElementById('modal-komitmen').innerText = respondent.komitmen || 'Tidak ada catatan komitmen.';
-            document.getElementById('modal-observasi').innerText = respondent.observasi || 'Tidak ada observasi khusus dari enumerator.';
+            document.getElementById('modal-observasi').innerText = respondent.observasi ||
+            'Tidak ada observasi khusus dari enumerator.';
             document.getElementById('modal-meta-tanggal').innerText = `Wawancara Sesi: ${respondent.tanggal}`;
 
             document.getElementById('modal-glowing-accent').style.backgroundColor = glowingColor;
@@ -866,7 +1075,8 @@
                 else if (score <= 10) gmCategory = 'Rendah';
 
                 const isGmHigh = (score >= 13);
-                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '').length + (item.komitmen || '').length;
+                const totalTextLength = (item.sikap || '').length + (item.harapan || '').length + (item.kontrol || '')
+                    .length + (item.komitmen || '').length;
                 const isTpbKuat = (totalTextLength > 40);
 
                 let stage = 'Terluka';
@@ -875,13 +1085,15 @@
                 else if (isGmHigh && !isTpbKuat) stage = 'Pejuang';
 
                 const escape = (text) => `"${(text || '').replace(/"/g, '""')}"`;
-                csvContent += `${item.kode},${item.tanggal},${score},${gmCategory},${stage},${escape(item.sikap)},${escape(item.harapan)},${escape(item.kontrol)},${escape(item.komitmen)},${escape(item.observasi)}\r\n`;
+                csvContent +=
+                    `${item.kode},${item.tanggal},${score},${gmCategory},${stage},${escape(item.sikap)},${escape(item.harapan)},${escape(item.kontrol)},${escape(item.komitmen)},${escape(item.observasi)}\r\n`;
             });
 
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Kompas_Tumbuh_Analytics_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download",
+                `Kompas_Tumbuh_Analytics_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -918,7 +1130,8 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.3)' : 'rgba(99, 102, 241, 0.25)';
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.3)' :
+                        'rgba(99, 102, 241, 0.25)';
                     ctx.fill();
                 }
             }
@@ -943,9 +1156,9 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = document.documentElement.classList.contains('dark')
-                                ? `rgba(6, 182, 212, ${0.12 - dist/115 * 0.12})`
-                                : `rgba(99, 102, 241, ${0.1 - dist/115 * 0.1})`;
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark') ?
+                                `rgba(6, 182, 212, ${0.12 - dist/115 * 0.12})` :
+                                `rgba(99, 102, 241, ${0.1 - dist/115 * 0.1})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -960,6 +1173,72 @@
                 animateParticles();
             });
             window.addEventListener('resize', resizeCanvas);
+        }
+
+        // ================================================================
+        // THEME TOGGLE
+        // ================================================================
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-sun-nav')?.classList.remove('hidden');
+            document.getElementById('theme-moon-nav')?.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-sun-nav')?.classList.add('hidden');
+            document.getElementById('theme-moon-nav')?.classList.remove('hidden');
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const sun = document.getElementById('theme-sun-nav');
+            const moon = document.getElementById('theme-moon-nav');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                if (sun) sun.classList.add('hidden');
+                if (moon) moon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                if (sun) sun.classList.remove('hidden');
+                if (moon) moon.classList.add('hidden');
+            }
+        }
+        window.toggleTheme = toggleTheme;
+
+        // ================================================================
+        // TOGGLE MOBILE MENU
+        // ================================================================
+        const hamburger = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    hamburger.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    hamburger.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                }
+            });
         }
 
         // ================================================================
@@ -980,7 +1259,6 @@
         window.closeDossierModal = closeDossierModal;
         window.deleteRespondent = deleteRespondent;
         window.filterTableData = filterTableData;
-        window.toggleTheme = toggleTheme;
         window.logout = logout;
     </script>
 </body>
