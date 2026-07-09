@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth dark">
 <head>
@@ -988,6 +987,22 @@
         // Initialize state
         seedDatabase();
 
+        // ===== CEK AUTENTIKASI DI DASHBOARD =====
+async function checkAuth() {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+        // Jika tidak ada session, redirect ke halaman login
+        window.location.href = 'index.html';
+        return;
+    }
+    
+    // Jika login, bisa tampilkan email pengguna (opsional)
+    // document.getElementById('user-email').textContent = session.user.email;
+}
+
+// Panggil saat halaman dimuat
+checkAuth();
 
         // ==========================================
         // DYNAMIC BEHAVIORAL Synaptic Network CANVAS
@@ -1075,5 +1090,3 @@
     </script>
 </body>
 </html>
-
-```
