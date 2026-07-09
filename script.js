@@ -44,6 +44,60 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// ===== TOGGLE MOBILE MENU (HAMBURGER) =====
+function toggleMobileMenu() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (hamburger && mobileMenu) {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+    }
+}
+
+function closeMobileMenu() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (hamburger && mobileMenu) {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+    }
+}
+
+// ===== INISIALISASI NAVIGASI MOBILE =====
+function initMobileNav() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (hamburger && mobileMenu) {
+        // Klik hamburger
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+
+        // Tutup menu saat link di klik
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                closeMobileMenu();
+            });
+        });
+
+        // Tutup menu saat klik di luar
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Tutup menu saat resize ke desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                closeMobileMenu();
+            }
+        });
+    }
+}
+
 // ===== INISIALISASI THEME SAAT LOAD =====
 document.addEventListener('DOMContentLoaded', function() {
     // Cek preferensi tema dari localStorage atau sistem
@@ -71,8 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
             link.classList.remove('bg-white/20', 'text-cyan-500', 'dark:text-cyan-400');
         }
     });
+
+    // Inisialisasi mobile nav
+    initMobileNav();
 });
 
 // ===== EKSPOR FUNGSI KE GLOBAL =====
 window.toggleTheme = toggleTheme;
 window.logout = logout;
+window.toggleMobileMenu = toggleMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
