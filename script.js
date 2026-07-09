@@ -9,18 +9,16 @@
 // ============================================================
 
 // ===== KONFIGURASI SUPABASE =====
-// Ganti dengan credential proyek Supabase Anda
 const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
 
-// Inisialisasi client (pakai CDN)
-// Pastikan sudah include di HTML: 
-// <script src="https://esm.sh/@supabase/supabase-js@2"></script>
-// Jika belum, aktifkan di bawah dengan menghapus tanda komentar:
-/*
+// ===== INISIALISASI SUPABASE CLIENT =====
+// Aktifkan baris di bawah dengan menghapus tanda komentar
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-*/
+
+// Ekspor supabase ke window agar bisa diakses dari halaman lain
+window.supabase = supabase;
 
 // ===== VARIABEL GLOBAL =====
 let allData = [];
@@ -30,7 +28,7 @@ let allData = [];
 // ============================================================
 async function loadAllData() {
     try {
-        // Jika menggunakan Supabase, aktifkan kode di bawah:
+        // Aktifkan kode di bawah jika sudah siap menggunakan Supabase
         /*
         const { data, error } = await supabase
             .from('profil_kompas_tumbuh')
@@ -42,7 +40,7 @@ async function loadAllData() {
         return data;
         */
 
-        // ===== SEMENTARA: SIMULASI DATA DUMMY (hapus jika pakai Supabase) =====
+        // ===== SEMENTARA: SIMULASI DATA DUMMY =====
         allData = dummyData();
         return allData;
     } catch (err) {
@@ -162,7 +160,6 @@ function renderCharts(data) {
 
     const ctx1 = document.getElementById('chart-growth');
     if (ctx1) {
-        // Hapus chart lama jika ada
         if (window._growthChart) window._growthChart.destroy();
 
         window._growthChart = new Chart(ctx1, {
@@ -179,9 +176,9 @@ function renderCharts(data) {
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { 
-                        position: 'bottom', 
-                        labels: { font: { family: 'Inter' } } 
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: 'Inter' } }
                     }
                 }
             }
@@ -213,9 +210,9 @@ function renderCharts(data) {
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { 
-                        beginAtZero: true, 
-                        ticks: { stepSize: 1, font: { family: 'Inter' } } 
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1, font: { family: 'Inter' } }
                     },
                     x: { ticks: { font: { family: 'Inter' } } }
                 }
@@ -297,7 +294,6 @@ function renderCard(d) {
     };
 
     const html = `
-        <!-- Header -->
         <div class="${info.header} p-6 text-gray-800">
             <div class="flex flex-wrap justify-between items-start gap-2">
                 <div>
@@ -311,7 +307,6 @@ function renderCard(d) {
             </div>
         </div>
 
-        <!-- Tipe -->
         <div class="px-6 py-4 border-b border-white/30 flex flex-wrap items-center justify-between gap-2">
             <div>
                 <span class="text-3xl mr-2">${info.icon}</span>
@@ -321,9 +316,7 @@ function renderCard(d) {
             <span class="text-sm text-gray-500 italic">${info.desc}</span>
         </div>
 
-        <!-- Body -->
         <div class="p-6 space-y-5">
-            <!-- Growth Mindset -->
             <div>
                 <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">🧠 Platform Dasar Psikis</h2>
                 <div class="flex items-center gap-3 mt-1">
@@ -334,7 +327,6 @@ function renderCard(d) {
                 <p class="text-sm text-gray-600 mt-1">${descGrowth[d.kategori_growth] || '-'}</p>
             </div>
 
-            <!-- Extended TPB -->
             <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
                 <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">🧭 Extended TPB</h2>
                 <div class="space-y-2 text-sm">
@@ -345,14 +337,12 @@ function renderCard(d) {
                 </div>
             </div>
 
-            <!-- Catatan Enumerator -->
             <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
                 <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">📋 Catatan Enumerator</h2>
                 <p class="text-sm text-gray-600">${d.catatan_observasi || '-'}</p>
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="px-6 py-4 bg-white/20 backdrop-blur-sm border-t border-white/30 flex flex-wrap justify-between items-center no-print">
             <span class="text-xs text-gray-400">Enumerator: ${d.nama_enumerator}</span>
             <div class="flex gap-2">
@@ -430,7 +420,7 @@ function exportCSV() {
 // ============================================================
 async function saveData(data) {
     try {
-        // Jika menggunakan Supabase, aktifkan kode di bawah:
+        // Aktifkan kode di bawah jika sudah siap menggunakan Supabase
         /*
         const { error } = await supabase
             .from('profil_kompas_tumbuh')
@@ -440,9 +430,8 @@ async function saveData(data) {
         return { success: true };
         */
 
-        // ===== SEMENTARA: SIMULASI SAVE (hapus jika pakai Supabase) =====
+        // ===== SEMENTARA: SIMULASI SAVE =====
         console.log('Data disimpan:', data);
-        // Tambahkan ke allData (untuk simulasi)
         allData.unshift(data);
         return { success: true };
     } catch (err) {
@@ -462,16 +451,69 @@ async function initDashboard() {
 }
 
 // ============================================================
-// 12. EKSPOR FUNGSI GLOBAL
+// 12. FUNGSI NAVIGASI GLOBAL
+// ============================================================
+function toggleTheme() {
+    const html = document.documentElement;
+    const suns = document.querySelectorAll('#theme-sun-nav, #theme-sun');
+    const moons = document.querySelectorAll('#theme-moon-nav, #theme-moon');
+
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.theme = 'light';
+        suns.forEach(el => el?.classList.add('hidden'));
+        moons.forEach(el => el?.classList.remove('hidden'));
+    } else {
+        html.classList.add('dark');
+        localStorage.theme = 'dark';
+        suns.forEach(el => el?.classList.remove('hidden'));
+        moons.forEach(el => el?.classList.add('hidden'));
+    }
+}
+
+// ============================================================
+// 13. FUNGSI LOGOUT
+// ============================================================
+async function logout() {
+    if (confirm('Apakah Anda yakin ingin keluar?')) {
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
+            localStorage.removeItem('supabase_session');
+            window.location.href = 'index.html';
+        } catch (err) {
+            alert('Gagal logout: ' + err.message);
+        }
+    }
+}
+
+// ============================================================
+// 14. NAVIGASI SCROLL EFFECT
+// ============================================================
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.nav-top');
+    if (nav) {
+        if (window.scrollY > 10) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+});
+
+// ============================================================
+// 15. EKSPOR FUNGSI GLOBAL
 // ============================================================
 window.exportCSV = exportCSV;
 window.initDashboard = initDashboard;
 window.loadProfile = loadProfile;
 window.saveData = saveData;
 window.loadAllData = loadAllData;
+window.toggleTheme = toggleTheme;
+window.logout = logout;
 
 // ============================================================
-// 13. AUTO-INIT SAAT DOKUMEN SIAP
+// 16. AUTO-INIT SAAT DOKUMEN SIAP
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
     // Deteksi halaman
@@ -488,45 +530,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const kode = params.get('id');
         if (kode) {
             loadProfile(kode);
-        } else {
+        } else if (isProfil) {
             isProfil.innerHTML = `<div class="p-10 text-center text-red-500">❌ Kode responden tidak ditemukan di URL.</div>`;
         }
     }
 
     if (isInput) {
-        // Logika input di-handle oleh script di input.html
-        // Tapi kita bisa tambahkan helper di sini jika diperlukan
         console.log('Halaman input siap digunakan.');
     }
-    // ===== NAVIGASI SCROLL EFFECT =====
-window.addEventListener('scroll', function() {
-    const nav = document.querySelector('.nav-top');
-    if (nav) {
-        if (window.scrollY > 10) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+
+    // Inisialisasi tema dari localStorage
+    if (localStorage.theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else if (localStorage.theme === 'light') {
+        document.documentElement.classList.remove('dark');
     }
 });
-
-// ===== LOGOUT =====
-async function logout() {
-    if (confirm('Apakah Anda yakin ingin keluar?')) {
-        try {
-            const { error } = await supabase.auth.signOut();
-            if (error) throw error;
-            
-            // Hapus session dari localStorage
-            localStorage.removeItem('supabase_session');
-            
-            // Redirect ke halaman login/beranda
-            window.location.href = 'index.html';
-        } catch (err) {
-            alert('Gagal logout: ' + err.message);
-        }
-    }
-}
-
-// Ekspor agar bisa dipanggil dari HTML
-window.logout = logout;
