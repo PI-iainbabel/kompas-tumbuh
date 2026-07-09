@@ -35,6 +35,11 @@ body {
     position: relative;
 }
 
+@media (max-width: 1023px) {
+    .nav-link-desktop {
+        display: none !important;
+    }
+}
 /* Pola halus (grid/pattern) untuk memberikan kedalaman */
 body::before {
     content: '';
