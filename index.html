@@ -6,11 +6,9 @@
     <title>Portal Kompas Tumbuh</title>
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase Client (untuk database, bukan auth) -->
-    <script src="https://esm.sh/@supabase/supabase-js@2">
-    </script>
+    <script src="https://esm.sh/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -39,8 +37,7 @@
     <link rel="stylesheet" href="style.css" />
 
     <!-- ===== SCRIPT GLOBAL (defer) ===== -->
-    <script src="script.js" defer>
-    </script>
+    <script src="script.js" defer></script>
 
     <style>
         body {
@@ -101,22 +98,76 @@
         }
 
         @keyframes shake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-6px);
-            }
-            75% {
-                transform: translateX(6px);
-            }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
         }
         .shake-element {
             animation: shake 0.2s ease-in-out 2;
         }
 
-        /* ===== NAVIGASI GLOBAL YANG DIPERBAIKI ===== */
+        /* ===== SIDEBAR STYLING ===== */
+        #mobile-sidebar {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+        }
+        .dark #mobile-sidebar {
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+        }
+        #sidebar-overlay {
+            transition: opacity 0.25s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        #sidebar-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #sidebar-overlay:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Sidebar link aktif */
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .dark .sidebar-link {
+            color: #cbd5e1;
+        }
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #06b6d4;
+        }
+        .dark .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #22d3ee;
+        }
+        .sidebar-link.active {
+            background: rgba(6, 182, 212, 0.15);
+            color: #06b6d4;
+        }
+        .dark .sidebar-link.active {
+            background: rgba(6, 182, 212, 0.2);
+            color: #22d3ee;
+        }
+        .sidebar-link .icon {
+            font-size: 1.2rem;
+            width: 1.5rem;
+            text-align: center;
+        }
+
+        /* ===== NAV-TOP DENGAN HAMBURGER ===== */
         .nav-top {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(16px);
@@ -128,122 +179,15 @@
             background: rgba(15, 23, 42, 0.7);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .nav-link {
-            position: relative;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.75rem;
-            color: #475569;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+        .nav-top.scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-        .dark .nav-link {
-            color: #cbd5e1;
-        }
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #06b6d4;
-        }
-        .dark .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #22d3ee;
-        }
-        .nav-link.active {
-            background: rgba(6, 182, 212, 0.15);
-            color: #06b6d4;
-        }
-        .dark .nav-link.active {
-            background: rgba(6, 182, 212, 0.2);
-            color: #22d3ee;
-        }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            border-radius: 2px;
-            background: #06b6d4;
+        .dark .nav-top.scrolled {
+            background: rgba(15, 23, 42, 0.95) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* Mobile menu */
-        #mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(-6px);
-            background: inherit;
-            backdrop-filter: inherit;
-            -webkit-backdrop-filter: inherit;
-            border-bottom: 1px solid transparent;
-        }
-        #mobile-menu.open {
-            max-height: 600px;
-            opacity: 1;
-            transform: translateY(0);
-            border-bottom-color: rgba(255, 255, 255, 0.15);
-        }
-        .dark #mobile-menu.open {
-            border-bottom-color: rgba(255, 255, 255, 0.05);
-        }
-        #mobile-menu a {
-            display: block;
-            padding: 0.7rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #334155;
-            border-radius: 0.5rem;
-            transition: background 0.2s, color 0.2s;
-        }
-        .dark #mobile-menu a {
-            color: #e2e8f0;
-        }
-        #mobile-menu a:hover {
-            background: rgba(6, 182, 212, 0.08);
-            color: #06b6d4;
-        }
-        #mobile-menu a.active-mobile {
-            background: rgba(6, 182, 212, 0.12);
-            color: #06b6d4;
-        }
-
-        /* Hamburger animation */
-        .hamburger {
-            width: 28px;
-            height: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .hamburger span {
-            display: block;
-            height: 2.5px;
-            border-radius: 4px;
-            background: #475569;
-            transition: all 0.3s ease;
-            transform-origin: center;
-        }
-        .dark .hamburger span {
-            background: #cbd5e1;
-        }
-        .hamburger.open span:nth-child(1) {
-            transform: translateY(8.5px) rotate(45deg);
-        }
-        .hamburger.open span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .hamburger.open span:nth-child(3) {
-            transform: translateY(-8.5px) rotate(-45deg);
-        }
-
-        /* Tombol aksi di kanan */
         .nav-action-btn {
             width: 2.25rem;
             height: 2.25rem;
@@ -255,6 +199,7 @@
             color: #475569;
             transition: all 0.2s ease;
             border: 1px solid transparent;
+            cursor: pointer;
         }
         .dark .nav-action-btn {
             background: rgba(255, 255, 255, 0.05);
@@ -277,35 +222,126 @@
             background: rgba(244, 63, 94, 0.15);
         }
 
+        /* Hamburger button */
+        .hamburger-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border-radius: 0.75rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 0;
+        }
+        .hamburger-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .dark .hamburger-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 4px;
+            background: #475569;
+            transition: all 0.25s ease;
+            transform-origin: center;
+        }
+        .dark .hamburger-btn span {
+            background: #cbd5e1;
+        }
+        .hamburger-btn.open span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+        .hamburger-btn.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger-btn.open span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        /* Desktop nav links (disembunyikan di mobile) */
+        .nav-link-desktop {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .nav-link-desktop {
+                display: inline-flex;
+            }
+        }
+
         /* Responsive fine-tune */
         @media (max-width: 768px) {
             .nav-top .container {
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
-            .nav-link-desktop {
-                display: none;
-            }
-        }
-        @media (min-width: 769px) {
-            #mobile-menu {
-                display: none !important;
-            }
-            .hamburger {
-                display: none;
-            }
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 overflow-x-hidden flex flex-col justify-between py-6 md:py-12 px-4 relative">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 overflow-x-hidden flex flex-col justify-between py-0 px-0 relative">
 
-    <!-- ===== NAVIGASI GLOBAL YANG DIPERBAIKI ===== -->
-    <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2 relative">
+    <!-- ===== SIDEBAR (MOBILE & DESKTOP) ===== -->
+    <aside id="mobile-sidebar" class="fixed top-0 left-0 z-50 w-72 h-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none flex flex-col">
+        <!-- Header Sidebar -->
+        <div class="p-5 border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🧭</span>
+                <span class="font-space font-bold text-sm text-slate-800 dark:text-white">Kompas Tumbuh</span>
+            </div>
+            <button onclick="closeSidebar()" class="md:hidden p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
 
-            <!-- Kiri: Logo & Brand -->
+        <!-- Navigasi Sidebar -->
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <a href="index.html" class="sidebar-link active">
+                <span class="icon">🏠</span> Beranda
+            </a>
+            <a href="input.html" class="sidebar-link">
+                <span class="icon">📝</span> Input Data
+            </a>
+            <a href="dashboard.html" class="sidebar-link">
+                <span class="icon">📊</span> Dashboard
+            </a>
+            <a href="profil.html" class="sidebar-link">
+                <span class="icon">🧾</span> Kartu Profil
+            </a>
+            <a href="buku-saku.html" class="sidebar-link">
+                <span class="icon">📘</span> Buku Saku
+            </a>
+        </nav>
+
+        <!-- Footer Sidebar (Info) -->
+        <div class="p-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[10px] text-slate-400 dark:text-slate-500 space-y-1">
+            <p>Psychosophia Behavioral Lab</p>
+            <p>IAIN SAS Bangka Belitung</p>
+            <p class="text-[9px]">v1.0 · LPKA Pangkalpinang</p>
+        </div>
+    </aside>
+
+    <!-- ===== OVERLAY (untuk menutup sidebar di mobile) ===== -->
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden md:hidden" onclick="closeSidebar()"></div>
+
+    <!-- ===== NAV-TOP (sticky, dengan hamburger) ===== -->
+    <nav class="nav-top sticky top-0 z-30 transition-all duration-300 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+            <!-- Kiri: Hamburger + Brand -->
             <div class="flex items-center gap-3 flex-shrink-0">
+                <button onclick="toggleSidebar()" class="hamburger-btn md:hidden" aria-label="Buka menu" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
                     <span class="text-xl">🧭</span>
                     <span class="hidden sm:inline">Kompas Tumbuh</span>
@@ -316,72 +352,37 @@
                     <span>IAIN SAS Babel</span>
                 </div>
             </div>
-			/*
-            <!-- Tengah: Menu Desktop -->
-            <div class="hidden md:flex items-center gap-1 flex-1 justify-center">
+
+            <!-- Tengah: Menu Desktop (opsional, bisa dihilangkan karena sidebar sudah ada) -->
+            <div class="hidden md:flex items-center gap-1 flex-1 justify-center nav-link-desktop">
                 <a href="index.html" class="nav-link active">🏠 Beranda</a>
                 <a href="input.html" class="nav-link">📝 Input</a>
                 <a href="dashboard.html" class="nav-link">📊 Dashboard</a>
                 <a href="profil.html" class="nav-link">🧾 Profil</a>
                 <a href="buku-saku.html" class="nav-link">📘 Buku Saku</a>
             </div>
-			/*
-			
-			<!-- Sidebar untuk mobile -->
-	<div id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
-    <div class="p-4 border-b border-slate-200 dark:border-slate-800">
-        <span class="text-lg font-bold font-space text-slate-800 dark:text-white">🧭 Menu</span>
-    </div>
-    <nav class="p-4 space-y-2">
-        <a href="index.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">🏠 Beranda</a>
-        <a href="input.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">📝 Input</a>
-        <a href="dashboard.html" class="flex items-center gap-3 p-3 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400">📊 Dashboard</a>
-        <a href="profil.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">🧾 Profil</a>
-        <a href="buku-saku.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">📘 Buku Saku</a>
-    </nav>
-</div>
 
-<!-- Overlay untuk menutup sidebar saat diklik di luar -->
-<div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden"></div>
-
-            <!-- Kanan: Tombol Aksi + Hamburger -->
+            <!-- Kanan: Tombol Aksi -->
             <div class="flex items-center gap-1.5 flex-shrink-0">
-                <!-- Theme toggle -->
                 <button onclick="window.toggleTheme && toggleTheme()" class="nav-action-btn" title="Ganti Mode">
                     <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                 </button>
-                <!-- Logout -->
                 <button onclick="window.logout && logout()" class="nav-action-btn logout-btn" title="Logout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                 </button>
-                <!-- Hamburger (mobile) -->
-                <div id="hamburger-btn" class="hamburger md:hidden" aria-label="Toggle menu" role="button" tabindex="0">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
         </div>
-		/*
-        <!-- Menu Mobile (dropdown) -->
-        <div id="mobile-menu" class="md:hidden px-4 pb-3 space-y-0.5">
-            <a href="index.html" class="active-mobile">🏠 Beranda</a>
-            <a href="input.html">📝 Input</a>
-            <a href="dashboard.html">📊 Dashboard</a>
-            <a href="profil.html">🧾 Profil</a>
-            <a href="buku-saku.html">📘 Buku Saku</a>
-        </div>
-		*/
     </nav>
 
-    <!-- ===== BACKGROUND & KONTEN UTAMA ===== -->
+    <!-- ===== AMBIENT BACKGROUND ===== -->
     <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <canvas id="portalCanvas" class="absolute inset-0 pointer-events-auto opacity-30 dark:opacity-45"></canvas>
         <div class="glow-orb-portal absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-500"></div>
         <div class="glow-orb-portal absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-600"></div>
     </div>
 
+    <!-- ===== MAIN CONTENT ===== -->
     <main class="w-full max-w-4xl mx-auto glass-portal rounded-[32px] p-6 md:p-10 shadow-2xl shadow-indigo-500/5 relative z-10 my-auto">
 
         <!-- ===== HEADER STATUS BAR ===== -->
@@ -596,7 +597,22 @@
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== INISIALISASI THEME =====
+        // ================================================================
+        // INISIALISASI SUPABASE (HANYA UNTUK DATABASE)
+        // ================================================================
+        const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
+        let supabase;
+        if (typeof window.supabase !== 'undefined' && window.supabase) {
+            supabase = window.supabase;
+        } else {
+            supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+        window.supabase = supabase;
+
+        // ================================================================
+        // THEME TOGGLE
+        // ================================================================
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             document.getElementById('theme-sun-nav')?.classList.remove('hidden');
@@ -623,7 +639,85 @@
                 if (moon) moon.classList.add('hidden');
             }
         }
+        window.toggleTheme = toggleTheme;
 
+        // ================================================================
+        // LOGOUT
+        // ================================================================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('kompas_login');
+                window.location.href = 'index.html';
+            }
+        }
+        window.logout = logout;
+
+        // ================================================================
+        // SIDEBAR TOGGLE
+        // ================================================================
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const hamburger = document.getElementById('hamburgerBtn');
+
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+
+            // Animate hamburger
+            if (hamburger) {
+                hamburger.classList.toggle('open');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const hamburger = document.getElementById('hamburgerBtn');
+
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                if (hamburger) hamburger.classList.remove('open');
+            }
+        }
+
+        // Ekspos ke global
+        window.toggleSidebar = toggleSidebar;
+        window.closeSidebar = closeSidebar;
+
+        // ================================================================
+        // SWIPE UNTUK MEMBUKA SIDEBAR (di mobile)
+        // ================================================================
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            const swipeDistance = touchEndX - touchStartX;
+
+            // Swipe dari kiri ke kanan (> 60px) untuk membuka
+            if (swipeDistance > 60 && !isOpen && touchStartX < 40) {
+                toggleSidebar();
+            }
+            // Swipe dari kanan ke kiri (< -60px) untuk menutup
+            if (swipeDistance < -60 && isOpen) {
+                closeSidebar();
+            }
+        }
+
+        // ================================================================
+        // TABS PORTAL
+        // ================================================================
         function switchPortalTab(targetId) {
             document.querySelectorAll('.tab-portal-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-portal-btn').forEach(b => {
@@ -636,14 +730,17 @@
                 btn.className = "tab-portal-btn px-4 py-2.5 rounded-xl text-xs font-bold font-space transition-all active:scale-95 bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50";
             }
         }
+        window.switchPortalTab = switchPortalTab;
 
+        // ================================================================
+        // SIMULASI STATISTIK (UNTUK TAB OPERASI)
+        // ================================================================
         function randomizeMockStats() {
             let r1 = Math.floor(Math.random() * 30) + 20;
             let r2 = Math.floor(Math.random() * 25) + 10;
             let r3 = Math.floor(Math.random() * 20) + 10;
             let r4 = 100 - (r1 + r2 + r3);
-            if (r4 < 5) { r1 -= 5;
-                r4 += 5; }
+            if (r4 < 5) { r1 -= 5; r4 += 5; }
             document.getElementById('stat-pionir-val').innerText = `${r1}%`;
             document.getElementById('stat-pencari-val').innerText = `${r2}%`;
             document.getElementById('stat-pejuang-val').innerText = `${r3}%`;
@@ -653,8 +750,11 @@
             document.getElementById('stat-pejuang-bar').style.width = `${r3}%`;
             document.getElementById('stat-terluka-bar').style.width = `${r4}%`;
         }
+        window.randomizeMockStats = randomizeMockStats;
 
-        // ===== LOGIN SEDERHANA =====
+        // ================================================================
+        // LOGIN SEDERHANA
+        // ================================================================
         document.getElementById('portal-login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('portal-email').value.trim();
@@ -684,7 +784,9 @@
             }
         });
 
-        // ===== COMPASS =====
+        // ================================================================
+        // COMPASS
+        // ================================================================
         const miniCompass = document.getElementById('miniCompassBtn');
         const miniCompassSvg = document.getElementById('miniCompassSvg');
         if (miniCompass && miniCompassSvg) {
@@ -707,7 +809,9 @@
             });
         }
 
-        // ===== CANVAS =====
+        // ================================================================
+        // CANVAS BACKGROUND
+        // ================================================================
         const canvas = document.getElementById('portalCanvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
@@ -718,6 +822,7 @@
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
             }
+
             class Particle {
                 constructor() {
                     this.x = Math.random() * canvas.width;
@@ -735,8 +840,7 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.4)' :
-                        'rgba(99, 102, 241, 0.3)';
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.4)' : 'rgba(99, 102, 241, 0.3)';
                     ctx.fill();
                 }
             }
@@ -759,9 +863,7 @@
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = document.documentElement.classList.contains('dark') ?
-                                `rgba(6, 182, 212, ${0.12 - dist / 100 * 0.12})` :
-                                `rgba(99, 102, 241, ${0.1 - dist / 100 * 0.1})`;
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark') ? `rgba(6, 182, 212, ${0.12 - dist / 100 * 0.12})` : `rgba(99, 102, 241, ${0.1 - dist / 100 * 0.1})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -769,6 +871,7 @@
                 }
                 requestAnimationFrame(animateParticles);
             }
+
             window.addEventListener('load', () => {
                 resizeCanvas();
                 initParticles();
@@ -777,47 +880,25 @@
             window.addEventListener('resize', resizeCanvas);
         }
 
-        window.toggleTheme = toggleTheme;
-        window.switchPortalTab = switchPortalTab;
-        window.randomizeMockStats = randomizeMockStats;
-
-        // ===== TOGGLE MOBILE MENU =====
-        const hamburger = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (hamburger && mobileMenu) {
-            // Klik hamburger
-            hamburger.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('open');
-                mobileMenu.classList.toggle('open');
-            });
-
-            // Tutup menu saat link di klik
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function() {
-                    hamburger.classList.remove('open');
-                    mobileMenu.classList.remove('open');
-                });
-            });
-
-            // Tutup menu saat klik di luar
-            document.addEventListener('click', function(e) {
-                if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-                    hamburger.classList.remove('open');
-                    mobileMenu.classList.remove('open');
+        // ================================================================
+        // SCROLL EFFECT NAV-TOP
+        // ================================================================
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav-top');
+            if (nav) {
+                if (window.scrollY > 10) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
                 }
-            });
+            }
+        });
 
-            // Tutup menu saat resize ke desktop
-            window.addEventListener('resize', function() {
-                if (window.innerWidth >= 768) {
-                    hamburger.classList.remove('open');
-                    mobileMenu.classList.remove('open');
-                }
-            });
-        }
+        // ================================================================
+        // INIT: Aktifkan tab pertama
+        // ================================================================
+        // Secara default tab 'tentang' aktif
+        switchPortalTab('tentang');
     </script>
-
 </body>
 </html>
