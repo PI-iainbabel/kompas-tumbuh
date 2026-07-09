@@ -509,4 +509,3 @@ window.addEventListener('scroll', function() {
         }
     }
 });
-});
