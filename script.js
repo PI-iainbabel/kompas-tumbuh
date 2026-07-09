@@ -12,12 +12,11 @@
 const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
 
-// ===== INISIALISASI SUPABASE CLIENT =====
-// Aktifkan baris di bawah dengan menghapus tanda komentar
+// ===== INISIALISASI SUPABASE (AKTIF) =====
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Ekspor supabase ke window agar bisa diakses dari halaman lain
+// Ekspor ke global agar bisa diakses dari semua halaman
 window.supabase = supabase;
 
 // ===== VARIABEL GLOBAL =====
@@ -28,17 +27,7 @@ let allData = [];
 // ============================================================
 async function loadAllData() {
     try {
-        // Aktifkan kode di bawah jika sudah siap menggunakan Supabase
-          const { data, error } = await supabase
-            .from('profil_kompas_tumbuh')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-        if (error) throw error;
-        allData = data;
-        return data;
-        
-        // ===== SEMENTARA: SIMULASI DATA DUMMY =====
+        // ===== SEMENTARA: SIMULASI DATA DUMMY (hapus jika pakai Supabase) =====
         allData = dummyData();
         return allData;
     } catch (err) {
@@ -174,10 +163,7 @@ function renderCharts(data) {
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { font: { family: 'Inter' } }
-                    }
+                    legend: { position: 'bottom', labels: { font: { family: 'Inter' } } }
                 }
             }
         });
@@ -208,10 +194,7 @@ function renderCharts(data) {
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1, font: { family: 'Inter' } }
-                    },
+                    y: { beginAtZero: true, ticks: { stepSize: 1, font: { family: 'Inter' } } },
                     x: { ticks: { font: { family: 'Inter' } } }
                 }
             }
@@ -228,8 +211,7 @@ function renderTable(data) {
 
     tbody.innerHTML = '';
     if (data.length === 0) {
-        tbody.innerHTML =
-            `<tr><td colspan="6" class="text-center text-gray-400 py-6">Belum ada data. Silakan input data terlebih dahulu.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-gray-400 py-6">Belum ada data. Silakan input data terlebih dahulu.</td></tr>`;
         return;
     }
 
@@ -284,7 +266,6 @@ function renderCard(d) {
         SEDANG: 'glass-badge-sedang',
         RENDAH: 'glass-badge-rendah'
     };
-
     const descGrowth = {
         TINGGI: 'Keyakinan kuat untuk berkembang.',
         SEDANG: 'Keyakinan cukup, masih perlu penguatan.',
@@ -294,62 +275,32 @@ function renderCard(d) {
     const html = `
         <div class="${info.header} p-6 text-gray-800">
             <div class="flex flex-wrap justify-between items-start gap-2">
-                <div>
-                    <h1 class="text-2xl font-bold flex items-center gap-2">🧭 Kartu Profil Psikososial</h1>
-                    <p class="text-sm opacity-75">"Kompas Tumbuh" · LPKA Pangkalpinang</p>
-                </div>
-                <div class="text-right">
-                    <span class="text-sm font-medium">Kode: ${d.kode_responden}</span><br>
-                    <span class="text-sm opacity-75">Tanggal: ${d.tanggal_wawancara}</span>
-                </div>
+                <div><h1 class="text-2xl font-bold flex items-center gap-2">🧭 Kartu Profil Psikososial</h1><p class="text-sm opacity-75">"Kompas Tumbuh" · LPKA Pangkalpinang</p></div>
+                <div class="text-right"><span class="text-sm font-medium">Kode: ${d.kode_responden}</span><br><span class="text-sm opacity-75">Tanggal: ${d.tanggal_wawancara}</span></div>
             </div>
         </div>
-
         <div class="px-6 py-4 border-b border-white/30 flex flex-wrap items-center justify-between gap-2">
-            <div>
-                <span class="text-3xl mr-2">${info.icon}</span>
-                <span class="text-xl font-bold">TAHAP ${d.tipe_orientasi}</span>
-                <span class="text-sm text-gray-500 ml-2">— ${info.sub}</span>
-            </div>
+            <div><span class="text-3xl mr-2">${info.icon}</span><span class="text-xl font-bold">TAHAP ${d.tipe_orientasi}</span><span class="text-sm text-gray-500 ml-2">— ${info.sub}</span></div>
             <span class="text-sm text-gray-500 italic">${info.desc}</span>
         </div>
-
         <div class="p-6 space-y-5">
-            <div>
-                <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">🧠 Platform Dasar Psikis</h2>
-                <div class="flex items-center gap-3 mt-1">
-                    <span class="text-2xl font-bold">${d.total_skor_growth}</span>
-                    <span class="text-sm text-gray-500">/ 20</span>
-                    <span class="glass-badge ${badgeClass[d.kategori_growth]}">${d.kategori_growth}</span>
-                </div>
+            <div><h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">🧠 Platform Dasar Psikis</h2>
+                <div class="flex items-center gap-3 mt-1"><span class="text-2xl font-bold">${d.total_skor_growth}</span><span class="text-sm text-gray-500">/ 20</span><span class="glass-badge ${badgeClass[d.kategori_growth]}">${d.kategori_growth}</span></div>
                 <p class="text-sm text-gray-600 mt-1">${descGrowth[d.kategori_growth] || '-'}</p>
             </div>
-
-            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
-                <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">🧭 Extended TPB</h2>
-                <div class="space-y-2 text-sm">
-                    <div><span class="font-medium text-gray-600">Sikap:</span> ${d.catatan_sikap || '-'}</div>
-                    <div><span class="font-medium text-gray-600">Harapan:</span> ${d.catatan_harapan || '-'}</div>
-                    <div><span class="font-medium text-gray-600">Kontrol:</span> ${d.catatan_kontrol || '-'}</div>
-                    <div><span class="font-medium text-gray-600">Komitmen:</span> ${d.catatan_komitmen || '-'}</div>
-                </div>
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30"><h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">🧭 Extended TPB</h2>
+                <div class="space-y-2 text-sm"><div><span class="font-medium text-gray-600">Sikap:</span> ${d.catatan_sikap || '-'}</div>
+                <div><span class="font-medium text-gray-600">Harapan:</span> ${d.catatan_harapan || '-'}</div>
+                <div><span class="font-medium text-gray-600">Kontrol:</span> ${d.catatan_kontrol || '-'}</div>
+                <div><span class="font-medium text-gray-600">Komitmen:</span> ${d.catatan_komitmen || '-'}</div></div>
             </div>
-
-            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
-                <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">📋 Catatan Enumerator</h2>
-                <p class="text-sm text-gray-600">${d.catatan_observasi || '-'}</p>
-            </div>
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30"><h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">📋 Catatan Enumerator</h2><p class="text-sm text-gray-600">${d.catatan_observasi || '-'}</p></div>
         </div>
-
         <div class="px-6 py-4 bg-white/20 backdrop-blur-sm border-t border-white/30 flex flex-wrap justify-between items-center no-print">
             <span class="text-xs text-gray-400">Enumerator: ${d.nama_enumerator}</span>
-            <div class="flex gap-2">
-                <button onclick="window.print()" class="btn-glass-primary">🖨️ Cetak</button>
-                <a href="dashboard.html" class="btn-glass-secondary">⬅ Kembali</a>
-            </div>
+            <div class="flex gap-2"><button onclick="window.print()" class="btn-glass-primary">🖨️ Cetak</button><a href="dashboard.html" class="btn-glass-secondary">⬅ Kembali</a></div>
         </div>
     `;
-
     const container = document.getElementById('kartu-profil');
     if (container) container.innerHTML = html;
 }
@@ -363,7 +314,7 @@ function emojiTipe(tipe) {
 }
 
 // ============================================================
-// 8. FUNGSI LOAD PROFIL PER ORANG (UNTUK PROFIL.HTML)
+// 8. FUNGSI LOAD PROFIL PER ORANG
 // ============================================================
 async function loadProfile(kode) {
     const data = await loadAllData();
@@ -379,21 +330,14 @@ async function loadProfile(kode) {
 }
 
 // ============================================================
-// 9. EKSPORT CSV (UNTUK DASHBOARD)
+// 9. EKSPORT CSV
 // ============================================================
 function exportCSV() {
     if (!allData || allData.length === 0) {
         alert('Belum ada data untuk diekspor.');
         return;
     }
-
-    const headers = [
-        'Kode', 'Tanggal', 'Enumerator',
-        'Skor_G1', 'Skor_G2', 'Skor_G3', 'Skor_G4',
-        'Total_Growth', 'Kategori_Growth', 'Tipe',
-        'Sikap', 'Harapan', 'Kontrol', 'Komitmen', 'Observasi'
-    ];
-
+    const headers = ['Kode', 'Tanggal', 'Enumerator', 'Skor_G1', 'Skor_G2', 'Skor_G3', 'Skor_G4', 'Total_Growth', 'Kategori_Growth', 'Tipe', 'Sikap', 'Harapan', 'Kontrol', 'Komitmen', 'Observasi'];
     const rows = allData.map(d => [
         d.kode_responden, d.tanggal_wawancara, d.nama_enumerator,
         d.skor_g1, d.skor_g2, d.skor_g3, d.skor_g4,
@@ -404,12 +348,11 @@ function exportCSV() {
         `"${(d.catatan_komitmen || '').replace(/"/g, '""')}"`,
         `"${(d.catatan_observasi || '').replace(/"/g, '""')}"`
     ]);
-
     const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `kompas_tumbuh_${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `kompas_tumbuh_${new Date().toISOString().slice(0,10)}.csv`;
     link.click();
 }
 
@@ -418,17 +361,6 @@ function exportCSV() {
 // ============================================================
 async function saveData(data) {
     try {
-        // Aktifkan kode di bawah jika sudah siap menggunakan Supabase
-        /*
-        const { error } = await supabase
-            .from('profil_kompas_tumbuh')
-            .upsert(data, { onConflict: 'kode_responden' });
-
-        if (error) throw error;
-        return { success: true };
-        */
-
-        // ===== SEMENTARA: SIMULASI SAVE =====
         console.log('Data disimpan:', data);
         allData.unshift(data);
         return { success: true };
@@ -449,44 +381,16 @@ async function initDashboard() {
 }
 
 // ============================================================
-// 12. FUNGSI NAVIGASI GLOBAL
+// 12. EKSPOR FUNGSI GLOBAL
 // ============================================================
-function toggleTheme() {
-    const html = document.documentElement;
-    const suns = document.querySelectorAll('#theme-sun-nav, #theme-sun');
-    const moons = document.querySelectorAll('#theme-moon-nav, #theme-moon');
-
-    if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        localStorage.theme = 'light';
-        suns.forEach(el => el?.classList.add('hidden'));
-        moons.forEach(el => el?.classList.remove('hidden'));
-    } else {
-        html.classList.add('dark');
-        localStorage.theme = 'dark';
-        suns.forEach(el => el?.classList.remove('hidden'));
-        moons.forEach(el => el?.classList.add('hidden'));
-    }
-}
+window.exportCSV = exportCSV;
+window.initDashboard = initDashboard;
+window.loadProfile = loadProfile;
+window.saveData = saveData;
+window.loadAllData = loadAllData;
 
 // ============================================================
-// 13. FUNGSI LOGOUT
-// ============================================================
-async function logout() {
-    if (confirm('Apakah Anda yakin ingin keluar?')) {
-        try {
-            const { error } = await supabase.auth.signOut();
-            if (error) throw error;
-            localStorage.removeItem('supabase_session');
-            window.location.href = 'index.html';
-        } catch (err) {
-            alert('Gagal logout: ' + err.message);
-        }
-    }
-}
-
-// ============================================================
-// 14. NAVIGASI SCROLL EFFECT
+// 13. NAVIGASI SCROLL EFFECT & LOGOUT
 // ============================================================
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('.nav-top');
@@ -499,22 +403,24 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// ============================================================
-// 15. EKSPOR FUNGSI GLOBAL
-// ============================================================
-window.exportCSV = exportCSV;
-window.initDashboard = initDashboard;
-window.loadProfile = loadProfile;
-window.saveData = saveData;
-window.loadAllData = loadAllData;
-window.toggleTheme = toggleTheme;
+async function logout() {
+    if (confirm('Apakah Anda yakin ingin keluar?')) {
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
+            localStorage.removeItem('supabase_session');
+            window.location.href = 'index.html';
+        } catch (err) {
+            alert('Gagal logout: ' + err.message);
+        }
+    }
+}
 window.logout = logout;
 
 // ============================================================
-// 16. AUTO-INIT SAAT DOKUMEN SIAP
+// 14. AUTO-INIT SAAT DOKUMEN SIAP
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Deteksi halaman
     const isDashboard = document.getElementById('stat-ringkasan');
     const isProfil = document.getElementById('kartu-profil');
     const isInput = document.getElementById('form-kompas');
@@ -522,25 +428,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (isDashboard) {
         initDashboard();
     }
-
     if (isProfil) {
         const params = new URLSearchParams(window.location.search);
         const kode = params.get('id');
         if (kode) {
             loadProfile(kode);
-        } else if (isProfil) {
+        } else {
             isProfil.innerHTML = `<div class="p-10 text-center text-red-500">❌ Kode responden tidak ditemukan di URL.</div>`;
         }
     }
-
     if (isInput) {
         console.log('Halaman input siap digunakan.');
-    }
-
-    // Inisialisasi tema dari localStorage
-    if (localStorage.theme === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else if (localStorage.theme === 'light') {
-        document.documentElement.classList.remove('dark');
     }
 });
