@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kompas Tumbuh · Smart Interactive Handbook</title>
+    <title>Buku Saku · Kompas Tumbuh</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,8 +27,16 @@
             }
         }
     </script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- ===== STYLE GLOBAL ===== -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ===== SCRIPT GLOBAL (defer) ===== -->
+    <script src="script.js" defer></script>
+
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -35,7 +44,7 @@
         .font-space {
             font-family: 'Space Grotesk', sans-serif;
         }
-        
+
         /* Glassmorphism Classes */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
@@ -43,7 +52,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
-        
+
         .dark .glass-panel {
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(20px);
@@ -89,58 +98,95 @@
         }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 pb-32">
 
-    <!-- Ambient background orbs for futuristic sci-fi feel -->
+    <!-- ============================================================ -->
+    <!-- NAVIGASI GLOBAL (SAMA DENGAN INDEX.HTML)                     -->
+    <!-- ============================================================ -->
+    <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+
+            <!-- Kiri: Logo & Brand -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
+                    <span class="text-xl">🧭</span>
+                    <span class="hidden sm:inline">Kompas Tumbuh</span>
+                </a>
+                <div class="hidden sm:flex items-center gap-2 text-[10px] text-slate-400 border-l border-slate-300 dark:border-slate-700 pl-3">
+                    <span>LPKA Pangkalpinang</span>
+                    <span class="text-slate-500">•</span>
+                    <span>IAIN SAS Babel</span>
+                </div>
+            </div>
+
+            <!-- Tengah: Menu Desktop -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🏠 Beranda</a>
+                <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📝 Input</a>
+                <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📊 Dashboard</a>
+                <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🧾 Profil</a>
+                <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/20 text-cyan-500 dark:text-cyan-400 transition-all">📘 Buku Saku</a>
+            </div>
+
+            <!-- Kanan: Tema + Logout -->
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggler -->
+                <button onclick="window.toggleTheme && toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
+                    <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+
+                <!-- Logout -->
+                <button onclick="window.logout && logout()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 transition-all active:scale-95" title="Logout">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Menu Mobile (Bottom Nav) -->
+        <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
+            <a href="index.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">🏠</span> Beranda
+            </a>
+            <a href="input.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">📝</span> Input
+            </a>
+            <a href="dashboard.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">📊</span> Dashboard
+            </a>
+            <a href="profil.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">🧾</span> Profil
+            </a>
+            <a href="buku-saku.html" class="flex flex-col items-center text-[10px] text-cyan-500 transition-all">
+                <span class="text-lg">📘</span> Buku
+            </a>
+        </div>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- AMBIENT BACKGROUND ORBS                                      -->
+    <!-- ============================================================ -->
     <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <div class="glow-orb absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-500"></div>
         <div class="glow-orb absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600"></div>
         <div class="glow-orb absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full bg-emerald-500"></div>
     </div>
 
-    <!-- ===== TOP HEADER (FLOAT BAR & QUICK SWITCHES) ===== -->
-    <header class="sticky top-0 z-50 glass-panel shadow-sm transition-all duration-300 no-print border-b">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[2px] shadow-lg shadow-cyan-500/10">
-                    <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center text-xl">🧭</div>
-                </div>
-                <div>
-                    <span class="font-space font-bold tracking-tight text-lg text-slate-900 dark:text-white">KOMPAS TUMBUH</span>
-                    <span class="text-[10px] block text-cyan-500 font-semibold tracking-wider uppercase -mt-1 font-space">Smart Interactive System</span>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-2">
-                <!-- Theme Toggler -->
-                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode Tampilan">
-                    <!-- Sun Icon -->
-                    <svg id="theme-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    <!-- Moon Icon -->
-                    <svg id="theme-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                </button>
-                
-                <!-- Quick Print -->
-                <button onclick="window.print()" class="p-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95 flex items-center gap-2" title="Cetak PDF">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-                    <span class="text-sm font-semibold hidden md:inline">Cetak</span>
-                </button>
-            </div>
-        </div>
-        <!-- Progress Bar -->
-        <div id="readProgress" class="h-[2px] bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 w-0 transition-all duration-100"></div>
-    </header>
-
-    <!-- ===== FLOATING MAIN CONTAINER ===== -->
+    <!-- ============================================================ -->
+    <!-- FLOATING MAIN CONTAINER                                      -->
+    <!-- ============================================================ -->
     <main class="max-w-5xl mx-auto px-4 mt-8 relative z-10">
-        
-        <!-- ===== SECTION 1: COVER (FUTURISTIC LANDING) ===== -->
+
+        <!-- ===== SECTION 1: COVER ===== -->
         <section id="cover" class="print-page glass-panel rounded-3xl p-8 md:p-16 text-center relative overflow-hidden mb-8 shadow-2xl shadow-cyan-500/5">
-            <!-- Background Canvas Nodes -->
             <canvas id="neuralCanvas" class="absolute inset-0 pointer-events-auto opacity-30 dark:opacity-40 z-0"></canvas>
-            
+
             <div class="relative z-10 flex flex-col items-center">
-                
+
                 <!-- Logo Partner Badge -->
                 <div class="flex items-center gap-6 justify-center mb-8 flex-wrap">
                     <div class="bg-white/80 dark:bg-white p-3 rounded-2xl shadow-md transform hover:scale-105 transition-all">
@@ -151,30 +197,23 @@
                     </div>
                 </div>
 
-                <!-- Interactive Rotating 3D Compass -->
+                <!-- Interactive Compass -->
                 <div class="relative w-40 h-40 mb-8 cursor-grab active:cursor-grabbing group">
                     <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-indigo-600 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
                     <svg id="interactiveCompass" class="w-full h-full transform transition-transform duration-300 ease-out" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Outer Ring -->
                         <circle cx="100" cy="100" r="90" stroke="currentColor" class="text-slate-200 dark:text-slate-800" stroke-width="4" stroke-dasharray="8 4"/>
                         <circle cx="100" cy="100" r="80" stroke="url(#compassGlow)" stroke-width="2"/>
-                        <!-- Compass markings -->
                         <text x="94" y="32" class="fill-cyan-400 font-bold font-space text-[14px]">N</text>
                         <text x="95" y="182" class="fill-slate-400 font-bold font-space text-[12px]">S</text>
                         <text x="172" y="105" class="fill-slate-400 font-bold font-space text-[12px]">E</text>
                         <text x="18" y="105" class="fill-slate-400 font-bold font-space text-[12px]">W</text>
-                        <!-- Grid lines -->
                         <path d="M100 20 L100 180" stroke="currentColor" class="text-slate-200/40 dark:text-slate-800/40" stroke-width="1"/>
                         <path d="M20 100 L180 100" stroke="currentColor" class="text-slate-200/40 dark:text-slate-800/40" stroke-width="1"/>
-                        <!-- Compass Needle -->
                         <g id="needle" class="origin-[100px_100px] transition-transform duration-700 ease-out">
-                            <!-- North Pointer (Cyan Glow) -->
                             <path d="M100 35 L112 100 L100 90 Z" fill="url(#needleNorth)"/>
-                            <!-- South Pointer (Indigo Glow) -->
                             <path d="M100 165 L112 100 L100 90 Z" fill="url(#needleSouth)" transform="rotate(180 100 100)"/>
                             <circle cx="100" cy="100" r="8" fill="#ffffff" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.3))"/>
                         </g>
-                        <!-- Gradients -->
                         <defs>
                             <linearGradient id="compassGlow" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
                                 <stop stop-color="#06b6d4"/>
@@ -193,11 +232,11 @@
                     <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-space text-slate-400 bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 uppercase tracking-widest pointer-events-none whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Interaktif</span>
                 </div>
 
-                <!-- Main Title and badge -->
+                <!-- Title -->
                 <span class="px-4 py-1.5 rounded-full bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-semibold text-xs uppercase tracking-widest mb-4 font-space">
                     Digital Smart-Book 🧭 Versi 2.0
                 </span>
-                
+
                 <h1 class="font-space text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
                     Buku Saku
                 </h1>
@@ -228,7 +267,7 @@
                     </div>
                 </div>
 
-                <!-- Call to action scroll -->
+                <!-- Call to action -->
                 <div class="mt-12 animate-bounce no-print">
                     <a href="#daftar-isi" class="text-slate-400 hover:text-cyan-400 flex flex-col items-center gap-1">
                         <span class="text-xs tracking-wider uppercase font-semibold font-space">Mulai Membaca</span>
@@ -239,13 +278,13 @@
             </div>
         </section>
 
-        <!-- ===== SECTION 2: DAFTAR ISI (CARD BASED) ===== -->
+        <!-- ===== SECTION 2: DAFTAR ISI ===== -->
         <section id="daftar-isi" class="print-page glass-panel rounded-3xl p-6 md:p-10 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
             <div class="flex items-center gap-3 mb-6">
                 <span class="text-3xl">📋</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Daftar Isi Buku Saku</h2>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-space">
                 <a href="#bab1" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
                     <div class="flex items-center gap-3">
@@ -326,13 +365,12 @@
                 <span class="px-3 py-1 rounded-lg bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-500 font-bold font-space text-sm">BAB 1</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Pendahuluan</h2>
             </div>
-            
+
             <div class="prose dark:prose-invert max-w-none space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed">
                 <p>
                     <strong class="text-slate-900 dark:text-white">Kompas Tumbuh</strong> adalah instrumen psikososial futuristik berbasis metodologi ilmiah yang dikembangkan untuk mendampingi Anak Binaan di LPKA Pangkalpinang. Alat ini membantu mengarahkan energi mental, memetakan potensi perubahan diri, serta menumbuhkan keyakinan intrinsik.
                 </p>
 
-                <!-- Modern Highlight Box -->
                 <div class="relative p-6 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-indigo-500/5 border border-cyan-500/20 my-6 overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl"></div>
                     <h4 class="font-space font-bold text-cyan-500 flex items-center gap-2 mb-2 text-base">
@@ -366,7 +404,7 @@
                 <span class="px-3 py-1 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-500 font-bold font-space text-sm">BAB 2</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Landasan Teori</h2>
             </div>
-            
+
             <div class="prose dark:prose-invert max-w-none space-y-6 text-slate-600 dark:text-slate-300">
                 <p>
                     Struktur evaluasi Kompas Tumbuh disintesis dari integrasi mutakhir antara psikologi kognitif dan teori perilaku terencana:
@@ -429,12 +467,12 @@
                 <span class="px-3 py-1 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-500 font-bold font-space text-sm">BAB 3</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Peran Enumerator &amp; Etika</h2>
             </div>
-            
+
             <div class="prose dark:prose-invert max-w-none space-y-4 text-slate-600 dark:text-slate-300">
                 <p>
                     Sebagai jembatan data, enumerator (mahasiswa BKI IAIN SAS) mengemban amanah penting yang wajib dijalankan dengan keteguhan prinsip moral dan etika klinis yang ketat.
                 </p>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                     <div class="p-5 rounded-2xl bg-red-500/5 dark:bg-red-500/10 border border-red-500/20">
                         <h4 class="font-bold text-red-500 mb-2 flex items-center gap-2 text-sm uppercase tracking-wider font-space">
@@ -467,14 +505,12 @@
                     <span class="px-3 py-1 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 text-pink-500 font-bold font-space text-sm">BAB 4 &amp; 5</span>
                     <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Prosedur Wawancara</h2>
                 </div>
-                <!-- Mini Tab switches -->
                 <div class="bg-slate-100 dark:bg-slate-900 p-1 rounded-xl flex gap-1 no-print">
                     <button onclick="switchFormTab('panduan')" id="btn-tab-panduan" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm transition-all">Panduan Sesi</button>
                     <button onclick="switchFormTab('formulir')" id="btn-tab-formulir" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-950 transition-all">Lembar Cetak</button>
                 </div>
             </div>
 
-            <!-- Content Tab 1: Panduan -->
             <div id="tab-panduan" class="space-y-4">
                 <p class="text-sm text-slate-600 dark:text-slate-400">
                     Sesi wawancara dirancang dengan pendekatan semi-terstruktur berdurasi total 25-30 menit. Ikuti alur interaksi berikut untuk memastikan data yang terkumpul valid dan bebas tekanan.
@@ -504,7 +540,6 @@
                 </div>
             </div>
 
-            <!-- Content Tab 2: Lembar Cetak (Hidden by default, shown when toggled or printed) -->
             <div id="tab-formulir" class="hidden">
                 <div class="p-6 rounded-2xl bg-slate-950 text-slate-200 font-mono text-[11px] leading-relaxed overflow-x-auto border border-slate-800">
                     <div class="text-center border-b border-dashed border-slate-700 pb-4 mb-4">
@@ -549,26 +584,23 @@
                 <span class="px-3 py-1 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500 font-bold font-space text-sm">BAB 6</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Sistem Input Online</h2>
             </div>
-            
+
             <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300">
                 <p class="mb-6">
                     Pencatatan data harus didigitalisasi ke database aman Psychosophia Behavioral Lab guna menghasilkan grafik agregat analisis institusi. Silakan gunakan alur integrasi digital berikut:
                 </p>
-                
+
                 <div class="relative border-l-2 border-dashed border-emerald-500 pl-6 ml-4 space-y-8">
-                    <!-- Step 1 -->
                     <div class="relative">
                         <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">1</span>
                         <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Otentikasi Kredensial</h4>
                         <p class="text-xs text-slate-400 mt-1">Masuk ke dasbor utama sistem Kompas Tumbuh menggunakan akun institusi IAIN SAS yang sah.</p>
                     </div>
-                    <!-- Step 2 -->
                     <div class="relative">
                         <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">2</span>
                         <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Formulir Perekaman Virtual</h4>
                         <p class="text-xs text-slate-400 mt-1">Isi identitas kode responden, enumerator, skor skala linear, dan intisari kalimat hasil dialog kualitatif TPB.</p>
                     </div>
-                    <!-- Step 3 -->
                     <div class="relative">
                         <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">3</span>
                         <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Penghitungan Otomatis & Generasi Kartu Profil</h4>
@@ -578,29 +610,27 @@
             </div>
         </section>
 
-        <!-- ===== BAB 7 & 8: INTERPRETASI & SIMULATOR DOKUMENTASI (THE CORE INNOVATION!) ===== -->
+        <!-- ===== BAB 7 & 8: INTERPRETASI & SIMULATOR ===== -->
         <section id="bab7" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
             <div class="flex items-center gap-2 mb-6">
                 <span class="px-3 py-1 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-500 font-bold font-space text-sm">BAB 7 &amp; 8</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Interpretasi &amp; Simulator Profil</h2>
             </div>
-            
+
             <p class="text-sm text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                 Di bawah ini adalah sistem simulasi interaktif yang berfungsi untuk menginterpretasikan data secara otomatis. Silakan coba sesuaikan opsi jawaban di bawah ini untuk melihat bagaimana klasifikasi tipe orientasi masa depan dan arahan rekomendasi beradaptasi secara dinamis secara instan!
             </p>
 
             <!-- SIMULATOR PANEL -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 no-print">
-                <!-- Inputs (Left - 5 Cols) -->
                 <div class="lg:col-span-5 space-y-6">
                     <h3 class="font-space text-base font-bold text-slate-900 dark:text-cyan-400 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center gap-2">
                         <span>🎛️</span> Parameter Input
                     </h3>
-                    
-                    <!-- Growth Mindset Range sliders -->
+
                     <div class="space-y-4">
                         <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block">A. Skala Growth Mindset</span>
-                        
+
                         <div>
                             <label class="text-xs flex justify-between mb-1 text-slate-500">
                                 <span>1. Keyakinan Berubah Lebih Baik</span>
@@ -631,7 +661,6 @@
                         </div>
                     </div>
 
-                    <!-- TPB Strength buttons -->
                     <div class="space-y-3">
                         <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block">B. Intensitas Harapan (Extended TPB)</span>
                         <div>
@@ -644,35 +673,30 @@
                     </div>
                 </div>
 
-                <!-- Outputs (Right - 7 Cols) -->
                 <div class="lg:col-span-7 flex flex-col justify-between">
                     <div class="p-6 rounded-2xl bg-slate-100/40 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 h-full flex flex-col justify-between relative overflow-hidden">
-                        
-                        <!-- Floating Glass Background Indicator -->
+
                         <div id="sim-glowing-bg" class="absolute -right-16 -top-16 w-48 h-48 rounded-full blur-3xl opacity-20"></div>
 
                         <div class="relative z-10">
                             <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-4">Hasil Kalkulasi Profil</span>
-                            
-                            <!-- Total Score Indicator -->
+
                             <div class="flex items-baseline gap-2 mb-6">
                                 <span class="text-5xl font-black font-space tracking-tight text-slate-900 dark:text-white" id="sim-total-skor">12</span>
                                 <span class="text-xs text-slate-500">Skor Growth Mindset (Rentang 4-20)</span>
                             </div>
 
-                            <!-- Big Diagnostic Output Badges -->
                             <div class="flex gap-2 flex-wrap mb-6">
                                 <div id="sim-badge-gm" class="px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase">...</div>
                                 <div id="sim-badge-tipe" class="px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase">...</div>
                             </div>
 
-                            <!-- Description -->
                             <div class="space-y-4 mb-8">
                                 <div>
                                     <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase mb-1">Karakteristik Tipe:</h4>
                                     <p id="sim-karakteristik" class="text-xs text-slate-500 leading-relaxed">...</p>
                                 </div>
-                                
+
                                 <div>
                                     <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase mb-1">Rekomendasi Pendampingan:</h4>
                                     <p id="sim-rekomendasi" class="text-xs text-slate-500 leading-relaxed">...</p>
@@ -680,7 +704,6 @@
                             </div>
                         </div>
 
-                        <!-- Mini Dynamic Progress/Chart representation -->
                         <div class="border-t border-slate-200/50 dark:border-slate-800/50 pt-4 relative z-10">
                             <div class="flex items-center justify-between text-xs font-semibold mb-1 text-slate-400">
                                 <span>Persentase Kapasitas Adaptif</span>
@@ -695,7 +718,6 @@
                 </div>
             </div>
 
-            <!--STATIC GRID FOR PRINT / BACKUP (Pure HTML representation) -->
             <div class="hidden print:block mt-8">
                 <h3 class="font-space text-lg font-bold text-slate-900 mb-4">Ringkasan Klasifikasi Orientasi Masa Depan</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -719,15 +741,14 @@
             </div>
         </section>
 
-        <!-- ===== BAB 9: FAQ (ACCORDION INTERAKTIF) ===== -->
+        <!-- ===== BAB 9: FAQ ===== -->
         <section id="bab9" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
             <div class="flex items-center gap-2 mb-6">
                 <span class="px-3 py-1 rounded-lg bg-teal-500/10 dark:bg-teal-500/20 text-teal-500 font-bold font-space text-sm">BAB 9</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Pertanyaan yang Sering Diajukan (FAQ)</h2>
             </div>
-            
+
             <div class="space-y-4">
-                <!-- FAQ 1 -->
                 <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
                     <button onclick="toggleFaq(1)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
                         <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Apakah modul ini valid digunakan untuk penentuan diagnosis psikologis klinis?</span>
@@ -737,8 +758,7 @@
                         Tidak. Kompas Tumbuh merupakan alat bantu reflektif dan pemetaan sosiopsikologis untuk memandu jalannya proses bimbingan konseling dan pendampingan. Hasilnya bukan klasifikasi gangguan kejiwaan klinis atau tes intelegensi.
                     </div>
                 </div>
-                
-                <!-- FAQ 2 -->
+
                 <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
                     <button onclick="toggleFaq(2)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
                         <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Bagaimana menyikapi situasi jika responden menolak merespon pertanyaan wawancara?</span>
@@ -749,7 +769,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ 3 -->
                 <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
                     <button onclick="toggleFaq(3)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
                         <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Kepada siapa enumerator harus berkonsultasi jika mendapati kendala di lapangan?</span>
@@ -768,7 +787,7 @@
                 <span class="px-3 py-1 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-500 font-bold font-space text-sm">BAB 10</span>
                 <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Lampiran: Format Pelaporan Laporan</h2>
             </div>
-            
+
             <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                 Struktur draf di bawah adalah modul laporan perkembangan berkala anonim yang wajib dirangkum oleh tim pendamping dan enumerator di akhir masa bakti program kolaboratif LPKA.
             </p>
@@ -805,9 +824,10 @@
 
     </main>
 
-    <!-- ===== FLOATING BOTTOM NAV BAR (Glassmorphic Dock) ===== -->
+    <!-- ============================================================ -->
+    <!-- FLOATING BOTTOM NAV BAR (Table of Contents)                  -->
+    <!-- ============================================================ -->
     <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl glass-panel py-2 px-3 rounded-full shadow-2xl flex gap-1.5 overflow-x-auto bottom-nav no-print border justify-between items-center" id="floating-dock">
-        <!-- Scroll Indicators / Navigation Items -->
         <a href="#cover" class="nav-btn-item active flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
             <span>📖</span> <span class="hidden md:inline">Cover</span>
         </a>
@@ -840,8 +860,9 @@
         </a>
     </nav>
 
-
-    <!-- ===== DETIL LOGIK PROGRAM (JAVASCRIPT) ===== -->
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                   -->
+    <!-- ============================================================ -->
     <script>
         // Global variables
         let tpbStrength = 'kuat';
@@ -849,30 +870,30 @@
         // Initialize Theme Setup on page load
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-            document.getElementById('theme-sun').classList.remove('hidden');
-            document.getElementById('theme-moon').classList.add('hidden');
+            document.getElementById('theme-sun-nav')?.classList.remove('hidden');
+            document.getElementById('theme-moon-nav')?.classList.add('hidden');
         } else {
             document.documentElement.classList.remove('dark');
-            document.getElementById('theme-sun').classList.add('hidden');
-            document.getElementById('theme-moon').classList.remove('hidden');
+            document.getElementById('theme-sun-nav')?.classList.add('hidden');
+            document.getElementById('theme-moon-nav')?.classList.remove('hidden');
         }
 
-        // Toggle Dark/Light Mode
+        // Toggle Dark/Light Mode (fallback, akan di-override oleh script.js jika ada)
         function toggleTheme() {
             const html = document.documentElement;
-            const sun = document.getElementById('theme-sun');
-            const moon = document.getElementById('theme-moon');
-            
+            const sun = document.getElementById('theme-sun-nav');
+            const moon = document.getElementById('theme-moon-nav');
+
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 localStorage.theme = 'light';
-                sun.classList.add('hidden');
-                moon.classList.remove('hidden');
+                if (sun) sun.classList.add('hidden');
+                if (moon) moon.classList.remove('hidden');
             } else {
                 html.classList.add('dark');
                 localStorage.theme = 'dark';
-                sun.classList.remove('hidden');
-                moon.classList.add('hidden');
+                if (sun) sun.classList.remove('hidden');
+                if (moon) moon.classList.add('hidden');
             }
         }
 
@@ -880,10 +901,9 @@
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             const navItems = document.querySelectorAll('.nav-btn-item');
-            
+
             let current = '';
-            
-            // Calculate current section visible on screen
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 if (pageYOffset >= sectionTop - 150) {
@@ -894,17 +914,11 @@
             navItems.forEach(item => {
                 item.classList.remove('active', 'bg-cyan-500/10', 'text-cyan-500', 'dark:bg-cyan-500/20');
                 const href = item.getAttribute('href').substring(1);
-                
+
                 if (href === current) {
                     item.classList.add('active', 'bg-cyan-500/10', 'text-cyan-500', 'dark:bg-cyan-500/20');
                 }
             });
-
-            // Smooth progress bar calculation
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("readProgress").style.width = scrolled + "%";
         });
 
         // Tab Switcher for BAB 4 & 5
@@ -960,23 +974,19 @@
         }
 
         function runSimulation() {
-            // Retrieve values
             const q1 = parseInt(document.getElementById('slider-q1').value);
             const q2 = parseInt(document.getElementById('slider-q2').value);
             const q3 = parseInt(document.getElementById('slider-q3').value);
             const q4 = parseInt(document.getElementById('slider-q4').value);
 
-            // Update UI Slider labels
             document.getElementById('val-q1').innerText = q1;
             document.getElementById('val-q2').innerText = q2;
             document.getElementById('val-q3').innerText = q3;
             document.getElementById('val-q4').innerText = q4;
 
-            // Calculate overall Growth Mindset score
             const totalScore = q1 + q2 + q3 + q4;
             document.getElementById('sim-total-skor').innerText = totalScore;
 
-            // Classify Growth Mindset category
             let gmCategory = 'SEDANG';
             let gmBadgeClass = 'bg-amber-500/10 text-amber-500 border border-amber-500/20';
             if (totalScore >= 17) {
@@ -987,7 +997,6 @@
                 gmBadgeClass = 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
             }
 
-            // Define final Future Orientation Type (Based on matrix of GM score and TPB)
             let orientationType = '';
             let typeBadgeClass = '';
             let karakteristikText = '';
@@ -995,7 +1004,7 @@
             let barColor = 'from-cyan-400 to-indigo-500';
             let glowBgColor = '#6366f1';
 
-            const isGmHigh = (totalScore >= 13); // Threshold mid point for 2D matrix
+            const isGmHigh = (totalScore >= 13);
 
             if (isGmHigh && tpbStrength === 'kuat') {
                 orientationType = '🟢 PIONIR';
@@ -1027,7 +1036,6 @@
                 glowBgColor = '#f43f5e';
             }
 
-            // Apply simulation results to DOM
             const gmBadge = document.getElementById('sim-badge-gm');
             gmBadge.innerText = `GM: ${gmCategory}`;
             gmBadge.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase ${gmBadgeClass}`;
@@ -1039,138 +1047,131 @@
             document.getElementById('sim-karakteristik').innerText = karakteristikText;
             document.getElementById('sim-rekomendasi').innerText = rekomendasiText;
 
-            // Update custom dynamic progress percentage and color
             const percentValue = Math.round((totalScore / 20) * 100);
             document.getElementById('sim-persen').innerText = `${percentValue}%`;
-            
+
             const progressBar = document.getElementById('sim-progress-bar');
             progressBar.className = `h-full rounded-full bg-gradient-to-r ${barColor} transition-all duration-500`;
             progressBar.style.width = `${percentValue}%`;
 
-            // Adjust neon shadow orbs on background
             document.getElementById('sim-glowing-bg').style.backgroundColor = glowBgColor;
         }
 
-        // Run projection simulation on initial boot
         runSimulation();
 
-
         // ==========================================
-        // 3D COMPASS AND ACCELERATION SIMULATION
+        // 3D COMPASS
         // ==========================================
         const compass = document.getElementById('interactiveCompass');
         const needle = document.getElementById('needle');
 
-        // Dynamic mouse movement tracking to rotate compass needle smoothly
-        window.addEventListener('mousemove', (e) => {
-            const rect = compass.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
-            
-            // Offset the needle to align with North point
-            needle.style.transform = `rotate(${angle + 90}deg)`;
-        });
-
-        // Touch event tracking for mobile devices
-        window.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
+        if (compass && needle) {
+            window.addEventListener('mousemove', (e) => {
                 const rect = compass.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
-                const angle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * (180 / Math.PI);
+                const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
                 needle.style.transform = `rotate(${angle + 90}deg)`;
-            }
-        });
+            });
 
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    const rect = compass.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const angle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * (180 / Math.PI);
+                    needle.style.transform = `rotate(${angle + 90}deg)`;
+                }
+            });
+        }
 
         // ==========================================
-        // NEURAL BACKGROUND PARTICLES SIMULATOR
+        // NEURAL BACKGROUND PARTICLES
         // ==========================================
         const canvas = document.getElementById('neuralCanvas');
-        const ctx = canvas.getContext('2d');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const maxParticles = 60;
 
-        let particles = [];
-        const maxParticles = 60;
-
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.radius = Math.random() * 2 + 1;
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
             }
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(34, 211, 238, 0.4)' : 'rgba(99, 102, 241, 0.3)';
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw lines connecting nearby particles
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 90) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = document.documentElement.classList.contains('dark') 
-                            ? `rgba(34, 211, 238, ${0.15 - dist/90 * 0.15})` 
-                            : `rgba(99, 102, 241, ${0.1 - dist/90 * 0.1})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.radius = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(34, 211, 238, 0.4)' : 'rgba(99, 102, 241, 0.3)';
+                    ctx.fill();
                 }
             }
-            requestAnimationFrame(animateParticles);
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < maxParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 90) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark')
+                                ? `rgba(34, 211, 238, ${0.15 - dist / 90 * 0.15})`
+                                : `rgba(99, 102, 241, ${0.1 - dist / 90 * 0.1})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            window.addEventListener('load', () => {
+                resizeCanvas();
+                initParticles();
+                animateParticles();
+            });
+            window.addEventListener('resize', resizeCanvas);
         }
 
-        // Activate particle engine on page load
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            initParticles();
-            animateParticles();
-        });
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
+        // ===== PROGRESS BAR =====
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById('readProgress');
+            if (progressBar) {
+                progressBar.style.width = scrolled + "%";
+            }
         });
     </script>
+
 </body>
 </html>
-
-```
