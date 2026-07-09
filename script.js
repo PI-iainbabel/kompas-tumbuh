@@ -10,8 +10,8 @@
 
 // ===== KONFIGURASI SUPABASE =====
 // Ganti dengan credential proyek Supabase Anda
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_KEY = 'YOUR_ANON_KEY';
+const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co/rest/v1/';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
 
 // Inisialisasi client (pakai CDN)
 // Pastikan sudah include di HTML: 
