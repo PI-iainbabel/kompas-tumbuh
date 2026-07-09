@@ -1,0 +1,590 @@
+/* ============================================================
+   style.css — Gaya Global Kompas Tumbuh
+   ============================================================
+   Pengembang Utama : Psychosophia Behavioral Lab
+                    Prodi Psikologi Islam IAIN SAS
+   Kolaborator      : Prodi BKI IAIN SAS
+   Mitra            : LPKA Pangkalpinang
+   Versi            : 1.0
+   ============================================================ */
+
+/* ===== RESET & DASAR ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 50%, #fef3c7 100%);
+    background-attachment: fixed;
+    color: #1e293b;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== DARK MODE ===== */
+body.dark {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c1929 100%);
+    color: #e2e8f0;
+}
+
+/* ============================================================
+   GLASSMORPHISM CORE
+   ============================================================ */
+
+/* === GLASS CARD (UTAMA) === */
+.glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    padding: 32px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    max-width: 960px;
+    width: 100%;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode glass card */
+body.dark .glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .glass-card:hover {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+/* === LANDING PAGE CARD (LEBIH SEMPIT) === */
+.landing-card {
+    max-width: 480px;
+    padding: 40px 32px;
+}
+
+/* === GLASS INPUT === */
+.glass-input,
+.glass-select,
+.glass-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    font-size: 0.95rem;
+    color: #1e293b;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+body.dark .glass-input,
+body.dark .glass-select,
+body.dark .glass-textarea {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #f1f5f9;
+}
+
+.glass-input:focus,
+.glass-select:focus,
+.glass-textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.7);
+    border-color: #818cf8;
+    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
+}
+
+body.dark .glass-input:focus,
+body.dark .glass-select:focus,
+body.dark .glass-textarea:focus {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.25);
+}
+
+.glass-input::placeholder,
+.glass-textarea::placeholder {
+    color: #94a3b8;
+    font-weight: 300;
+}
+
+/* === GLASS LABEL === */
+.glass-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #334155;
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+}
+
+body.dark .glass-label {
+    color: #cbd5e1;
+}
+
+/* === GLASS BADGE === */
+.glass-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Badge variants for Growth Mindset */
+.glass-badge-tinggi {
+    background: rgba(16, 185, 129, 0.3);
+    color: #065f46;
+}
+
+.glass-badge-sedang {
+    background: rgba(245, 158, 11, 0.3);
+    color: #92400e;
+}
+
+.glass-badge-rendah {
+    background: rgba(239, 68, 68, 0.3);
+    color: #991b1b;
+}
+
+body.dark .glass-badge-tinggi {
+    background: rgba(16, 185, 129, 0.25);
+    color: #6ee7b7;
+}
+
+body.dark .glass-badge-sedang {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fcd34d;
+}
+
+body.dark .glass-badge-rendah {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+/* === GLASS PRIMARY === */
+.btn-glass-primary {
+    background: rgba(37, 99, 235, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 600;
+    color: #1e40af;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+.btn-glass-primary:hover {
+    background: rgba(37, 99, 235, 0.4);
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+}
+
+body.dark .btn-glass-primary {
+    background: rgba(37, 99, 235, 0.15);
+    color: #93c5fd;
+}
+
+body.dark .btn-glass-primary:hover {
+    background: rgba(37, 99, 235, 0.3);
+}
+
+/* === GLASS SECONDARY === */
+.btn-glass-secondary {
+    background: rgba(226, 232, 240, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 600;
+    color: #475569;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+.btn-glass-secondary:hover {
+    background: rgba(226, 232, 240, 0.6);
+    transform: scale(1.02);
+}
+
+body.dark .btn-glass-secondary {
+    background: rgba(30, 41, 59, 0.4);
+    color: #94a3b8;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .btn-glass-secondary:hover {
+    background: rgba(30, 41, 59, 0.6);
+}
+
+/* === GLASS GREEN (Untuk Export CSV) === */
+.btn-glass-green {
+    background: rgba(22, 163, 74, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 600;
+    color: #166534;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+.btn-glass-green:hover {
+    background: rgba(22, 163, 74, 0.4);
+    transform: scale(1.02);
+}
+
+body.dark .btn-glass-green {
+    background: rgba(22, 163, 74, 0.15);
+    color: #6ee7b7;
+}
+
+body.dark .btn-glass-green:hover {
+    background: rgba(22, 163, 74, 0.3);
+}
+
+/* ============================================================
+   TABEL GLASSMORPHISM
+   ============================================================ */
+.glass-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+}
+
+.glass-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #475569;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border-radius: 12px 12px 0 0;
+}
+
+body.dark .glass-table th {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.glass-table td {
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark .glass-table td {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.glass-table tr:hover td {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark .glass-table tr:hover td {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   TAB NAVIGASI
+   ============================================================ */
+.tab-btn {
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #475569;
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.tab-btn.active {
+    background: rgba(37, 99, 235, 0.25);
+    border-color: rgba(37, 99, 235, 0.4);
+    color: #1e40af;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+body.dark .tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+}
+
+body.dark .tab-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark .tab-btn.active {
+    background: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+/* Konten Tab */
+.tab-content {
+    display: none;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ============================================================
+   KARTU PENGEMBANG (DEV CARD)
+   ============================================================ */
+.dev-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dev-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body.dark .dev-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .dev-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   BADGE LAB
+   ============================================================ */
+.badge-lab {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.2);
+    color: #4338ca;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+body.dark .badge-lab {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+}
+
+/* ============================================================
+   ANIMASI
+   ============================================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.glass-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+    body {
+        padding: 12px;
+    }
+    
+    .glass-card {
+        padding: 20px !important;
+        border-radius: 24px;
+    }
+    
+    .landing-card {
+        padding: 28px 20px !important;
+    }
+    
+    .tab-btn {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .glass-input,
+    .glass-select,
+    .glass-textarea {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+    
+    .glass-card {
+        padding: 16px !important;
+        border-radius: 20px;
+    }
+    
+    .btn-glass-primary,
+    .btn-glass-secondary,
+    .btn-glass-green {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        border-radius: 12px;
+    }
+}
+
+/* ============================================================
+   PRINT (UNTUK CETAK KARTU PROFIL & BUKU SAKU)
+   ============================================================ */
+@media print {
+    body {
+        background: white !important;
+        padding: 0 !important;
+        color: black !important;
+    }
+    
+    .glass-card {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        background: white !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        padding: 32px !important;
+        max-width: 100% !important;
+    }
+    
+    .glass-card:hover {
+        transform: none !important;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .glass-table td,
+    .glass-table th {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        color: black !important;
+    }
+    
+    .glass-badge {
+        background: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #1e293b !important;
+    }
+    
+    .glass-badge-tinggi {
+        background: #d1fae5 !important;
+        color: #065f46 !important;
+    }
+    .glass-badge-sedang {
+        background: #fef3c7 !important;
+        color: #92400e !important;
+    }
+    .glass-badge-rendah {
+        background: #fecaca !important;
+        color: #991b1b !important;
+    }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING (OPSIONAL)
+   ============================================================ */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.15);
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.3);
+}
+

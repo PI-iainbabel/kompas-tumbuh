@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kompas Tumbuh · Smart Interactive Handbook</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            800: '#155e75',
+                            950: '#083344',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-space {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Glowing Orbs */
+        .glow-orb {
+            filter: blur(80px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            transition: all 1s ease;
+        }
+        .dark .glow-orb {
+            opacity: 0.35;
+        }
+
+        /* Active bottom nav logic */
+        .bottom-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Print Override styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-page {
+                page-break-before: always;
+                box-shadow: none !important;
+                background: white !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 pb-32">
+
+    <!-- Ambient background orbs for futuristic sci-fi feel -->
+    <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
+        <div class="glow-orb absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-500"></div>
+        <div class="glow-orb absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600"></div>
+        <div class="glow-orb absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full bg-emerald-500"></div>
+    </div>
+
+    <!-- ===== TOP HEADER (FLOAT BAR & QUICK SWITCHES) ===== -->
+    <header class="sticky top-0 z-50 glass-panel shadow-sm transition-all duration-300 no-print border-b">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[2px] shadow-lg shadow-cyan-500/10">
+                    <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center text-xl">🧭</div>
+                </div>
+                <div>
+                    <span class="font-space font-bold tracking-tight text-lg text-slate-900 dark:text-white">KOMPAS TUMBUH</span>
+                    <span class="text-[10px] block text-cyan-500 font-semibold tracking-wider uppercase -mt-1 font-space">Smart Interactive System</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggler -->
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode Tampilan">
+                    <!-- Sun Icon -->
+                    <svg id="theme-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <!-- Moon Icon -->
+                    <svg id="theme-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+                
+                <!-- Quick Print -->
+                <button onclick="window.print()" class="p-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95 flex items-center gap-2" title="Cetak PDF">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                    <span class="text-sm font-semibold hidden md:inline">Cetak</span>
+                </button>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div id="readProgress" class="h-[2px] bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 w-0 transition-all duration-100"></div>
+    </header>
+
+    <!-- ===== FLOATING MAIN CONTAINER ===== -->
+    <main class="max-w-5xl mx-auto px-4 mt-8 relative z-10">
+        
+        <!-- ===== SECTION 1: COVER (FUTURISTIC LANDING) ===== -->
+        <section id="cover" class="print-page glass-panel rounded-3xl p-8 md:p-16 text-center relative overflow-hidden mb-8 shadow-2xl shadow-cyan-500/5">
+            <!-- Background Canvas Nodes -->
+            <canvas id="neuralCanvas" class="absolute inset-0 pointer-events-auto opacity-30 dark:opacity-40 z-0"></canvas>
+            
+            <div class="relative z-10 flex flex-col items-center">
+                
+                <!-- Logo Partner Badge -->
+                <div class="flex items-center gap-6 justify-center mb-8 flex-wrap">
+                    <div class="bg-white/80 dark:bg-white p-3 rounded-2xl shadow-md transform hover:scale-105 transition-all">
+                        <img src="assets/logo-lpka.png" alt="Logo LPKA" class="h-12 w-auto object-contain" onerror="this.src='https://placehold.co/120x120/0f172a/06b6d4?text=LPKA'" />
+                    </div>
+                    <div class="bg-white/80 dark:bg-white p-3 rounded-2xl shadow-md transform hover:scale-105 transition-all">
+                        <img src="assets/logo-iain.png" alt="Logo IAIN" class="h-12 w-auto object-contain" onerror="this.src='https://placehold.co/120x120/0f172a/6366f1?text=IAIN'" />
+                    </div>
+                </div>
+
+                <!-- Interactive Rotating 3D Compass -->
+                <div class="relative w-40 h-40 mb-8 cursor-grab active:cursor-grabbing group">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-indigo-600 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <svg id="interactiveCompass" class="w-full h-full transform transition-transform duration-300 ease-out" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Outer Ring -->
+                        <circle cx="100" cy="100" r="90" stroke="currentColor" class="text-slate-200 dark:text-slate-800" stroke-width="4" stroke-dasharray="8 4"/>
+                        <circle cx="100" cy="100" r="80" stroke="url(#compassGlow)" stroke-width="2"/>
+                        <!-- Compass markings -->
+                        <text x="94" y="32" class="fill-cyan-400 font-bold font-space text-[14px]">N</text>
+                        <text x="95" y="182" class="fill-slate-400 font-bold font-space text-[12px]">S</text>
+                        <text x="172" y="105" class="fill-slate-400 font-bold font-space text-[12px]">E</text>
+                        <text x="18" y="105" class="fill-slate-400 font-bold font-space text-[12px]">W</text>
+                        <!-- Grid lines -->
+                        <path d="M100 20 L100 180" stroke="currentColor" class="text-slate-200/40 dark:text-slate-800/40" stroke-width="1"/>
+                        <path d="M20 100 L180 100" stroke="currentColor" class="text-slate-200/40 dark:text-slate-800/40" stroke-width="1"/>
+                        <!-- Compass Needle -->
+                        <g id="needle" class="origin-[100px_100px] transition-transform duration-700 ease-out">
+                            <!-- North Pointer (Cyan Glow) -->
+                            <path d="M100 35 L112 100 L100 90 Z" fill="url(#needleNorth)"/>
+                            <!-- South Pointer (Indigo Glow) -->
+                            <path d="M100 165 L112 100 L100 90 Z" fill="url(#needleSouth)" transform="rotate(180 100 100)"/>
+                            <circle cx="100" cy="100" r="8" fill="#ffffff" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.3))"/>
+                        </g>
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="compassGlow" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#06b6d4"/>
+                                <stop offset="1" stop-color="#6366f1"/>
+                            </linearGradient>
+                            <linearGradient id="needleNorth" x1="100" y1="35" x2="112" y2="100" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#22d3ee"/>
+                                <stop offset="1" stop-color="#0891b2"/>
+                            </linearGradient>
+                            <linearGradient id="needleSouth" x1="100" y1="35" x2="112" y2="100" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#818cf8"/>
+                                <stop offset="1" stop-color="#4f46e5"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-space text-slate-400 bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-800 uppercase tracking-widest pointer-events-none whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Interaktif</span>
+                </div>
+
+                <!-- Main Title and badge -->
+                <span class="px-4 py-1.5 rounded-full bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-semibold text-xs uppercase tracking-widest mb-4 font-space">
+                    Digital Smart-Book 🧭 Versi 2.0
+                </span>
+                
+                <h1 class="font-space text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+                    Buku Saku
+                </h1>
+                <h2 class="font-space text-5xl md:text-7xl font-black mt-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500">
+                    Kompas Tumbuh
+                </h2>
+
+                <p class="mt-6 text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl font-light">
+                    Panduan Enumerator & Pendamping bagi Profil Psikososial Berbasis <span class="text-cyan-500 font-medium">Growth Mindset</span> &amp; <span class="text-indigo-500 font-medium">Extended TPB</span>.
+                </p>
+
+                <!-- Metadata Cards -->
+                <div class="mt-12 w-full grid grid-cols-1 md:grid-cols-3 gap-4 text-left font-space">
+                    <div class="p-5 rounded-2xl bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/40">
+                        <span class="text-xs text-cyan-500 font-bold uppercase tracking-wider block mb-1">Pengembang</span>
+                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Psychosophia Behavioral Lab</p>
+                        <p class="text-xs text-slate-500">Prodi Psikologi Islam IAIN SAS Babel</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/40">
+                        <span class="text-xs text-indigo-500 font-bold uppercase tracking-wider block mb-1">Kolaborator</span>
+                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Prodi Bimbingan Konseling Islam</p>
+                        <p class="text-xs text-slate-500">IAIN SAS Bangka Belitung</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/40">
+                        <span class="text-xs text-emerald-500 font-bold uppercase tracking-wider block mb-1">Mitra Utama</span>
+                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">LPKA Pangkalpinang</p>
+                        <p class="text-xs text-slate-500">Lembaga Pembinaan Khusus Anak</p>
+                    </div>
+                </div>
+
+                <!-- Call to action scroll -->
+                <div class="mt-12 animate-bounce no-print">
+                    <a href="#daftar-isi" class="text-slate-400 hover:text-cyan-400 flex flex-col items-center gap-1">
+                        <span class="text-xs tracking-wider uppercase font-semibold font-space">Mulai Membaca</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== SECTION 2: DAFTAR ISI (CARD BASED) ===== -->
+        <section id="daftar-isi" class="print-page glass-panel rounded-3xl p-6 md:p-10 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">📋</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Daftar Isi Buku Saku</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-space">
+                <a href="#bab1" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-500 flex items-center justify-center font-bold text-sm">1</span>
+                        <span class="text-sm font-medium">Pendahuluan</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 1</span>
+                </a>
+                <a href="#bab2" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-500 flex items-center justify-center font-bold text-sm">2</span>
+                        <span class="text-sm font-medium">Landasan Teoris</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 3</span>
+                </a>
+                <a href="#bab3" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-500 flex items-center justify-center font-bold text-sm">3</span>
+                        <span class="text-sm font-medium">Peran Enumerator &amp; Etika</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 5</span>
+                </a>
+                <a href="#bab4" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 text-pink-500 flex items-center justify-center font-bold text-sm">4</span>
+                        <span class="text-sm font-medium">Panduan Wawancara</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 7</span>
+                </a>
+                <a href="#bab5" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 text-orange-500 flex items-center justify-center font-bold text-sm">5</span>
+                        <span class="text-sm font-medium">Formulir Cetak</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 11</span>
+                </a>
+                <a href="#bab6" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-bold text-sm">6</span>
+                        <span class="text-sm font-medium">Input Data Online</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 13</span>
+                </a>
+                <a href="#bab7" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-500 flex items-center justify-center font-bold text-sm">7</span>
+                        <span class="text-sm font-medium">Interpretasi Profil</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 15</span>
+                </a>
+                <a href="#bab8" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-rose-500/10 dark:bg-rose-500/20 text-rose-500 flex items-center justify-center font-bold text-sm">8</span>
+                        <span class="text-sm font-medium">Rekomendasi Pendampingan</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 17</span>
+                </a>
+                <a href="#bab9" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-teal-500/10 dark:bg-teal-500/20 text-teal-500 flex items-center justify-center font-bold text-sm">9</span>
+                        <span class="text-sm font-medium">FAQ (Tanya Jawab)</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 19</span>
+                </a>
+                <a href="#bab10" class="flex items-center justify-between p-4 rounded-2xl bg-slate-100/50 hover:bg-cyan-500/10 dark:bg-slate-900/30 dark:hover:bg-cyan-950/20 border border-slate-200/30 dark:border-slate-800/30 transition-all hover:-translate-y-1">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold text-sm">10</span>
+                        <span class="text-sm font-medium">Lampiran Template</span>
+                    </div>
+                    <span class="text-xs text-slate-400">Hal. 21</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== BAB 1: PENDAHULUAN ===== -->
+        <section id="bab1" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-500 font-bold font-space text-sm">BAB 1</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Pendahuluan</h2>
+            </div>
+            
+            <div class="prose dark:prose-invert max-w-none space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p>
+                    <strong class="text-slate-900 dark:text-white">Kompas Tumbuh</strong> adalah instrumen psikososial futuristik berbasis metodologi ilmiah yang dikembangkan untuk mendampingi Anak Binaan di LPKA Pangkalpinang. Alat ini membantu mengarahkan energi mental, memetakan potensi perubahan diri, serta menumbuhkan keyakinan intrinsik.
+                </p>
+
+                <!-- Modern Highlight Box -->
+                <div class="relative p-6 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-indigo-500/5 border border-cyan-500/20 my-6 overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl"></div>
+                    <h4 class="font-space font-bold text-cyan-500 flex items-center gap-2 mb-2 text-base">
+                        <span>🎯</span> Fokus Utama Pengembangan
+                    </h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                        Memetakan kekuatan karakter, menavigasi harapan, dan meminimalisir kepasrahan destruktif sehingga pendampingan terfokus secara presisi demi mendukung reintegrasi sosial yang sukses.
+                    </p>
+                </div>
+
+                <p>
+                    Pengembangan ini diinisiasi oleh <strong class="text-cyan-500">Psychosophia Behavioral Lab</strong> (Prodi Psikologi Islam IAIN SAS Bangka Belitung) berkolaborasi dengan Prodi Bimbingan Konseling Islam (BKI) serta LPKA Pangkalpinang. Mahasiswa yang melakukan PPL bertindak sebagai enumerator terlatih untuk menjembatani evaluasi ini di lapangan.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="p-5 rounded-xl bg-slate-100/50 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-800/50">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">🧭 Arti "Kompas"</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Membimbing anak binaan menemukan titik orientasi kehidupan baru, merumuskan peta aksi nyata, dan menjaga konsistensi perbaikan diri.</p>
+                    </div>
+                    <div class="p-5 rounded-xl bg-slate-100/50 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-800/50">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">🌱 Arti "Tumbuh"</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Mengadopsi pola pikir adaptif (growth mindset) yang menolak keyakinan statis; kegagalan dipandang sebagai tangga esensial untuk belajar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 2: LANDASAN TEORI ===== -->
+        <section id="bab2" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-500 font-bold font-space text-sm">BAB 2</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Landasan Teori</h2>
+            </div>
+            
+            <div class="prose dark:prose-invert max-w-none space-y-6 text-slate-600 dark:text-slate-300">
+                <p>
+                    Struktur evaluasi Kompas Tumbuh disintesis dari integrasi mutakhir antara psikologi kognitif dan teori perilaku terencana:
+                </p>
+
+                <!-- Theory 1 -->
+                <div class="p-6 rounded-2xl bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/30 dark:border-slate-800/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold font-space text-lg">A</div>
+                        <h3 class="font-space text-lg font-bold text-slate-900 dark:text-white m-0">Growth Mindset (Platform Pondasi Psikis)</h3>
+                    </div>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                        Mengadaptasi riset <strong>Carol Dweck</strong>. Karakteristik paling menentukan dari proses pemulihan sosial adalah keyakinan anak bahwa identitas mereka tidaklah permanen. Mereka memiliki daya plastisitas mental untuk mendesain ulang masa depannya.
+                    </p>
+                    <div class="bg-white/50 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-200/40 dark:border-slate-800/60">
+                        <span class="text-xs uppercase font-bold tracking-wider text-cyan-500 block mb-2">Variabel Likert (Skala 1-5)</span>
+                        <ul class="text-xs space-y-1.5 list-none pl-0 m-0 text-slate-600 dark:text-slate-400">
+                            <li>🌱 <strong>Item 1:</strong> Keyakinan penuh untuk menjadi entitas pribadi yang jauh lebih mulia.</li>
+                            <li>🌱 <strong>Item 2:</strong> Membaca kesalahan masa lalu sebagai modul pembelajaran termahal.</li>
+                            <li>🌱 <strong>Item 3:</strong> Keyakinan bahwa kerja keras memiliki daya ubah superior atas nasib.</li>
+                            <li>🌱 <strong>Item 4:</strong> Keteguhan untuk menolak takdir menyerah di tengah badai krisis.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Theory 2 -->
+                <div class="p-6 rounded-2xl bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/30 dark:border-slate-800/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold font-space text-lg">B</div>
+                        <h3 class="font-space text-lg font-bold text-slate-900 dark:text-white m-0">Extended Theory of Planned Behavior (TPB)</h3>
+                    </div>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                        Dikembangkan dari postulat <strong>Icek Ajzen</strong>, diperluas ke dalam matriks psikososial anak binaan. Intensi perubahan diukur melalui keyakinan subjektif, kendali internal, dan komitmen aksi nyata.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        <div class="p-3 bg-white/50 dark:bg-slate-950/40 rounded-lg text-center border dark:border-slate-800">
+                            <span class="block text-xs font-bold text-indigo-500 font-space mb-1">SIKAP</span>
+                            <span class="text-[10px] text-slate-400">Evaluasi nilai perubahan diri</span>
+                        </div>
+                        <div class="p-3 bg-white/50 dark:bg-slate-950/40 rounded-lg text-center border dark:border-slate-800">
+                            <span class="block text-xs font-bold text-pink-500 font-space mb-1">HARAPAN</span>
+                            <span class="text-[10px] text-slate-400">Proyeksi visualisasi 2 tahun</span>
+                        </div>
+                        <div class="p-3 bg-white/50 dark:bg-slate-950/40 rounded-lg text-center border dark:border-slate-800">
+                            <span class="block text-xs font-bold text-emerald-500 font-space mb-1">KONTROL</span>
+                            <span class="text-[10px] text-slate-400">Identifikasi & solusi hambatan</span>
+                        </div>
+                        <div class="p-3 bg-white/50 dark:bg-slate-950/40 rounded-lg text-center border dark:border-slate-800">
+                            <span class="block text-xs font-bold text-amber-500 font-space mb-1">KOMITMEN</span>
+                            <span class="text-[10px] text-slate-400">Mikrosteps tindakan besok</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 3: PERAN ENUMERATOR ===== -->
+        <section id="bab3" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-500 font-bold font-space text-sm">BAB 3</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Peran Enumerator &amp; Etika</h2>
+            </div>
+            
+            <div class="prose dark:prose-invert max-w-none space-y-4 text-slate-600 dark:text-slate-300">
+                <p>
+                    Sebagai jembatan data, enumerator (mahasiswa BKI IAIN SAS) mengemban amanah penting yang wajib dijalankan dengan keteguhan prinsip moral dan etika klinis yang ketat.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="p-5 rounded-2xl bg-red-500/5 dark:bg-red-500/10 border border-red-500/20">
+                        <h4 class="font-bold text-red-500 mb-2 flex items-center gap-2 text-sm uppercase tracking-wider font-space">
+                            <span>🚫</span> Larangan Keras (Do Not)
+                        </h4>
+                        <ul class="text-xs space-y-2 text-slate-500 list-disc pl-4">
+                            <li>Jangan mengklaim hasil sebagai diagnosis medis/klinis kejiwaan resmi.</li>
+                            <li>Jangan mencantumkan nama asli Anak Binaan di database terbuka (gunakan kode enkripsi responden).</li>
+                            <li>Jangan memaksakan proses interviu jika kondisi anak tidak kondusif atau tertekan.</li>
+                        </ul>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20">
+                        <h4 class="font-bold text-emerald-500 mb-2 flex items-center gap-2 text-sm uppercase tracking-wider font-space">
+                            <span>✅</span> Tindakan Wajib (Must Do)
+                        </h4>
+                        <ul class="text-xs space-y-2 text-slate-500 list-disc pl-4">
+                            <li>Membangun ikatan rasa aman awal (Rapport building) setidaknya 5 menit pertama.</li>
+                            <li>Melakukan wawancara di zona terpantau ramah anak namun tetap aman.</li>
+                            <li>Menghentikan sesi seketika apabila mendeteksi indikasi distress mental berat, lalu melaporkannya ke pendamping LPKA.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 4 & 5: PANDUAN & FORMULIR WAWANCARA ===== -->
+        <section id="bab4" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
+            <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-pink-500/10 dark:bg-pink-500/20 text-pink-500 font-bold font-space text-sm">BAB 4 &amp; 5</span>
+                    <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Prosedur Wawancara</h2>
+                </div>
+                <!-- Mini Tab switches -->
+                <div class="bg-slate-100 dark:bg-slate-900 p-1 rounded-xl flex gap-1 no-print">
+                    <button onclick="switchFormTab('panduan')" id="btn-tab-panduan" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm transition-all">Panduan Sesi</button>
+                    <button onclick="switchFormTab('formulir')" id="btn-tab-formulir" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-950 transition-all">Lembar Cetak</button>
+                </div>
+            </div>
+
+            <!-- Content Tab 1: Panduan -->
+            <div id="tab-panduan" class="space-y-4">
+                <p class="text-sm text-slate-600 dark:text-slate-400">
+                    Sesi wawancara dirancang dengan pendekatan semi-terstruktur berdurasi total 25-30 menit. Ikuti alur interaksi berikut untuk memastikan data yang terkumpul valid dan bebas tekanan.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-100/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50">
+                        <span class="w-6 h-6 rounded-full bg-cyan-500/10 text-cyan-500 flex items-center justify-center text-xs font-bold font-space shrink-0">1</span>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Fase Prakondisi (5 Menit)</h4>
+                            <p class="text-xs text-slate-400 mt-1">Duduk sejajar, singkirkan berkas formalitas berlebih, buat kontak mata bersahabat, jelaskan asas kerahasiaan penuh.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-100/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50">
+                        <span class="w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-xs font-bold font-space shrink-0">2</span>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Fase Pengukuran Likert (10 Menit)</h4>
+                            <p class="text-xs text-slate-400 mt-1">Bacakan perlahan setiap item Growth Mindset. Pastikan anak paham bahwa rentang skor (1-5) melambangkan gradasi perasaan mereka.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-100/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50">
+                        <span class="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xs font-bold font-space shrink-0">3</span>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Dialog Eksplorasi TPB (10 Menit)</h4>
+                            <p class="text-xs text-slate-400 mt-1">Gunakan pertanyaan reflektif tanpa kesan mendikte. Catat kata kunci bermakna kuat dari narasi lisan anak secara objektif.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Tab 2: Lembar Cetak (Hidden by default, shown when toggled or printed) -->
+            <div id="tab-formulir" class="hidden">
+                <div class="p-6 rounded-2xl bg-slate-950 text-slate-200 font-mono text-[11px] leading-relaxed overflow-x-auto border border-slate-800">
+                    <div class="text-center border-b border-dashed border-slate-700 pb-4 mb-4">
+                        <h4 class="text-sm font-bold tracking-widest text-cyan-400">LEMBAR WAWANCARA "KOMPAS TUMBUH"</h4>
+                        <span class="text-[9px] text-slate-400">MITRA PENELITIAN &amp; EVALUASI SOSIAL · LPKA PANGKALPINANG</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 border-b border-dashed border-slate-700 pb-4">
+                        <div>
+                            <p>KODE RESPONDEN : _______________________</p>
+                            <p>NAMA ENUMERATOR : _______________________</p>
+                        </div>
+                        <div>
+                            <p>TANGGAL SESI   : _______________________</p>
+                            <p>PENDAMPING LPKA : _______________________</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 mb-4">
+                        <h5 class="text-cyan-500 font-bold">[BLOK A - SKALA GROWTH MINDSET] (Lingkari rentang 1 s.d 5)</h5>
+                        <p>1. Saya yakin saya mampu merekonstruksi karakter menjadi jauh lebih mulia.<br>   [ Sangat Ragu ]  1   2   3   4   5  [ Sangat Yakin ]</p>
+                        <p>2. Bagi diri saya pribadi, rentetan kesalahan masa lalu adalah bahan bakar evaluasi.<br>   [ Sangat Ragu ]  1   2   3   4   5  [ Sangat Yakin ]</p>
+                        <p>3. Saya sangat percaya bahwa usaha yang militan sanggup merubah garis takdir.<br>   [ Sangat Ragu ]  1   2   3   4   5  [ Sangat Yakin ]</p>
+                        <p>4. Saya memiliki komitmen kuat untuk menolak menyerah seberat apa pun tantangannya.<br>   [ Sangat Ragu ]  1   2   3   4   5  [ Sangat Yakin ]</p>
+                    </div>
+                    <div class="space-y-3 border-t border-dashed border-slate-700 pt-4">
+                        <h5 class="text-indigo-400 font-bold">[BLOK B - DIALOG REFLEKTIF EXTENDED TPB] (Ringkas kata kunci utama)</h5>
+                        <p>1. SIKAP    : Apa pendorong terdalam di hatimu yang menyatakan pentingnya berubah?</p>
+                        <p>   Catatan  : __________________________________________________________________</p>
+                        <p>2. HARAPAN   : Gambarkan kondisi dirimu 2 tahun kedepan saat semua mimpimu terwujud.</p>
+                        <p>   Catatan  : __________________________________________________________________</p>
+                        <p>3. KONTROL   : Apa rintangan mental terbesar yang berisiko menahan langkahmu kembali?</p>
+                        <p>   Catatan  : __________________________________________________________________</p>
+                        <p>4. KOMITMEN  : Apa satu tindakan konkret paling sederhana yang akan kamu eksekusi besok pagi?</p>
+                        <p>   Catatan  : __________________________________________________________________</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 6: ONLINE INPUT SYSTEM ===== -->
+        <section id="bab6" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500 font-bold font-space text-sm">BAB 6</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Sistem Input Online</h2>
+            </div>
+            
+            <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300">
+                <p class="mb-6">
+                    Pencatatan data harus didigitalisasi ke database aman Psychosophia Behavioral Lab guna menghasilkan grafik agregat analisis institusi. Silakan gunakan alur integrasi digital berikut:
+                </p>
+                
+                <div class="relative border-l-2 border-dashed border-emerald-500 pl-6 ml-4 space-y-8">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">1</span>
+                        <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Otentikasi Kredensial</h4>
+                        <p class="text-xs text-slate-400 mt-1">Masuk ke dasbor utama sistem Kompas Tumbuh menggunakan akun institusi IAIN SAS yang sah.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">2</span>
+                        <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Formulir Perekaman Virtual</h4>
+                        <p class="text-xs text-slate-400 mt-1">Isi identitas kode responden, enumerator, skor skala linear, dan intisari kalimat hasil dialog kualitatif TPB.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <span class="absolute -left-10 top-0.5 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold font-space">3</span>
+                        <h4 class="font-space font-bold text-slate-900 dark:text-white text-sm">Penghitungan Otomatis & Generasi Kartu Profil</h4>
+                        <p class="text-xs text-slate-400 mt-1">Mesin komputasi secara real-time memetakan profil ke dalam salah satu dari 4 kuadran orientasi (Pionir, Pencari, Pejuang, Terluka) untuk dicetak instan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 7 & 8: INTERPRETASI & SIMULATOR DOKUMENTASI (THE CORE INNOVATION!) ===== -->
+        <section id="bab7" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 text-blue-500 font-bold font-space text-sm">BAB 7 &amp; 8</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Interpretasi &amp; Simulator Profil</h2>
+            </div>
+            
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                Di bawah ini adalah sistem simulasi interaktif yang berfungsi untuk menginterpretasikan data secara otomatis. Silakan coba sesuaikan opsi jawaban di bawah ini untuk melihat bagaimana klasifikasi tipe orientasi masa depan dan arahan rekomendasi beradaptasi secara dinamis secara instan!
+            </p>
+
+            <!-- SIMULATOR PANEL -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 no-print">
+                <!-- Inputs (Left - 5 Cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <h3 class="font-space text-base font-bold text-slate-900 dark:text-cyan-400 border-b border-slate-200 dark:border-slate-800 pb-2 flex items-center gap-2">
+                        <span>🎛️</span> Parameter Input
+                    </h3>
+                    
+                    <!-- Growth Mindset Range sliders -->
+                    <div class="space-y-4">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block">A. Skala Growth Mindset</span>
+                        
+                        <div>
+                            <label class="text-xs flex justify-between mb-1 text-slate-500">
+                                <span>1. Keyakinan Berubah Lebih Baik</span>
+                                <span class="font-bold text-cyan-500" id="val-q1">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3" class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500" id="slider-q1" oninput="runSimulation()">
+                        </div>
+                        <div>
+                            <label class="text-xs flex justify-between mb-1 text-slate-500">
+                                <span>2. Nilai Kesalahan Masa Lalu</span>
+                                <span class="font-bold text-cyan-500" id="val-q2">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3" class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500" id="slider-q2" oninput="runSimulation()">
+                        </div>
+                        <div>
+                            <label class="text-xs flex justify-between mb-1 text-slate-500">
+                                <span>3. Keyakinan Terhadap Usaha</span>
+                                <span class="font-bold text-cyan-500" id="val-q3">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3" class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500" id="slider-q3" oninput="runSimulation()">
+                        </div>
+                        <div>
+                            <label class="text-xs flex justify-between mb-1 text-slate-500">
+                                <span>4. Keteguhan Menolak Menyerah</span>
+                                <span class="font-bold text-cyan-500" id="val-q4">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3" class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500" id="slider-q4" oninput="runSimulation()">
+                        </div>
+                    </div>
+
+                    <!-- TPB Strength buttons -->
+                    <div class="space-y-3">
+                        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block">B. Intensitas Harapan (Extended TPB)</span>
+                        <div>
+                            <span class="text-xs text-slate-500 block mb-2">Nilai Motivasi & Harapan Masa Depan:</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="setTpbStrength('kuat')" id="btn-tpb-kuat" class="py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-gradient-to-tr from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emerald-500 shadow-md">Kuat &amp; Jelas</button>
+                                <button onclick="setTpbStrength('lemah')" id="btn-tpb-lemah" class="py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-slate-100/50 dark:bg-slate-900/50 border-slate-200/50 dark:border-slate-800 text-slate-500 hover:text-slate-950 dark:hover:text-white">Lemah / Ragu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outputs (Right - 7 Cols) -->
+                <div class="lg:col-span-7 flex flex-col justify-between">
+                    <div class="p-6 rounded-2xl bg-slate-100/40 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 h-full flex flex-col justify-between relative overflow-hidden">
+                        
+                        <!-- Floating Glass Background Indicator -->
+                        <div id="sim-glowing-bg" class="absolute -right-16 -top-16 w-48 h-48 rounded-full blur-3xl opacity-20"></div>
+
+                        <div class="relative z-10">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-4">Hasil Kalkulasi Profil</span>
+                            
+                            <!-- Total Score Indicator -->
+                            <div class="flex items-baseline gap-2 mb-6">
+                                <span class="text-5xl font-black font-space tracking-tight text-slate-900 dark:text-white" id="sim-total-skor">12</span>
+                                <span class="text-xs text-slate-500">Skor Growth Mindset (Rentang 4-20)</span>
+                            </div>
+
+                            <!-- Big Diagnostic Output Badges -->
+                            <div class="flex gap-2 flex-wrap mb-6">
+                                <div id="sim-badge-gm" class="px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase">...</div>
+                                <div id="sim-badge-tipe" class="px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase">...</div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="space-y-4 mb-8">
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase mb-1">Karakteristik Tipe:</h4>
+                                    <p id="sim-karakteristik" class="text-xs text-slate-500 leading-relaxed">...</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase mb-1">Rekomendasi Pendampingan:</h4>
+                                    <p id="sim-rekomendasi" class="text-xs text-slate-500 leading-relaxed">...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Dynamic Progress/Chart representation -->
+                        <div class="border-t border-slate-200/50 dark:border-slate-800/50 pt-4 relative z-10">
+                            <div class="flex items-center justify-between text-xs font-semibold mb-1 text-slate-400">
+                                <span>Persentase Kapasitas Adaptif</span>
+                                <span id="sim-persen">60%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden">
+                                <div id="sim-progress-bar" class="h-full rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-500" style="width: 60%"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--STATIC GRID FOR PRINT / BACKUP (Pure HTML representation) -->
+            <div class="hidden print:block mt-8">
+                <h3 class="font-space text-lg font-bold text-slate-900 mb-4">Ringkasan Klasifikasi Orientasi Masa Depan</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="p-4 border rounded-xl">
+                        <span class="block font-bold text-emerald-600">🟢 Tipe Pionir</span>
+                        <p class="text-[10px] text-slate-500 mt-1">Mindset Tinggi &amp; Harapan Kuat. Berikan peran mentor sebaya atau penggerak program positif di LPKA.</p>
+                    </div>
+                    <div class="p-4 border rounded-xl">
+                        <span class="block font-bold text-orange-600">🟠 Tipe Pencari</span>
+                        <p class="text-[10px] text-slate-500 mt-1">Mindset Rendah &amp; Harapan Kuat. Fokus pada penguatan kepercayaan diri dengan membuktikan kesuksesan skala mikro.</p>
+                    </div>
+                    <div class="p-4 border rounded-xl">
+                        <span class="block font-bold text-blue-600">🔵 Tipe Pejuang</span>
+                        <p class="text-[10px] text-slate-500 mt-1">Mindset Tinggi &amp; Harapan Lemah. Fokus dialog eksploratif untuk memetakan arah cita-cita dan merumuskan peta aksi.</p>
+                    </div>
+                    <div class="p-4 border rounded-xl">
+                        <span class="block font-bold text-red-600">🔴 Tipe Terluka</span>
+                        <p class="text-[10px] text-slate-500 mt-1">Mindset Rendah &amp; Harapan Lemah. Prioritas tertinggi intervensi. Pendekatan sabar, berempati penuh, lupakan target agresif.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 9: FAQ (ACCORDION INTERAKTIF) ===== -->
+        <section id="bab9" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl transition-all">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-teal-500/10 dark:bg-teal-500/20 text-teal-500 font-bold font-space text-sm">BAB 9</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq(1)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
+                        <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Apakah modul ini valid digunakan untuk penentuan diagnosis psikologis klinis?</span>
+                        <svg id="faq-icon-1" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div id="faq-ans-1" class="hidden p-5 border-t border-slate-200/30 dark:border-slate-800/30 text-xs text-slate-500 leading-relaxed bg-white/40 dark:bg-slate-900/10">
+                        Tidak. Kompas Tumbuh merupakan alat bantu reflektif dan pemetaan sosiopsikologis untuk memandu jalannya proses bimbingan konseling dan pendampingan. Hasilnya bukan klasifikasi gangguan kejiwaan klinis atau tes intelegensi.
+                    </div>
+                </div>
+                
+                <!-- FAQ 2 -->
+                <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq(2)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
+                        <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Bagaimana menyikapi situasi jika responden menolak merespon pertanyaan wawancara?</span>
+                        <svg id="faq-icon-2" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div id="faq-ans-2" class="hidden p-5 border-t border-slate-200/30 dark:border-slate-800/30 text-xs text-slate-500 leading-relaxed bg-white/40 dark:bg-slate-900/10">
+                        Ingat etika kesukarelaan. Jangan memaksa responden menjawab. Istirahatkan sesi, bangun relasi informal pendukung (misal bermain catur, berbincang santai), lalu agendakan kembali sesi di hari lain saat mood anak telah membaik.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="border border-slate-200/50 dark:border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq(3)" class="w-full flex justify-between items-center p-5 text-left bg-slate-100/30 dark:bg-slate-900/10 hover:bg-slate-100/60 dark:hover:bg-slate-900/30 transition-all">
+                        <span class="font-bold text-sm text-slate-900 dark:text-white font-space">Kepada siapa enumerator harus berkonsultasi jika mendapati kendala di lapangan?</span>
+                        <svg id="faq-icon-3" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div id="faq-ans-3" class="hidden p-5 border-t border-slate-200/30 dark:border-slate-800/30 text-xs text-slate-500 leading-relaxed bg-white/40 dark:bg-slate-900/10">
+                        Konsultasi terdekat ditujukan langsung kepada Dosen Pembimbing Lapangan (DPL) masing-masing kelompok PPL serta mengomunikasikannya kepada supervisor utama di Psychosophia Behavioral Lab IAIN SAS.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BAB 10: LAMPIRAN LAPORAN ===== -->
+        <section id="bab10" class="print-page glass-panel rounded-3xl p-6 md:p-12 mb-8 border border-slate-100 dark:border-slate-900 shadow-xl">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="px-3 py-1 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-500 font-bold font-space text-sm">BAB 10</span>
+                <h2 class="font-space text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Lampiran: Format Pelaporan Laporan</h2>
+            </div>
+            
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                Struktur draf di bawah adalah modul laporan perkembangan berkala anonim yang wajib dirangkum oleh tim pendamping dan enumerator di akhir masa bakti program kolaboratif LPKA.
+            </p>
+
+            <div class="p-6 rounded-2xl bg-slate-100/60 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800/80">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest font-space">Template Laporan LPKA Pangkalpinang</span>
+                </div>
+                <div class="font-mono text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed bg-white/70 dark:bg-slate-950/40 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800/60 overflow-x-auto space-y-2">
+                    <p>LAPORAN AGREGAT PERKEMBANGAN PSIKOSOSIAL "KOMPAS TUMBUH"</p>
+                    <p>Lembaga Pembinaan Khusus Anak (LPKA) Kelas II Pangkalpinang</p>
+                    <p>-----------------------------------------------------------</p>
+                    <p>1. PARAMETER KUANTITATIF:</p>
+                    <p>   - Total Populasi Responden : [ ... ] Anak Binaan</p>
+                    <p>   - Proporsi Growth Mindset  : Tinggi: [ ... ]%  | Sedang: [ ... ]% | Rendah: [ ... ]%</p>
+                    <p>2. PROFIL DISTRIBUSI KELOMPOK:</p>
+                    <p>   - Tipe Pionir  (Growth GM Tinggi + Harapan Kuat) : [ ... ] Anak</p>
+                    <p>   - Tipe Pencari (Growth GM Rendah + Harapan Kuat) : [ ... ] Anak</p>
+                    <p>   - Tipe Pejuang (Growth GM Tinggi + Harapan Lemah) : [ ... ] Anak</p>
+                    <p>   - Tipe Terluka (Growth GM Rendah + Harapan Lemah) : [ ... ] Anak</p>
+                    <p>3. FORMULASI REKOMENDASI UMUM:</p>
+                    <p>   - [ Tuliskan kesimpulan program rujukan vokasi/pendidikan spiritual LPKA ]</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="text-center py-12 border-t border-slate-200/40 dark:border-slate-800/40 text-xs text-slate-400 space-y-2">
+            <p>&copy; 2026 · Psychosophia Behavioral Lab · Prodi Psikologi Islam</p>
+            <p>Fakultas Dakwah dan Komunikasi Islam · IAIN SAS Bangka Belitung</p>
+            <p class="text-[10px] text-slate-500">Dikembangkan bersinergi dengan Prodi BKI &amp; LPKA Pangkalpinang</p>
+        </footer>
+
+    </main>
+
+    <!-- ===== FLOATING BOTTOM NAV BAR (Glassmorphic Dock) ===== -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl glass-panel py-2 px-3 rounded-full shadow-2xl flex gap-1.5 overflow-x-auto bottom-nav no-print border justify-between items-center" id="floating-dock">
+        <!-- Scroll Indicators / Navigation Items -->
+        <a href="#cover" class="nav-btn-item active flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span>📖</span> <span class="hidden md:inline">Cover</span>
+        </a>
+        <a href="#daftar-isi" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span>📋</span> <span class="hidden md:inline">Daftar Isi</span>
+        </a>
+        <a href="#bab1" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">1</span> <span class="hidden md:inline">Pendahuluan</span>
+        </a>
+        <a href="#bab2" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">2</span> <span class="hidden md:inline">Landasan</span>
+        </a>
+        <a href="#bab3" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">3</span> <span class="hidden md:inline">Etika</span>
+        </a>
+        <a href="#bab4" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">4</span> <span class="hidden md:inline">Panduan</span>
+        </a>
+        <a href="#bab6" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">6</span> <span class="hidden md:inline">Input</span>
+        </a>
+        <a href="#bab7" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">7</span> <span class="hidden md:inline">Simulator</span>
+        </a>
+        <a href="#bab9" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">9</span> <span class="hidden md:inline">FAQ</span>
+        </a>
+        <a href="#bab10" class="nav-btn-item flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all whitespace-nowrap">
+            <span class="w-4 h-4 rounded-full bg-slate-200 dark:bg-slate-800 text-[9px] font-bold flex items-center justify-center font-space">10</span> <span class="hidden md:inline">Lampiran</span>
+        </a>
+    </nav>
+
+
+    <!-- ===== DETIL LOGIK PROGRAM (JAVASCRIPT) ===== -->
+    <script>
+        // Global variables
+        let tpbStrength = 'kuat';
+
+        // Initialize Theme Setup on page load
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-sun').classList.remove('hidden');
+            document.getElementById('theme-moon').classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-sun').classList.add('hidden');
+            document.getElementById('theme-moon').classList.remove('hidden');
+        }
+
+        // Toggle Dark/Light Mode
+        function toggleTheme() {
+            const html = document.documentElement;
+            const sun = document.getElementById('theme-sun');
+            const moon = document.getElementById('theme-moon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                sun.classList.add('hidden');
+                moon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                sun.classList.remove('hidden');
+                moon.classList.add('hidden');
+            }
+        }
+
+        // Active Navigation Scroll Tracking
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-btn-item');
+            
+            let current = '';
+            
+            // Calculate current section visible on screen
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active', 'bg-cyan-500/10', 'text-cyan-500', 'dark:bg-cyan-500/20');
+                const href = item.getAttribute('href').substring(1);
+                
+                if (href === current) {
+                    item.classList.add('active', 'bg-cyan-500/10', 'text-cyan-500', 'dark:bg-cyan-500/20');
+                }
+            });
+
+            // Smooth progress bar calculation
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("readProgress").style.width = scrolled + "%";
+        });
+
+        // Tab Switcher for BAB 4 & 5
+        function switchFormTab(tabName) {
+            const panduan = document.getElementById('tab-panduan');
+            const formulir = document.getElementById('tab-formulir');
+            const btnPanduan = document.getElementById('btn-tab-panduan');
+            const btnFormulir = document.getElementById('btn-tab-formulir');
+
+            if (tabName === 'panduan') {
+                panduan.classList.remove('hidden');
+                formulir.classList.add('hidden');
+                btnPanduan.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm transition-all";
+                btnFormulir.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-950 transition-all";
+            } else {
+                panduan.classList.add('hidden');
+                formulir.classList.remove('hidden');
+                btnFormulir.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800 text-slate-950 dark:text-white shadow-sm transition-all";
+                btnPanduan.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-950 transition-all";
+            }
+        }
+
+        // Accordion toggle for FAQ
+        function toggleFaq(id) {
+            const ans = document.getElementById(`faq-ans-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+
+            if (ans.classList.contains('hidden')) {
+                ans.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                ans.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // ==========================================
+        // SMART PROJECTION AND SIMULATION ENGINE
+        // ==========================================
+        function setTpbStrength(type) {
+            tpbStrength = type;
+            const btnKuat = document.getElementById('btn-tpb-kuat');
+            const btnLemah = document.getElementById('btn-tpb-lemah');
+
+            if (type === 'kuat') {
+                btnKuat.className = "py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-gradient-to-tr from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emerald-500 shadow-md";
+                btnLemah.className = "py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-slate-100/50 dark:bg-slate-900/50 border-slate-200/50 dark:border-slate-800 text-slate-500 hover:text-slate-950 dark:hover:text-white";
+            } else {
+                btnLemah.className = "py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-gradient-to-tr from-rose-500/20 to-pink-500/10 border-rose-500/30 text-rose-500 shadow-md";
+                btnKuat.className = "py-2.5 rounded-xl text-xs font-bold border transition-all active:scale-95 bg-slate-100/50 dark:bg-slate-900/50 border-slate-200/50 dark:border-slate-800 text-slate-500 hover:text-slate-950 dark:hover:text-white";
+            }
+            runSimulation();
+        }
+
+        function runSimulation() {
+            // Retrieve values
+            const q1 = parseInt(document.getElementById('slider-q1').value);
+            const q2 = parseInt(document.getElementById('slider-q2').value);
+            const q3 = parseInt(document.getElementById('slider-q3').value);
+            const q4 = parseInt(document.getElementById('slider-q4').value);
+
+            // Update UI Slider labels
+            document.getElementById('val-q1').innerText = q1;
+            document.getElementById('val-q2').innerText = q2;
+            document.getElementById('val-q3').innerText = q3;
+            document.getElementById('val-q4').innerText = q4;
+
+            // Calculate overall Growth Mindset score
+            const totalScore = q1 + q2 + q3 + q4;
+            document.getElementById('sim-total-skor').innerText = totalScore;
+
+            // Classify Growth Mindset category
+            let gmCategory = 'SEDANG';
+            let gmBadgeClass = 'bg-amber-500/10 text-amber-500 border border-amber-500/20';
+            if (totalScore >= 17) {
+                gmCategory = 'TINGGI';
+                gmBadgeClass = 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
+            } else if (totalScore <= 10) {
+                gmCategory = 'RENDAH';
+                gmBadgeClass = 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
+            }
+
+            // Define final Future Orientation Type (Based on matrix of GM score and TPB)
+            let orientationType = '';
+            let typeBadgeClass = '';
+            let karakteristikText = '';
+            let rekomendasiText = '';
+            let barColor = 'from-cyan-400 to-indigo-500';
+            let glowBgColor = '#6366f1';
+
+            const isGmHigh = (totalScore >= 13); // Threshold mid point for 2D matrix
+
+            if (isGmHigh && tpbStrength === 'kuat') {
+                orientationType = '🟢 PIONIR';
+                typeBadgeClass = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                karakteristikText = 'Sangat adaptif dengan keyakinan pertumbuhan yang tinggi didukung oleh arah mimpi masa depan yang kuat dan logis. Mampu memotivasi dirinya sendiri secara efektif.';
+                rekomendasiText = 'Berikan peran sebagai fasilitator kelas, asisten mentoring sebaya di LPKA, atau arahkan ke program keterampilan kepemimpinan/vokasional berisiko tinggi namun berhadiah besar.';
+                barColor = 'from-emerald-400 to-teal-500';
+                glowBgColor = '#10b981';
+            } else if (!isGmHigh && tpbStrength === 'kuat') {
+                orientationType = '🟠 PENCARI';
+                typeBadgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                karakteristikText = 'Memiliki energi mimpi masa depan yang membara, namun masih dihantui oleh ketidakpercayaan mendalam pada kapasitas pribadi mereka untuk berubah.';
+                rekomendasiText = 'Berikan "pencapaian kecil sukses" (micro-wins) di kelas untuk mendongkrak self-efficacy mereka terlebih dahulu. Apresiasi proses belajarnya, bukan hanya hasilnya.';
+                barColor = 'from-amber-400 to-orange-500';
+                glowBgColor = '#f59e0b';
+            } else if (isGmHigh && tpbStrength === 'lemah') {
+                orientationType = '🔵 PEJUANG';
+                typeBadgeClass = 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+                karakteristikText = 'Yakin dirinya dapat belajar dan merubah nasib, namun saat ini tidak memiliki target arah hidup yang terdefinisi dengan jelas. Kehilangan kompas arah.';
+                rekomendasiText = 'Fokuskan pendampingan pada dialog refleksi penemuan nilai hidup, pemetaan karier terencana, serta pembuatan target nyata langkah harian (microstep goals).';
+                barColor = 'from-blue-400 to-indigo-500';
+                glowBgColor = '#3b82f6';
+            } else {
+                orientationType = '🔴 TERLUKA';
+                typeBadgeClass = 'bg-rose-500/20 text-rose-400 border border-rose-500/30';
+                karakteristikText = 'Kondisi kerentanan tertinggi. Kehilangan keyakinan untuk berubah didorong rasa hampa/ragu akan masa depan. Menunjukkan sikap kepasrahan klinis.';
+                rekomendasiText = 'Hentikan tuntutan perubahan performa tinggi. Prioritaskan pembangunan rasa aman emosional (safety zone), tunjukkan kepedulian yang tulus, dan libatkan pendamping profesional sesegera mungkin.';
+                barColor = 'from-rose-400 to-pink-500';
+                glowBgColor = '#f43f5e';
+            }
+
+            // Apply simulation results to DOM
+            const gmBadge = document.getElementById('sim-badge-gm');
+            gmBadge.innerText = `GM: ${gmCategory}`;
+            gmBadge.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase ${gmBadgeClass}`;
+
+            const typeBadge = document.getElementById('sim-badge-tipe');
+            typeBadge.innerText = orientationType;
+            typeBadge.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold font-space uppercase ${typeBadgeClass}`;
+
+            document.getElementById('sim-karakteristik').innerText = karakteristikText;
+            document.getElementById('sim-rekomendasi').innerText = rekomendasiText;
+
+            // Update custom dynamic progress percentage and color
+            const percentValue = Math.round((totalScore / 20) * 100);
+            document.getElementById('sim-persen').innerText = `${percentValue}%`;
+            
+            const progressBar = document.getElementById('sim-progress-bar');
+            progressBar.className = `h-full rounded-full bg-gradient-to-r ${barColor} transition-all duration-500`;
+            progressBar.style.width = `${percentValue}%`;
+
+            // Adjust neon shadow orbs on background
+            document.getElementById('sim-glowing-bg').style.backgroundColor = glowBgColor;
+        }
+
+        // Run projection simulation on initial boot
+        runSimulation();
+
+
+        // ==========================================
+        // 3D COMPASS AND ACCELERATION SIMULATION
+        // ==========================================
+        const compass = document.getElementById('interactiveCompass');
+        const needle = document.getElementById('needle');
+
+        // Dynamic mouse movement tracking to rotate compass needle smoothly
+        window.addEventListener('mousemove', (e) => {
+            const rect = compass.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+            
+            // Offset the needle to align with North point
+            needle.style.transform = `rotate(${angle + 90}deg)`;
+        });
+
+        // Touch event tracking for mobile devices
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                const rect = compass.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const angle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * (180 / Math.PI);
+                needle.style.transform = `rotate(${angle + 90}deg)`;
+            }
+        });
+
+
+        // ==========================================
+        // NEURAL BACKGROUND PARTICLES SIMULATOR
+        // ==========================================
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const maxParticles = 60;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(34, 211, 238, 0.4)' : 'rgba(99, 102, 241, 0.3)';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw lines connecting nearby particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 90) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = document.documentElement.classList.contains('dark') 
+                            ? `rgba(34, 211, 238, ${0.15 - dist/90 * 0.15})` 
+                            : `rgba(99, 102, 241, ${0.1 - dist/90 * 0.1})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Activate particle engine on page load
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initParticles();
+            animateParticles();
+        });
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+    </script>
+</body>
+</html>
+
+```
