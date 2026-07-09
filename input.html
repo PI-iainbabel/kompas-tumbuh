@@ -1,10 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data · Kompas Tumbuh Smart Interface</title>
+    <title>Input Data · Kompas Tumbuh</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,9 +27,16 @@
             }
         }
     </script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <!-- ===== STYLE GLOBAL ===== -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ===== SCRIPT GLOBAL (defer) ===== -->
+    <script src="script.js" defer></script>
+
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -45,7 +52,6 @@
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
         .dark .glass-panel {
             background: rgba(9, 15, 30, 0.65);
             backdrop-filter: blur(24px) saturate(180%);
@@ -59,7 +65,6 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .dark .glass-input, .dark .glass-select, .dark .glass-textarea {
             background: rgba(15, 23, 42, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -72,7 +77,6 @@
             border-color: #06b6d4;
             box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
         }
-
         .dark .glass-input:focus, .dark .glass-select:focus, .dark .dark .glass-textarea:focus {
             background: rgba(15, 23, 42, 0.7);
             border-color: #06b6d4;
@@ -111,19 +115,69 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 flex flex-col justify-between py-6 md:py-10 px-4 relative overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 flex flex-col justify-between py-0 md:py-0 px-0 relative overflow-x-hidden">
 
-    <!-- Ambient background orbs -->
+    <!-- ============================================================ -->
+    <!-- NAVIGASI GLOBAL                                               -->
+    <!-- ============================================================ -->
+    <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+
+            <!-- Kiri: Logo & Brand -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
+                    <span class="text-xl">🧭</span>
+                    <span class="hidden sm:inline">Kompas Tumbuh</span>
+                </a>
+                <div class="hidden sm:flex items-center gap-2 text-[10px] text-slate-400 border-l border-slate-300 dark:border-slate-700 pl-3">
+                    <span>LPKA Pangkalpinang</span>
+                    <span class="text-slate-500">•</span>
+                    <span>IAIN SAS Babel</span>
+                </div>
+            </div>
+
+            <!-- Tengah: Menu Desktop -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🏠 Beranda</a>
+                <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/20 text-cyan-500 dark:text-cyan-400 transition-all">📝 Input</a>
+                <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📊 Dashboard</a>
+                <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🧾 Profil</a>
+                <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📘 Buku Saku</a>
+            </div>
+
+            <!-- Kanan: Tema + Logout -->
+            <div class="flex items-center gap-2">
+                <button onclick="window.toggleTheme && toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
+                    <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+                <button onclick="window.logout && logout()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 transition-all active:scale-95" title="Logout">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Bottom Nav) -->
+        <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
+            <a href="index.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">🏠</span> Beranda</a>
+            <a href="input.html" class="flex flex-col items-center text-[10px] text-cyan-500 transition-all"><span class="text-lg">📝</span> Input</a>
+            <a href="dashboard.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">📊</span> Dashboard</a>
+            <a href="profil.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">🧾</span> Profil</a>
+            <a href="buku-saku.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">📘</span> Buku</a>
+        </div>
+    </nav>
+
+    <!-- ===== AMBIENT BACKGROUND ===== -->
     <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <canvas id="neuralInputCanvas" class="absolute inset-0 pointer-events-auto opacity-30 dark:opacity-45"></canvas>
         <div class="glow-orb-input absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-500"></div>
         <div class="glow-orb-input absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600"></div>
     </div>
 
-    <!-- MAIN CARD -->
+    <!-- ===== MAIN CARD ===== -->
     <main class="w-full max-w-5xl mx-auto glass-panel rounded-[32px] p-6 md:p-10 shadow-2xl shadow-indigo-500/5 relative z-10 my-auto">
-        
-        <!-- ===== HEADER ===== -->
+
+        <!-- ===== HEADER (tanpa tombol tema, sudah di navigasi) ===== -->
         <div class="flex flex-wrap justify-between items-center gap-6 border-b border-slate-200/50 dark:border-slate-800/50 pb-6 mb-8">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[2px] shadow-lg shadow-cyan-500/10">
@@ -134,26 +188,19 @@
                     <p class="text-xs text-slate-500 font-medium">Input Data Profil Psikososial · LPKA Pangkalpinang</p>
                 </div>
             </div>
-
             <div class="flex items-center gap-3">
                 <span class="px-3.5 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-semibold text-xs font-space border border-indigo-500/20">
-                    Enumerator: Mahasiswa BKI
+                    Enumerator: Asisten Lapangan (Mahasiswa PPL)
                 </span>
-                
-                <!-- Theme Toggler -->
-                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode Tampilan">
-                    <svg id="theme-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    <svg id="theme-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                </button>
             </div>
         </div>
 
-        <!-- FORM & REAL-TIME PREVIEW GRID -->
+        <!-- ===== FORM & REAL-TIME PREVIEW GRID ===== -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8" id="form-container">
-            
+
             <!-- LEFT COLUMN: INPUT FIELDS (7 COLS) -->
             <form id="form-kompas" class="lg:col-span-7 space-y-6">
-                
+
                 <!-- STEP INDICATOR -->
                 <div class="flex items-center justify-between text-xs font-semibold text-slate-400 mb-2">
                     <span class="font-space uppercase tracking-wider">Persentase Pengisian</span>
@@ -186,7 +233,6 @@
                         <h3 class="text-sm font-bold font-space text-slate-400 uppercase tracking-widest">
                             🧠 B. Skala Growth Mindset
                         </h3>
-                        <!-- Voice Assist Toggle -->
                         <button type="button" onclick="speakGuidance()" class="text-xs font-semibold text-cyan-500 hover:text-cyan-400 flex items-center gap-1 transition-colors">
                             <span>🔊</span> Bacakan Panduan
                         </button>
@@ -309,16 +355,16 @@
 
             <!-- RIGHT COLUMN: REAL-TIME PROFILE PROJECTOR (5 COLS) -->
             <aside class="lg:col-span-5 flex flex-col justify-start space-y-6">
-                
+
                 <!-- STICKY MONITOR CARD -->
                 <div class="sticky top-6 p-6 rounded-3xl bg-slate-100/50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 shadow-inner space-y-6 relative overflow-hidden" id="projector-card">
-                    
+
                     <!-- Ambient Glow Effect inside panel -->
                     <div id="glow-orb-projector" class="absolute -right-12 -top-12 w-40 h-40 rounded-full blur-3xl opacity-20"></div>
 
                     <div class="relative z-10">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4 font-space">Real-time Profile Projector</span>
-                        
+
                         <!-- Header metadata -->
                         <div class="flex justify-between items-baseline mb-4">
                             <div>
@@ -376,14 +422,9 @@
         <div id="success-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
             <div class="w-full max-w-sm glass-panel rounded-3xl p-6 text-center border border-emerald-500/30 shadow-2xl relative overflow-hidden">
                 <div class="absolute -top-12 -left-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
-                
-                <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">
-                    ✓
-                </div>
-                
+                <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 animate-bounce">✓</div>
                 <h3 class="text-lg font-bold font-space text-slate-900 dark:text-white mb-1">Data Responden Berhasil Disimpan!</h3>
                 <p class="text-xs text-slate-400 leading-relaxed mb-6">Database Psychosophia Lab telah memperbarui matriks agregat LPKA Pangkalpinang secara mulus.</p>
-                
                 <button onclick="closeSuccessOverlay()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 transition-all text-white font-bold font-space text-xs rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95">
                     Kembali ke Input Baru
                 </button>
@@ -393,9 +434,9 @@
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="mt-8 text-center text-[10px] text-slate-400 dark:text-slate-500 space-y-1 relative z-10">
-        <p>&copy; 2026 · Psychosophia Behavioral Lab · Prodi BKI IAIN SAS Babel</p>
-        <p>Sistem Pemetaan Terintegrasi khusus LPKA Kelas II Pangkalpinang.</p>
+    <footer class="mt-8 text-center text-[10px] text-slate-400 dark:text-slate-500 space-y-1 relative z-10 pb-4">
+        <p>&copy; 2026 · Psychosophia Behavioral Lab, Prodi Psikologi Islam · Kolaborasi dengan Prodi Bimbingan dan Konseling Islam · Fakultas Dakwah dan Komunikasi Islam · IAIN SAS Babel</p>
+        <p>Sistem ini beroperasi di bawah naungan protokol pengawasan data internal LPKA Pangkalpinang.</p>
     </footer>
 
     <!-- ===== JAVASCRIPT PROGRAM LOGIC ===== -->
@@ -403,32 +444,36 @@
         // Init state on load
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-            document.getElementById('theme-sun').classList.remove('hidden');
-            document.getElementById('theme-moon').classList.add('hidden');
+            document.getElementById('theme-sun-nav')?.classList.remove('hidden');
+            document.getElementById('theme-moon-nav')?.classList.add('hidden');
         } else {
             document.documentElement.classList.remove('dark');
-            document.getElementById('theme-sun').classList.add('hidden');
-            document.getElementById('theme-moon').classList.remove('hidden');
+            document.getElementById('theme-sun-nav')?.classList.add('hidden');
+            document.getElementById('theme-moon-nav')?.classList.remove('hidden');
         }
 
-        // Theme toggling
+        // Theme toggling (fallback, akan di-override oleh script.js)
         function toggleTheme() {
             const html = document.documentElement;
-            const sun = document.getElementById('theme-sun');
-            const moon = document.getElementById('theme-moon');
-            
+            const sun = document.getElementById('theme-sun-nav');
+            const moon = document.getElementById('theme-moon-nav');
+
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 localStorage.theme = 'light';
-                sun.classList.add('hidden');
-                moon.classList.remove('hidden');
+                if (sun) sun.classList.add('hidden');
+                if (moon) moon.classList.remove('hidden');
             } else {
                 html.classList.add('dark');
                 localStorage.theme = 'dark';
-                sun.classList.remove('hidden');
-                moon.classList.add('hidden');
+                if (sun) sun.classList.remove('hidden');
+                if (moon) moon.classList.add('hidden');
             }
         }
+
+        // ================================================================
+        // FUNGSI KHUSUS INPUT
+        // ================================================================
 
         // Text-to-Speech Guidance for Enumerator
         function speakGuidance() {
@@ -452,15 +497,13 @@
                 document.getElementById('kontrol').value.trim(),
                 document.getElementById('komitmen').value.trim()
             ];
-            
+
             let filledCount = 0;
             fields.forEach(field => {
                 if (field !== '') filledCount++;
             });
 
-            // Count selected numbers too (since they are prefilled, let's keep them as static baseline)
             const progressPercent = Math.round((filledCount / fields.length) * 100);
-            
             document.getElementById('fill-progress-text').innerText = `${progressPercent}%`;
             document.getElementById('fill-progress-bar').style.width = `${progressPercent}%`;
         }
@@ -475,7 +518,7 @@
             const g2 = parseInt(document.getElementById('g2').value);
             const g3 = parseInt(document.getElementById('g3').value);
             const g4 = parseInt(document.getElementById('g4').value);
-            
+
             const sikap = document.getElementById('sikap').value.trim();
             const harapan = document.getElementById('harapan').value.trim();
             const kontrol = document.getElementById('kontrol').value.trim();
@@ -502,11 +545,10 @@
             gmBadge.className = `px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-wider font-space ${gmBadgeClass}`;
 
             // Dialog intensity determination (Extended TPB)
-            // Based on words/character length of inputs as simple mockup indicator of qualitative depth
             const totalTextLength = sikap.length + harapan.length + kontrol.length + komitmen.length;
             let tpbStrength = 'lemah';
             let tpbBadgeClass = 'bg-slate-200/50 text-slate-500 border border-slate-300';
-            
+
             if (totalTextLength > 40) {
                 tpbStrength = 'kuat';
                 tpbBadgeClass = 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
@@ -595,18 +637,15 @@
             const formCard = document.getElementById('form-container');
 
             if (!kode) {
-                // Shake form if validation missing
                 formCard.classList.add('shake-anim');
                 setTimeout(() => formCard.classList.remove('shake-anim'), 300);
                 return;
             }
 
-            // Success Flash Animation on target side
             const projector = document.getElementById('projector-card');
             projector.classList.add('success-anim');
             setTimeout(() => projector.classList.remove('success-anim'), 600);
 
-            // Open overlay success
             setTimeout(() => {
                 document.getElementById('success-overlay').classList.remove('hidden');
             }, 400);
@@ -615,91 +654,87 @@
         // Initialize state
         updateLiveDashboard();
 
-
-        // ==========================================
+        // ================================================================
         // NEURAL BACKGROUND PARTICLES CANVAS
-        // ==========================================
+        // ================================================================
         const canvas = document.getElementById('neuralInputCanvas');
-        const ctx = canvas.getContext('2d');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const maxParticles = 50;
 
-        let particles = [];
-        const maxParticles = 50;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.radius = Math.random() * 2 + 1;
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.3)' : 'rgba(99, 102, 241, 0.25)';
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 110) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = document.documentElement.classList.contains('dark') 
-                            ? `rgba(6, 182, 212, ${0.12 - dist/110 * 0.12})` 
-                            : `rgba(99, 102, 241, ${0.1 - dist/110 * 0.1})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.radius = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.3)' : 'rgba(99, 102, 241, 0.25)';
+                    ctx.fill();
                 }
             }
-            requestAnimationFrame(animateParticles);
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < maxParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 110) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark')
+                                ? `rgba(6, 182, 212, ${0.12 - dist/110 * 0.12})`
+                                : `rgba(99, 102, 241, ${0.1 - dist/110 * 0.1})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            window.addEventListener('load', () => {
+                resizeCanvas();
+                initParticles();
+                animateParticles();
+            });
+            window.addEventListener('resize', resizeCanvas);
         }
 
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            initParticles();
-            animateParticles();
-        });
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-        });
+        // Ekspor fungsi ke global
+        window.updateLiveDashboard = updateLiveDashboard;
+        window.resetFormState = resetFormState;
+        window.closeSuccessOverlay = closeSuccessOverlay;
+        window.speakGuidance = speakGuidance;
+        window.toggleTheme = toggleTheme;
     </script>
 </body>
 </html>
-
-```
