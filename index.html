@@ -249,18 +249,28 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Desktop nav links (disembunyikan di mobile) */
+        /* Desktop nav links - hanya untuk layar >= 1024px */
         .nav-link-desktop {
             display: none;
         }
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
             .nav-link-desktop {
                 display: inline-flex;
+            }
+            /* Pada desktop, sidebar tetap terbuka (tidak digeser) */
+            #mobile-sidebar {
+                transform: translateX(0) !important;
+            }
+            #sidebar-overlay {
+                display: none !important;
+            }
+            .menu-btn {
+                display: none !important;
             }
         }
 
         /* Responsive fine-tune */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .nav-top .container {
                 padding-left: 1rem;
                 padding-right: 1rem;
@@ -271,8 +281,8 @@
 
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 overflow-x-hidden flex flex-col justify-between py-0 px-0 relative">
 
-    <!-- ===== SIDEBAR (MOBILE & DESKTOP) ===== -->
-    <aside id="mobile-sidebar" class="fixed top-0 left-0 z-50 w-72 h-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none flex flex-col">
+    <!-- ===== SIDEBAR ===== -->
+    <aside id="mobile-sidebar" class="fixed top-0 left-0 z-50 w-72 h-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-800/50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col">
         <!-- Header Sidebar -->
         <div class="p-5 border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -280,7 +290,7 @@
                 <span class="font-space font-bold text-sm text-slate-800 dark:text-white">Kompas Tumbuh</span>
             </div>
             <!-- Tombol close hanya di mobile -->
-            <button onclick="closeSidebar()" class="md:hidden p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+            <button onclick="closeSidebar()" class="p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
@@ -306,15 +316,15 @@
         <!-- Footer di sidebar dihilangkan -->
     </aside>
 
-    <!-- ===== OVERLAY (untuk menutup sidebar di mobile) ===== -->
-    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden md:hidden" onclick="closeSidebar()"></div>
+    <!-- ===== OVERLAY ===== -->
+    <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden" onclick="closeSidebar()"></div>
 
-    <!-- ===== NAV-TOP (sticky, dengan ikon menu statis) ===== -->
+    <!-- ===== NAV-TOP ===== -->
     <nav class="nav-top sticky top-0 z-30 transition-all duration-300 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
             <!-- Kiri: Menu Icon + Brand -->
             <div class="flex items-center gap-3 flex-shrink-0">
-                <button onclick="toggleSidebar()" class="menu-btn md:hidden" aria-label="Buka menu" id="menuBtn">
+                <button onclick="toggleSidebar()" class="menu-btn" aria-label="Buka menu" id="menuBtn">
                     ☰
                 </button>
                 <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
@@ -328,8 +338,8 @@
                 </div>
             </div>
 
-            <!-- Tengah: Menu Desktop (opsional, bisa dihilangkan karena sidebar sudah ada) -->
-            <div class="hidden md:flex items-center gap-1 flex-1 justify-center nav-link-desktop">
+            <!-- Tengah: Menu Desktop (hanya untuk layar >= 1024px) -->
+            <div class="nav-link-desktop items-center gap-1 flex-1 justify-center">
                 <a href="index.html" class="nav-link active">🏠 Beranda</a>
                 <a href="input.html" class="nav-link">📝 Input</a>
                 <a href="dashboard.html" class="nav-link">📊 Dashboard</a>
@@ -562,7 +572,7 @@
             <p class="text-center text-[10px] text-slate-500 mt-6">Butuh akses baru? Silakan komunikasikan permohonan lisensi akun kepada Dosen Pembimbing Lapangan (DPL) masing-masing.</p>
         </div>
 
-        <!-- ===== FOOTER (HANYA DI HALAMAN UTAMA) ===== -->
+        <!-- ===== FOOTER ===== -->
         <footer class="mt-12 pt-6 border-t border-slate-200/50 dark:border-slate-800/50 text-center text-[10px] text-slate-400 dark:text-slate-500 space-y-1">
             <p>&copy; 2026 · Psychosophia Behavioral Lab, Program Studi Psikologi Islam · Program Studi Bimbingan dan Konseling Islam · Fakultas Dakwah dan Komunikasi Islam IAIN SAS Babel</p>
             <p>Sistem ini dilindungi hak cipta intelektual atas kolaborasi strategis bersama LPKA Pangkalpinang.</p>
@@ -628,7 +638,7 @@
         window.logout = logout;
 
         // ================================================================
-        // SIDEBAR TOGGLE (Tanpa animasi hamburger)
+        // SIDEBAR TOGGLE
         // ================================================================
         function toggleSidebar() {
             const sidebar = document.getElementById('mobile-sidebar');
@@ -646,7 +656,6 @@
             }
         }
 
-        // Ekspos ke global
         window.toggleSidebar = toggleSidebar;
         window.closeSidebar = closeSidebar;
 
@@ -670,11 +679,9 @@
             const isOpen = !sidebar.classList.contains('-translate-x-full');
             const swipeDistance = touchEndX - touchStartX;
 
-            // Swipe dari kiri ke kanan (> 60px) untuk membuka
             if (swipeDistance > 60 && !isOpen && touchStartX < 40) {
                 toggleSidebar();
             }
-            // Swipe dari kanan ke kiri (< -60px) untuk menutup
             if (swipeDistance < -60 && isOpen) {
                 closeSidebar();
             }
@@ -698,7 +705,7 @@
         window.switchPortalTab = switchPortalTab;
 
         // ================================================================
-        // SIMULASI STATISTIK (UNTUK TAB OPERASI)
+        // SIMULASI STATISTIK
         // ================================================================
         function randomizeMockStats() {
             let r1 = Math.floor(Math.random() * 30) + 20;
