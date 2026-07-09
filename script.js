@@ -10,7 +10,7 @@
 
 // ===== KONFIGURASI SUPABASE =====
 // Ganti dengan credential proyek Supabase Anda
-const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
 
 // Inisialisasi client (pakai CDN)
@@ -511,21 +511,22 @@ window.addEventListener('scroll', function() {
 });
 
 // ===== LOGOUT =====
-function logout() {
-    if (confirm('Apakah Anda yakin ingin keluar dari sistem?')) {
-        // Hapus session di localStorage (jika ada)
-        localStorage.removeItem('supabase_session');
-        localStorage.removeItem('kompas_db'); // opsional, jika Anda menyimpan data lokal
-        
-        // Jika menggunakan Supabase Auth, panggil signOut
-        // if (supabase) {
-        //     supabase.auth.signOut();
-        // }
-        
-        // Redirect ke halaman login (index.html)
-        window.location.href = 'index.html';
+async function logout() {
+    if (confirm('Apakah Anda yakin ingin keluar?')) {
+        try {
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
+            
+            // Hapus session dari localStorage
+            localStorage.removeItem('supabase_session');
+            
+            // Redirect ke halaman login/beranda
+            window.location.href = 'index.html';
+        } catch (err) {
+            alert('Gagal logout: ' + err.message);
+        }
     }
 }
 
-// Ekspos fungsi ke global (agar bisa dipanggil dari HTML)
+// Ekspor agar bisa dipanggil dari HTML
 window.logout = logout;
