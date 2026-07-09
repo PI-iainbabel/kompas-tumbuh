@@ -12,11 +12,9 @@
 const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
 
-// ===== INISIALISASI SUPABASE (AKTIF) =====
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// Ekspor ke global agar bisa diakses dari semua halaman
+// ===== INISIALISASI SUPABASE (via CDN global) =====
+// Pastikan tag <script src="https://esm.sh/@supabase/supabase-js@2"></script> sudah ada di HTML
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 window.supabase = supabase;
 
 // ===== VARIABEL GLOBAL =====
