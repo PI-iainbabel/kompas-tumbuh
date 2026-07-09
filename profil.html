@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase Client -->
-<script src="https://esm.sh/@supabase/supabase-js@2"></script>
+    <script src="https://esm.sh/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -46,8 +46,6 @@
         .font-space {
             font-family: 'Space Grotesk', sans-serif;
         }
-
-        /* Glassmorphic Panel Styling */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(24px) saturate(180%);
@@ -60,8 +58,6 @@
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        /* Ambient Dynamic Glow Orbs */
         .glow-orb-profile {
             filter: blur(120px);
             opacity: 0.15;
@@ -72,8 +68,6 @@
         .dark .glow-orb-profile {
             opacity: 0.35;
         }
-
-        /* Animation for dial loading */
         @keyframes strokeAnimation {
             from { stroke-dashoffset: 283; }
             to { stroke-dashoffset: var(--dashoffset); }
@@ -81,8 +75,11 @@
         .animated-stroke {
             animation: strokeAnimation 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-
-        /* Card rekomendasi behavioral */
+        @media print {
+            body { background: white !important; color: black !important; padding: 0 !important; }
+            .no-print { display: none !important; }
+            .print-card { box-shadow: none !important; background: white !important; border: 1px solid #e2e8f0 !important; border-radius: 16px !important; padding: 24px !important; max-width: 100% !important; margin: 0 !important; }
+        }
         .insight-card {
             background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(8px);
@@ -91,46 +88,19 @@
             padding: 20px;
             transition: transform 0.2s ease;
         }
-        .insight-card:hover {
-            transform: translateY(-2px);
-        }
+        .insight-card:hover { transform: translateY(-2px); }
         .dark .insight-card {
             background: rgba(15, 23, 42, 0.4);
             border-color: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Print view formatting */
-        @media print {
-            body {
-                background: white !important;
-                color: black !important;
-                padding: 0 !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .print-card {
-                box-shadow: none !important;
-                background: white !important;
-                border: 1px solid #e2e8f0 !important;
-                border-radius: 16px !important;
-                padding: 24px !important;
-                max-width: 100% !important;
-                margin: 0 !important;
-            }
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 flex flex-col justify-between py-0 md:py-0 px-0 relative overflow-x-hidden">
 
-    <!-- ============================================================ -->
-    <!-- NAVIGASI GLOBAL                                               -->
-    <!-- ============================================================ -->
+    <!-- ===== NAVIGASI GLOBAL ===== -->
     <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
-
-            <!-- Kiri: Logo & Brand -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-shrink-0">
                 <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
                     <span class="text-xl">🧭</span>
                     <span class="hidden sm:inline">Kompas Tumbuh</span>
@@ -141,18 +111,14 @@
                     <span>IAIN SAS Babel</span>
                 </div>
             </div>
-
-            <!-- Tengah: Menu Desktop -->
-            <div class="hidden md:flex items-center gap-1">
+            <div class="hidden md:flex items-center gap-1 flex-1 justify-center">
                 <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🏠 Beranda</a>
                 <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📝 Input</a>
                 <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📊 Dashboard</a>
                 <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/20 text-cyan-500 dark:text-cyan-400 transition-all">🧾 Profil</a>
                 <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📘 Buku Saku</a>
             </div>
-
-            <!-- Kanan: Tema + Logout -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-shrink-0">
                 <button onclick="window.toggleTheme && toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
                     <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
@@ -162,8 +128,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- Menu Mobile (Bottom Nav) -->
         <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
             <a href="index.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">🏠</span> Beranda</a>
             <a href="input.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all"><span class="text-lg">📝</span> Input</a>
@@ -199,10 +163,10 @@
             </div>
         </div>
 
-        <!-- ===== THE DOSSIER CARD ===== -->
+        <!-- ===== DOSSIER CARD ===== -->
         <div class="glass-panel rounded-[32px] overflow-hidden shadow-2xl shadow-indigo-500/5 border border-slate-200/50 dark:border-slate-800/50 print-card" id="profile-dossier-card">
 
-            <!-- HEADER BAR -->
+            <!-- HEADER -->
             <div id="dossier-header" class="p-6 md:p-8 transition-all duration-700 relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r opacity-20" id="header-gradient-overlay"></div>
                 <div class="relative z-10 flex flex-wrap justify-between items-center gap-4">
@@ -223,7 +187,7 @@
                 </div>
             </div>
 
-            <!-- ORIENTATION STAGE SUBHEADER -->
+            <!-- ORIENTATION STAGE -->
             <div class="px-6 py-5 md:px-8 border-b border-slate-200/50 dark:border-slate-800/50 flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
                     <span class="text-4xl" id="profile-icon">🟢</span>
@@ -239,13 +203,11 @@
                 </div>
             </div>
 
-            <!-- CORE DOSSIER BODY -->
+            <!-- BODY -->
             <div class="p-6 md:p-8 space-y-6">
 
-                <!-- ROW 1: GROWTH MINDSET GAUGE & ATTITUDE -->
+                <!-- Growth Mindset Gauge & Attitude -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-
-                    <!-- Left: Radial Dial Score -->
                     <div class="md:col-span-5 p-5 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50 flex flex-col items-center justify-between relative overflow-hidden">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-space mb-4 block">A. Skor Growth Mindset</span>
                         <div class="relative w-36 h-36 flex items-center justify-center">
@@ -271,8 +233,6 @@
                             </defs>
                         </svg>
                     </div>
-
-                    <!-- Right: Qualitative Dialogs Section 1 -->
                     <div class="md:col-span-7 space-y-4">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-space block">B. Transkrip Sikap &amp; Harapan</span>
                         <div class="p-5 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50">
@@ -286,7 +246,7 @@
                     </div>
                 </div>
 
-                <!-- ROW 2: CONTROL, COMMITMENT & OBSERVATION -->
+                <!-- Control, Commitment, Observation -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="p-5 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/50">
                         <h4 class="text-xs font-bold text-emerald-500 dark:text-emerald-400 uppercase tracking-wider mb-1.5 font-space">3. Persepsi Kendali &amp; Hambatan (Control)</h4>
@@ -297,62 +257,40 @@
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic" id="profile-komitmen">...</p>
                     </div>
                 </div>
-
-                <!-- OBSERVATION -->
                 <div class="p-5 rounded-2xl bg-slate-100/40 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-800/50">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5 font-space">📋 Catatan Pengamatan Enumerator</h4>
                     <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed" id="profile-observasi">...</p>
                 </div>
-
             </div>
 
-            <!-- FOOTER NAVIGATION AND ACTION COMMANDS -->
+            <!-- FOOTER -->
             <div class="px-6 py-5 md:px-8 bg-slate-100/50 dark:bg-slate-900/40 border-t border-slate-200/50 dark:border-slate-800/50 flex flex-wrap justify-between items-center gap-4 no-print">
                 <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider font-space" id="profile-meta-enum">Enumerator: -</span>
                 <div class="flex items-center gap-2">
-                    <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white font-bold font-space text-xs transition-all active:scale-95 shadow-md shadow-cyan-500/10">
-                        🖨️ Cetak Kartu Profil
-                    </button>
-                    <a href="dashboard.html" class="px-5 py-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold font-space text-xs transition-all active:scale-95 border border-slate-300/30 dark:border-slate-800">
-                        ⬅ Kembali
-                    </a>
+                    <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white font-bold font-space text-xs transition-all active:scale-95 shadow-md shadow-cyan-500/10">🖨️ Cetak Kartu Profil</button>
+                    <a href="dashboard.html" class="px-5 py-2.5 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold font-space text-xs transition-all active:scale-95 border border-slate-300/30 dark:border-slate-800">⬅ Kembali</a>
                 </div>
             </div>
 
         </div>
 
-        <!-- ============================================================ -->
-        <!-- SECTION: BEHAVIORAL SCIENCE INSIGHTS                          -->
-        <!-- ============================================================ -->
+        <!-- ===== BEHAVIORAL INSIGHTS SECTION ===== -->
         <div id="insight-section" class="mt-8 space-y-6 no-print hidden">
-            <!-- Judul -->
             <div class="flex items-center gap-3">
                 <span class="text-2xl">🧠</span>
                 <h2 class="font-space text-xl font-bold text-slate-900 dark:text-white">Behavioral Science Insights</h2>
             </div>
-
-            <!-- 1. REKOMENDASI PENDAMPINGAN INDIVIDUAL -->
             <div class="insight-card">
-                <h3 class="font-space font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 mb-3">
-                    <span>🎯</span> Rekomendasi Pendampingan Individual
-                </h3>
-                <div id="insight-individual" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-2">
-                    <p class="italic">Memuat rekomendasi berbasis profil...</p>
-                </div>
+                <h3 class="font-space font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 mb-3"><span>🎯</span> Rekomendasi Pendampingan Individual</h3>
+                <div id="insight-individual" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-2"><p class="italic">Memuat rekomendasi berbasis profil...</p></div>
             </div>
-
-            <!-- 2. BEHAVIORAL INSIGHT UNTUK LEMBAGA -->
             <div class="insight-card">
-                <h3 class="font-space font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 mb-3">
-                    <span>🏛️</span> Behavioral Insight untuk Lembaga
-                </h3>
-                <div id="insight-lembaga" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-2">
-                    <p class="italic">Memuat rekomendasi kebijakan berbasis data...</p>
-                </div>
+                <h3 class="font-space font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 mb-3"><span>🏛️</span> Behavioral Insight untuk Lembaga</h3>
+                <div id="insight-lembaga" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-2"><p class="italic">Memuat rekomendasi kebijakan berbasis data...</p></div>
             </div>
         </div>
 
-        <!-- ===== ERROR NOTIFICATION ===== -->
+        <!-- ERROR -->
         <div id="error-screen" class="hidden glass-panel rounded-3xl p-10 text-center border border-rose-500/30 shadow-2xl space-y-4">
             <span class="text-5xl block animate-bounce">⚠️</span>
             <h3 class="text-lg font-bold font-space text-slate-900 dark:text-white">Dossier Responden Tidak Ditemukan!</h3>
@@ -367,40 +305,47 @@
         <p>Sistem ini beroperasi di bawah naungan protokol pengawasan data internal LPKA Pangkalpinang.</p>
     </footer>
 
-    <!-- ============================================================ -->
-    <!-- JAVASCRIPT PROGRAM LOGIC                                      -->
-    <!-- ============================================================ -->
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ===== THEME =====
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.getElementById('theme-sun-nav')?.classList.remove('hidden');
-            document.getElementById('theme-moon-nav')?.classList.add('hidden');
+        // ================================================================
+        // INISIALISASI SUPABASE (HANYA UNTUK DATABASE)
+        // ================================================================
+        const SUPABASE_URL = 'https://ovykmdunxsgtmcuszsuc.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92eWttZHVueHNndG1jdXN6c3VjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMxMDQzODYsImV4cCI6MjA5ODY4MDM4Nn0.UQjcbkhx4UgpIpVpJoEq3zEQOQgIDDBr3b0N2DZv2WI';
+        let supabase;
+        if (typeof window.supabase !== 'undefined' && window.supabase) {
+            supabase = window.supabase;
         } else {
-            document.documentElement.classList.remove('dark');
-            document.getElementById('theme-sun-nav')?.classList.add('hidden');
-            document.getElementById('theme-moon-nav')?.classList.remove('hidden');
+            supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+        window.supabase = supabase;
+
+        // ================================================================
+        // CEK AUTENTIKASI (SEDERHANA)
+        // ================================================================
+        async function checkAuth() {
+            const isLoggedIn = localStorage.getItem('kompas_login') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+                return;
+            }
+            console.log('✅ Login terdeteksi, akses profil diizinkan.');
         }
 
-        // ===== TOGGLE THEME (fallback) =====
-        function toggleTheme() {
-            const html = document.documentElement;
-            const sun = document.getElementById('theme-sun-nav');
-            const moon = document.getElementById('theme-moon-nav');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.theme = 'light';
-                if (sun) sun.classList.add('hidden');
-                if (moon) moon.classList.remove('hidden');
-            } else {
-                html.classList.add('dark');
-                localStorage.theme = 'dark';
-                if (sun) sun.classList.remove('hidden');
-                if (moon) moon.classList.add('hidden');
+        // ================================================================
+        // LOGOUT
+        // ================================================================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('kompas_login');
+                window.location.href = 'index.html';
             }
         }
+        window.logout = logout;
 
-        // ===== DATABASE =====
+        // ================================================================
+        // DATA & INSIGHTS
+        // ================================================================
         const fallbackDatabase = [
             {
                 kode: "A01",
@@ -456,7 +401,7 @@
         let activeId = urlParams.get('id');
 
         // ================================================================
-        // FUNGSI INSIGHT GENERATOR
+        // INSIGHT GENERATOR
         // ================================================================
         function generateInsights(child) {
             const score = child.g1 + child.g2 + child.g3 + child.g4;
@@ -469,9 +414,6 @@
             else if (!isGmHigh && isTpbKuat) stage = 'PENCARI';
             else if (isGmHigh && !isTpbKuat) stage = 'PEJUANG';
             else stage = 'TERLUKA';
-
-            // ===== INDIVIDUAL INSIGHTS =====
-            let individualHTML = '';
 
             const insightMap = {
                 'PIONIR': {
@@ -513,19 +455,16 @@
             };
 
             const data = insightMap[stage] || insightMap['TERLUKA'];
-            individualHTML = `
+            let individualHTML = `
                 <p class="font-medium text-slate-800 dark:text-slate-200">${data.desc}</p>
                 <ul class="list-disc pl-4 space-y-1 mt-2">
                     ${data.rekomendasi.map(item => `<li>${item}</li>`).join('')}
                 </ul>
-                <p class="text-[10px] text-slate-400 mt-3 italic">
-                    💡 Berdasarkan integrasi Growth Mindset & Extended TPB (Dweck, 2006; Ajzen, 1991)
-                </p>
+                <p class="text-[10px] text-slate-400 mt-3 italic">💡 Berdasarkan integrasi Growth Mindset & Extended TPB (Dweck, 2006; Ajzen, 1991)</p>
             `;
             document.getElementById('insight-individual').innerHTML = individualHTML;
 
-            // ===== LEMBAGA INSIGHTS =====
-            // Hitung agregat sederhana dari semua data
+            // Lembaga insights
             const totalData = db.length;
             const totalPionir = db.filter(d => {
                 const s = d.g1 + d.g2 + d.g3 + d.g4;
@@ -544,7 +483,6 @@
             const pctTerluka = totalData > 0 ? Math.round((totalTerluka / totalData) * 100) : 0;
 
             let lembagaHTML = '';
-
             if (totalData === 0) {
                 lembagaHTML = `<p class="italic">Belum ada data responden untuk menghasilkan insight lembaga.</p>`;
             } else {
@@ -566,16 +504,14 @@
                             <li>🤝 <strong>Libatkan keluarga</strong> — Data menunjukkan bahwa dukungan sosial (kategori harapan) sangat mempengaruhi ketahanan anak.</li>
                         </ul>
                     </div>
-                    <p class="text-[10px] text-slate-400 mt-3 italic">
-                        📌 Rekomendasi ini bersifat dinamis dan akan berubah seiring bertambahnya data.
-                    </p>
+                    <p class="text-[10px] text-slate-400 mt-3 italic">📌 Rekomendasi ini bersifat dinamis dan akan berubah seiring bertambahnya data.</p>
                 `;
             }
             document.getElementById('insight-lembaga').innerHTML = lembagaHTML;
         }
 
         // ================================================================
-        // FUNGSI UTAMA PROFIL
+        // PROFIL FUNCTIONS
         // ================================================================
         function initDossier() {
             const picker = document.getElementById('direct-id-picker');
@@ -620,7 +556,6 @@
 
             const score = child.g1 + child.g2 + child.g3 + child.g4;
 
-            // GM category
             let gmCategory = 'Sedang';
             let gmBadgeClass = 'bg-amber-500/10 text-amber-500 border border-amber-500/20';
             let gmDescText = 'Keyakinan kognitif cukup, masih membutuhkan penguatan pendampingan terstruktur.';
@@ -634,7 +569,6 @@
                 gmDescText = 'Mempunyai pola pikir kaku/statis. Ragukan peluang perubahan identitas sosial dirinya.';
             }
 
-            // Stage mapping
             const isGmHigh = (score >= 13);
             const totalTextLength = (child.sikap || '').length + (child.harapan || '').length + (child.kontrol || '').length + (child.komitmen || '').length;
             const isTpbKuat = (totalTextLength > 40);
@@ -666,7 +600,6 @@
                 bgHeaderClass = 'from-rose-500/30 to-pink-500/10 border-b-4 border-rose-500/60';
             }
 
-            // Populate DOM
             document.getElementById('profile-kode').innerText = child.kode;
             document.getElementById('profile-tanggal').innerText = `Wawancara: ${child.tanggal}`;
             document.getElementById('profile-icon').innerText = stageIcon;
@@ -697,12 +630,11 @@
             header.className = `p-6 md:p-8 transition-all duration-700 relative overflow-hidden bg-gradient-to-r ${bgHeaderClass}`;
             document.getElementById('dynamic-glow-1').style.backgroundColor = themeColor;
 
-            // Generate Insights
             generateInsights(child);
         }
 
         // ================================================================
-        // NEURAL BACKGROUND CANVAS
+        // NEURAL BACKGROUND
         // ================================================================
         const canvas = document.getElementById('neuralProfileCanvas');
         if (canvas) {
@@ -776,12 +708,12 @@
             window.addEventListener('resize', resizeCanvas);
         }
 
-        // ===== INIT =====
+        // ================================================================
+        // INIT
+        // ================================================================
+        checkAuth();
         initDossier();
-
-        // Ekspor ke global
         window.loadDirectProfile = loadDirectProfile;
-        window.toggleTheme = toggleTheme;
     </script>
 </body>
 </html>
