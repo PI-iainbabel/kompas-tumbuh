@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portal Kompas Tumbuh</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,16 +27,25 @@
             }
         }
     </script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- ===== STYLE GLOBAL ===== -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ===== SCRIPT GLOBAL (defer) ===== -->
+    <script src="script.js" defer></script>
+
     <style>
+        /* Gaya tambahan spesifik halaman index */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .font-space {
             font-family: 'Space Grotesk', sans-serif;
         }
-        
+
         /* Premium Blur Glassmorphism */
         .glass-portal {
             background: rgba(255, 255, 255, 0.4);
@@ -43,7 +53,7 @@
             -webkit-backdrop-filter: blur(24px) saturate(160%);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         .dark .glass-portal {
             background: rgba(9, 15, 30, 0.65);
             backdrop-filter: blur(24px) saturate(180%);
@@ -75,7 +85,7 @@
             opacity: 0.4;
         }
 
-        /* Custom scrollbar for desktop */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -91,7 +101,7 @@
             background: rgba(156, 163, 175, 0.5);
         }
 
-        /* Shake animation for input errors */
+        /* Shake animation */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-6px); }
@@ -102,71 +112,79 @@
         }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-500 overflow-x-hidden flex flex-col justify-between py-6 md:py-12 px-4 relative">
 
-<!-- ===== NAVIGASI GLOBAL + HEADER TERPADU ===== -->
-<nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
-    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
-        
-        <!-- Kiri: Logo & Brand -->
-        <div class="flex items-center gap-3">
-            <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
-                <span class="text-xl">🧭</span>
-                <span class="hidden sm:inline">Kompas Tumbuh</span>
-            </a>
-            <div class="hidden sm:flex items-center gap-2 text-[10px] text-slate-400 border-l border-slate-300 dark:border-slate-700 pl-3">
-                <span>LPKA Pangkalpinang</span>
-                <span class="text-slate-500">•</span>
-                <span>IAIN SAS Babel</span>
+    <!-- ============================================================ -->
+    <!-- NAVIGASI GLOBAL                                               -->
+    <!-- ============================================================ -->
+    <nav class="nav-top sticky top-0 z-50 transition-all duration-300 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+
+            <!-- Kiri: Logo & Brand -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
+                    <span class="text-xl">🧭</span>
+                    <span class="hidden sm:inline">Kompas Tumbuh</span>
+                </a>
+                <div class="hidden sm:flex items-center gap-2 text-[10px] text-slate-400 border-l border-slate-300 dark:border-slate-700 pl-3">
+                    <span>LPKA Pangkalpinang</span>
+                    <span class="text-slate-500">•</span>
+                    <span>IAIN SAS Babel</span>
+                </div>
             </div>
+
+            <!-- Tengah: Menu Desktop -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/20 text-cyan-500 dark:text-cyan-400 transition-all">🏠 Beranda</a>
+                <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📝 Input</a>
+                <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📊 Dashboard</a>
+                <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🧾 Profil</a>
+                <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📘 Buku Saku</a>
+            </div>
+
+            <!-- Kanan: Tema + Logout -->
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggler (satu, global) -->
+                <button onclick="window.toggleTheme && toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
+                    <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+
+                <!-- Logout -->
+                <button onclick="window.logout && logout()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 transition-all active:scale-95" title="Logout">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+
         </div>
 
-        <!-- Tengah: Menu Desktop -->
-        <div class="hidden md:flex items-center gap-1">
-            <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all active-nav">🏠 Beranda</a>
-            <a href="input.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📝 Input</a>
-            <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📊 Dashboard</a>
-            <a href="profil.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">🧾 Profil</a>
-            <a href="buku-saku.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/20 hover:text-cyan-500 transition-all">📘 Buku Saku</a>
+        <!-- Menu Mobile (Bottom Nav) -->
+        <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
+            <a href="index.html" class="flex flex-col items-center text-[10px] text-cyan-500 transition-all">
+                <span class="text-lg">🏠</span> Beranda
+            </a>
+            <a href="input.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">📝</span> Input
+            </a>
+            <a href="dashboard.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">📊</span> Dashboard
+            </a>
+            <a href="profil.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">🧾</span> Profil
+            </a>
+            <a href="buku-saku.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
+                <span class="text-lg">📘</span> Buku
+            </a>
         </div>
+    </nav>
 
-        <!-- Kanan: Aksi (Tema + Logout) -->
-        <div class="flex items-center gap-2">
-            <!-- Theme Toggler -->
-            <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode">
-                <svg id="theme-sun-nav" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                <svg id="theme-moon-nav" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-            </button>
-            
-           <button onclick="logout()" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 dark:text-rose-400 transition-all active:scale-95" title="Logout">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-    </svg>
-</button>
-        </div>
+    <!-- ============================================================ -->
+    <!-- BACKGROUND & KONTEN UTAMA                                    -->
+    <!-- ============================================================ -->
 
-    </div>
-
-    <!-- Menu Mobile (Bottom Nav) -->
-    <div class="md:hidden flex justify-around items-center py-1.5 border-t border-slate-200/50 dark:border-slate-800/50 no-print">
-        <a href="index.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
-            <span class="text-lg">🏠</span> Beranda
-        </a>
-        <a href="input.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
-            <span class="text-lg">📝</span> Input
-        </a>
-        <a href="dashboard.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
-            <span class="text-lg">📊</span> Dashboard
-        </a>
-        <a href="profil.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
-            <span class="text-lg">🧾</span> Profil
-        </a>
-        <a href="buku-saku.html" class="flex flex-col items-center text-[10px] text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all">
-            <span class="text-lg">📘</span> Buku
-        </a>
-    </div>
-</nav>
-    
     <!-- Interactive Background Particles -->
     <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <canvas id="portalCanvas" class="absolute inset-0 pointer-events-auto opacity-30 dark:opacity-45"></canvas>
@@ -176,8 +194,8 @@
 
     <!-- MAIN HOLOGRAPHIC CONTAINER -->
     <main class="w-full max-w-4xl mx-auto glass-portal rounded-[32px] p-6 md:p-10 shadow-2xl shadow-indigo-500/5 relative z-10 my-auto">
-        
-        <!-- ===== HEADER STATUS BAR ===== -->
+
+        <!-- ===== HEADER STATUS BAR (ringkas, tanpa duplikasi) ===== -->
         <div class="flex flex-wrap justify-between items-center gap-6 border-b border-slate-200/50 dark:border-slate-800/50 pb-6 mb-8">
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-3">
@@ -187,12 +205,12 @@
                 </div>
                 <div class="hidden sm:block">
                     <h3 class="text-xs font-bold font-space text-slate-400 uppercase tracking-widest">Kolaborasi Institusi</h3>
-                    <p class="text-[10px] text-slate-500"> IAIN SAS Bangka Belitung & LPKA Pangkalpinang </p>
+                    <p class="text-[10px] text-slate-500">IAIN SAS Bangka Belitung & LPKA Pangkalpinang</p>
                 </div>
             </div>
-            
+
             <div class="flex items-center gap-3">
-                <!-- Interactive Mini Compass Brand Widget -->
+                <!-- Mini Compass -->
                 <div class="relative w-10 h-10 hidden xs:block cursor-pointer" id="miniCompassBtn">
                     <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-indigo-600 rounded-full blur-md opacity-20"></div>
                     <svg id="miniCompassSvg" class="w-full h-full transform transition-transform duration-500 ease-out" viewBox="0 0 100 100">
@@ -209,12 +227,6 @@
                     </span>
                     <p class="text-[9px] text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-widest font-space">Psychosophia Behavioral Lab</p>
                 </div>
-
-                <!-- Theme Toggler -->
-                <button onclick="togglePortalTheme()" class="p-2 rounded-xl bg-slate-200/50 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all active:scale-95" title="Ganti Mode Tampilan">
-                    <svg id="theme-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    <svg id="theme-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                </button>
             </div>
         </div>
 
@@ -262,7 +274,7 @@
                     Beroperasi sebagai platform non-klinis, alat ini mengintegrasikan sains kognitif modern untuk membantu petugas pemasyarakatan dan konselor dalam memilih metode intervensi terbaik bagi pemulihan moral sosial anak secara presisi.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="p-5 rounded-2xl glass-btn text-center hover:scale-[1.02] duration-300">
                     <span class="text-3xl block mb-2">🎯</span>
@@ -295,7 +307,7 @@
                     </p>
                     <span class="text-[10px] text-cyan-500 font-bold tracking-wider uppercase font-space">Poin Inti: Skala Kuantitatif 4 Item</span>
                 </div>
-                
+
                 <div class="p-6 rounded-2xl glass-btn">
                     <div class="flex items-center gap-2.5 mb-3">
                         <span class="text-2xl">🧭</span>
@@ -308,7 +320,7 @@
                 </div>
             </div>
 
-            <!-- Quadrant matrix visualization -->
+            <!-- Quadrant matrix -->
             <div class="p-5 rounded-2xl bg-slate-100/40 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/80">
                 <h4 class="font-space font-bold text-sm text-slate-900 dark:text-white mb-3">🔗 Matriks Klasifikasi Karakter Orientasi</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs font-space">
@@ -332,11 +344,9 @@
             </div>
         </div>
 
-        <!-- TAB 3: OPERASI (HOLOMATIC DASHBOARD SIMULATION) -->
+        <!-- TAB 3: OPERASI -->
         <div id="tab-content-operasi" class="tab-portal-content hidden space-y-6">
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-                Gambaran umum alur kerja operasional Kompas Tumbuh terintegrasi dari hulu ke hilir:
-            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Gambaran umum alur kerja operasional Kompas Tumbuh terintegrasi dari hulu ke hilir:</p>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div class="p-4 rounded-xl glass-btn text-center">
@@ -361,7 +371,7 @@
                 </div>
             </div>
 
-            <!-- Interaktif Live Data Graph Mockup -->
+            <!-- Sandbox Dashboard -->
             <div class="p-6 rounded-2xl bg-slate-900 text-white font-space border border-slate-800">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                     <div>
@@ -373,7 +383,6 @@
                     </button>
                 </div>
 
-                <!-- Live Interactive Bars -->
                 <div class="space-y-3">
                     <div>
                         <div class="flex justify-between text-[11px] mb-1">
@@ -412,7 +421,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between text-[10px] text-slate-500">
                     <span>Total Sampel Simulasi: 45 Responden</span>
                     <span>Status Keamanan: Terenkripsi Enkapsulasi</span>
@@ -447,20 +456,15 @@
 
             <div class="p-5 rounded-2xl bg-slate-100/40 dark:bg-slate-900/30 border border-slate-200/50 dark:border-slate-800/50 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 <h4 class="font-bold text-slate-900 dark:text-white mb-2 font-space">👥 Peran Mahasiswa PPL BKI:</h4>
-                <p>
-                    Seluruh mahasiswa BKI yang menjalankan Praktik Pengalaman Lapangan (PPL) dibekali pelatihan intensif metodologi wawancara reflektif Kompas Tumbuh. Mereka bertindak sebagai jembatan empati untuk mengumpulkan data akurat di lapangan demi kelancaran program.
-                </p>
+                <p>Seluruh mahasiswa BKI yang menjalankan Praktik Pengalaman Lapangan (PPL) dibekali pelatihan intensif metodologi wawancara reflektif Kompas Tumbuh. Mereka bertindak sebagai jembatan empati untuk mengumpulkan data akurat di lapangan demi kelancaran program.</p>
             </div>
         </div>
 
-        <!-- TAB 5: PANDUAN (GUIDE & BOOK COVER PREVIEW) -->
+        <!-- TAB 5: PANDUAN -->
         <div id="tab-content-guide" class="tab-portal-content hidden space-y-6">
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                Akses digital ke dokumen pendukung serta literatur resmi operasional tim Kompas Tumbuh:
-            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Akses digital ke dokumen pendukung serta literatur resmi operasional tim Kompas Tumbuh:</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Card 1 -->
                 <div class="p-5 rounded-2xl glass-btn flex items-center gap-4 hover:bg-slate-200/20 dark:hover:bg-slate-900/40 cursor-pointer">
                     <span class="text-3xl">📄</span>
                     <div>
@@ -470,7 +474,6 @@
                     </div>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="p-5 rounded-2xl glass-btn flex items-center gap-4 hover:bg-slate-200/20 dark:hover:bg-slate-900/40 cursor-pointer">
                     <span class="text-3xl">📘</span>
                     <div>
@@ -489,7 +492,7 @@
             </div>
         </div>
 
-        <!-- TAB 6: PORTAL LOGIN (PREMIUM GLASS FORM) -->
+        <!-- TAB 6: PORTAL LOGIN -->
         <div id="tab-content-login" class="tab-portal-content hidden">
             <div class="max-w-sm mx-auto p-6 md:p-8 rounded-3xl bg-slate-100/50 dark:bg-slate-900/20 border border-slate-200/50 dark:border-slate-800/80 shadow-inner">
                 <div class="text-center mb-6">
@@ -507,7 +510,7 @@
                         <label class="block text-[10px] font-bold font-space uppercase tracking-wider text-slate-400 mb-1.5">Kata Sandi / Password</label>
                         <input type="password" id="portal-password" class="w-full px-4 py-3 text-xs rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all dark:text-white" placeholder="••••••••" required />
                     </div>
-                    
+
                     <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 active:scale-[0.98] transition-all text-white font-bold font-space text-xs rounded-xl shadow-lg shadow-cyan-500/10 flex items-center justify-center gap-2">
                         <span>🚀</span> Verifikasi &amp; Masuk
                     </button>
@@ -515,7 +518,7 @@
                     <div id="login-feedback" class="text-center text-[11px] font-medium min-h-[16px] transition-all"></div>
                 </form>
             </div>
-            
+
             <p class="text-center text-[10px] text-slate-500 mt-6">
                 Butuh akses baru? Silakan komunikasikan permohonan lisensi akun kepada Dosen Pembimbing Lapangan (DPL) masing-masing.
             </p>
@@ -529,41 +532,44 @@
 
     </main>
 
-    <!-- ===== JAVASCRIPT PROGRAM LOGIC ===== -->
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                   -->
+    <!-- ============================================================ -->
     <script>
-        // Initialize Theme Setup on page load
+        // ===== INISIALISASI THEME (dari localStorage) =====
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-            document.getElementById('theme-sun').classList.remove('hidden');
-            document.getElementById('theme-moon').classList.add('hidden');
+            document.getElementById('theme-sun-nav')?.classList.remove('hidden');
+            document.getElementById('theme-moon-nav')?.classList.add('hidden');
         } else {
             document.documentElement.classList.remove('dark');
-            document.getElementById('theme-sun').classList.add('hidden');
-            document.getElementById('theme-moon').classList.remove('hidden');
+            document.getElementById('theme-sun-nav')?.classList.add('hidden');
+            document.getElementById('theme-moon-nav')?.classList.remove('hidden');
         }
 
-        // Toggle Dark/Light Mode
-        function togglePortalTheme() {
+        // ===== TOGGLE THEME (global) =====
+        // Fungsi ini akan di-override oleh script.js jika ada, tapi kita tetap definisikan
+        // sebagai fallback agar tombol tetap berfungsi.
+        function toggleTheme() {
             const html = document.documentElement;
-            const sun = document.getElementById('theme-sun');
-            const moon = document.getElementById('theme-moon');
-            
+            const sun = document.getElementById('theme-sun-nav');
+            const moon = document.getElementById('theme-moon-nav');
+
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
                 localStorage.theme = 'light';
-                sun.classList.add('hidden');
-                moon.classList.remove('hidden');
+                if (sun) sun.classList.add('hidden');
+                if (moon) moon.classList.remove('hidden');
             } else {
                 html.classList.add('dark');
                 localStorage.theme = 'dark';
-                sun.classList.remove('hidden');
-                moon.classList.add('hidden');
+                if (sun) sun.classList.remove('hidden');
+                if (moon) moon.classList.add('hidden');
             }
         }
 
-        // Active Navigation Switcher
+        // ===== SWITCH TAB =====
         function switchPortalTab(targetId) {
-            // Hide all contents and remove styling from all buttons
             document.querySelectorAll('.tab-portal-content').forEach(content => {
                 content.classList.add('hidden');
             });
@@ -571,11 +577,8 @@
                 btn.className = "tab-portal-btn px-4 py-2.5 rounded-xl text-xs font-bold font-space transition-all active:scale-95 text-slate-500 hover:text-slate-900 dark:hover:text-white";
             });
 
-            // Show current target content and style the active button
             const targetContent = document.getElementById(`tab-content-${targetId}`);
-            if (targetContent) {
-                targetContent.classList.remove('hidden');
-            }
+            if (targetContent) targetContent.classList.remove('hidden');
 
             const activeBtn = document.getElementById(`btn-${targetId}`);
             if (activeBtn) {
@@ -583,215 +586,178 @@
             }
         }
 
-        // Randomize Stats on Sandbox Dashboard
+        // ===== RANDOMIZE STATS =====
         function randomizeMockStats() {
-            // Generate random percentages that sum to 100
-            let r1 = Math.floor(Math.random() * 30) + 20; // 20 - 50
-            let r2 = Math.floor(Math.random() * 25) + 10; // 10 - 35
-            let r3 = Math.floor(Math.random() * 20) + 10; // 10 - 30
+            let r1 = Math.floor(Math.random() * 30) + 20;
+            let r2 = Math.floor(Math.random() * 25) + 10;
+            let r3 = Math.floor(Math.random() * 20) + 10;
             let r4 = 100 - (r1 + r2 + r3);
-            if(r4 < 5) { // fail-safe
-                r1 -= 5;
-                r4 += 5;
-            }
+            if (r4 < 5) { r1 -= 5; r4 += 5; }
 
-            // Update DOM text
             document.getElementById('stat-pionir-val').innerText = `${r1}%`;
             document.getElementById('stat-pencari-val').innerText = `${r2}%`;
             document.getElementById('stat-pejuang-val').innerText = `${r3}%`;
             document.getElementById('stat-terluka-val').innerText = `${r4}%`;
 
-            // Update DOM progress bar width
             document.getElementById('stat-pionir-bar').style.width = `${r1}%`;
             document.getElementById('stat-pencari-bar').style.width = `${r2}%`;
             document.getElementById('stat-pejuang-bar').style.width = `${r3}%`;
             document.getElementById('stat-terluka-bar').style.width = `${r4}%`;
         }
 
-        // ===== LOGIN DENGAN SUAPABASE AUTH =====
-document.getElementById('portal-login-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('portal-email').value.trim();
-    const password = document.getElementById('portal-password').value.trim();
-    const feedback = document.getElementById('login-feedback');
-    const formContainer = this.parentElement;
+        // ===== LOGIN DENGAN SUAPABASE AUTH (menggunakan supabase dari script.js) =====
+        document.getElementById('portal-login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    if (!email || !password) {
-        feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
-        feedback.innerText = "⚠️ Email dan password wajib diisi!";
-        return;
-    }
+            const email = document.getElementById('portal-email').value.trim();
+            const password = document.getElementById('portal-password').value.trim();
+            const feedback = document.getElementById('login-feedback');
+            const formContainer = this.parentElement;
 
-    try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-        if (error) {
-            feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
-            feedback.innerText = `❌ ${error.message}`;
-            formContainer.classList.add('shake-element');
-            setTimeout(() => formContainer.classList.remove('shake-element'), 400);
-            return;
-        }
-
-        // Login berhasil
-        feedback.className = "text-center text-[11px] font-bold text-emerald-500 mt-2";
-        feedback.innerText = "✅ Login berhasil! Mengarahkan...";
-        formContainer.classList.add('ring-2', 'ring-emerald-500', 'transition-all', 'duration-500');
-
-        // Simpan session (opsional, Supabase sudah menyimpan cookie)
-        localStorage.setItem('supabase_session', JSON.stringify(data.session));
-
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1000);
-
-    } catch (err) {
-        feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
-        feedback.innerText = "❌ Terjadi kesalahan: " + err.message;
-    }
-});
-
-            // Simple validation simulation
-            if (email === 'dpl@iain.ac.id' && password === 'kompastumbuh') {
-                feedback.className = "text-center text-[11px] font-bold text-emerald-500 mt-2";
-                feedback.innerText = "✅ Autentikasi Sukses! Mempersiapkan Dasbor...";
-                
-                // Fancy success flash state
-                formContainer.classList.add('ring-2', 'ring-emerald-500', 'transition-all', 'duration-500');
-                
-                setTimeout(() => {
-                    // Redirect to simulated dashboard
-                    feedback.innerText = "Mengarahkan...";
-                    window.location.href = 'dashboard.html';
-                }, 1200);
-            } else {
+            if (!email || !password) {
                 feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
-                feedback.innerText = "❌ Surel atau Kata Sandi Salah! Coba dpl@iain.ac.id / kompastumbuh";
-                
-                // Shake form container to indicate error
-                formContainer.classList.add('shake-element');
+                feedback.innerText = "⚠️ Email dan password wajib diisi!";
+                return;
+            }
+
+            // Pastikan supabase tersedia (dari script.js)
+            if (typeof supabase === 'undefined') {
+                feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+                feedback.innerText = "❌ Supabase tidak terinisialisasi. Periksa script.js.";
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+                    feedback.innerText = `❌ ${error.message}`;
+                    formContainer.classList.add('shake-element');
+                    setTimeout(() => formContainer.classList.remove('shake-element'), 400);
+                    return;
+                }
+
+                feedback.className = "text-center text-[11px] font-bold text-emerald-500 mt-2";
+                feedback.innerText = "✅ Login berhasil! Mengarahkan...";
+                formContainer.classList.add('ring-2', 'ring-emerald-500', 'transition-all', 'duration-500');
+
+                localStorage.setItem('supabase_session', JSON.stringify(data.session));
+
                 setTimeout(() => {
-                    formContainer.classList.remove('shake-element');
-                }, 400);
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+
+            } catch (err) {
+                feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+                feedback.innerText = "❌ Terjadi kesalahan: " + err.message;
             }
         });
 
-
-        // ==========================================
-        // 3D COMPASS INTERACTIVE DECORATION WIDGET
-        // ==========================================
+        // ============================================================
+        // 3D COMPASS INTERACTIVE
+        // ============================================================
         const miniCompass = document.getElementById('miniCompassBtn');
         const miniCompassSvg = document.getElementById('miniCompassSvg');
 
-        window.addEventListener('mousemove', (e) => {
-            const rect = miniCompass.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
-            
-            // Smoothen and rotate the needle toward cursor location
-            miniCompassSvg.style.transform = `rotate(${angle + 90}deg)`;
-        });
-
-        // Touch event tracking for mobile devices
-        window.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
+        if (miniCompass && miniCompassSvg) {
+            window.addEventListener('mousemove', (e) => {
                 const rect = miniCompass.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
-                const angle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * (180 / Math.PI);
+                const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
                 miniCompassSvg.style.transform = `rotate(${angle + 90}deg)`;
-            }
-        });
+            });
 
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    const touch = e.touches[0];
+                    const rect = miniCompass.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const angle = Math.atan2(touch.clientY - centerY, touch.clientX - centerX) * (180 / Math.PI);
+                    miniCompassSvg.style.transform = `rotate(${angle + 90}deg)`;
+                }
+            });
+        }
 
-        // ==========================================
-        // PORTAL NEURAL NETWORK BACKGROUND CANVAS
-        // ==========================================
+        // ============================================================
+        // NEURAL BACKGROUND PARTICLES
+        // ============================================================
         const canvas = document.getElementById('portalCanvas');
-        const ctx = canvas.getContext('2d');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const maxParticles = 50;
 
-        let particles = [];
-        const maxParticles = 50;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 2 + 1;
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.4)' : 'rgba(99, 102, 241, 0.3)';
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = document.documentElement.classList.contains('dark') 
-                            ? `rgba(6, 182, 212, ${0.12 - dist/100 * 0.12})` 
-                            : `rgba(99, 102, 241, ${0.1 - dist/100 * 0.1})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = document.documentElement.classList.contains('dark') ? 'rgba(6, 182, 212, 0.4)' : 'rgba(99, 102, 241, 0.3)';
+                    ctx.fill();
                 }
             }
-            requestAnimationFrame(animateParticles);
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < maxParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = document.documentElement.classList.contains('dark')
+                                ? `rgba(6, 182, 212, ${0.12 - dist / 100 * 0.12})`
+                                : `rgba(99, 102, 241, ${0.1 - dist / 100 * 0.1})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            window.addEventListener('load', () => {
+                resizeCanvas();
+                initParticles();
+                animateParticles();
+            });
+            window.addEventListener('resize', resizeCanvas);
         }
-
-        // Initialize systems
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            initParticles();
-            animateParticles();
-        });
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-        });
     </script>
 
 </body>
