@@ -316,7 +316,7 @@
                     <span>IAIN SAS Babel</span>
                 </div>
             </div>
-
+			/*
             <!-- Tengah: Menu Desktop -->
             <div class="hidden md:flex items-center gap-1 flex-1 justify-center">
                 <a href="index.html" class="nav-link active">🏠 Beranda</a>
@@ -325,6 +325,24 @@
                 <a href="profil.html" class="nav-link">🧾 Profil</a>
                 <a href="buku-saku.html" class="nav-link">📘 Buku Saku</a>
             </div>
+			/*
+			
+			<!-- Sidebar untuk mobile -->
+	<div id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
+    <div class="p-4 border-b border-slate-200 dark:border-slate-800">
+        <span class="text-lg font-bold font-space text-slate-800 dark:text-white">🧭 Menu</span>
+    </div>
+    <nav class="p-4 space-y-2">
+        <a href="index.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">🏠 Beranda</a>
+        <a href="input.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">📝 Input</a>
+        <a href="dashboard.html" class="flex items-center gap-3 p-3 rounded-xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400">📊 Dashboard</a>
+        <a href="profil.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">🧾 Profil</a>
+        <a href="buku-saku.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">📘 Buku Saku</a>
+    </nav>
+</div>
+
+<!-- Overlay untuk menutup sidebar saat diklik di luar -->
+<div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden"></div>
 
             <!-- Kanan: Tombol Aksi + Hamburger -->
             <div class="flex items-center gap-1.5 flex-shrink-0">
@@ -345,7 +363,7 @@
                 </div>
             </div>
         </div>
-
+		/*
         <!-- Menu Mobile (dropdown) -->
         <div id="mobile-menu" class="md:hidden px-4 pb-3 space-y-0.5">
             <a href="index.html" class="active-mobile">🏠 Beranda</a>
@@ -354,6 +372,7 @@
             <a href="profil.html">🧾 Profil</a>
             <a href="buku-saku.html">📘 Buku Saku</a>
         </div>
+		*/
     </nav>
 
     <!-- ===== BACKGROUND & KONTEN UTAMA ===== -->
