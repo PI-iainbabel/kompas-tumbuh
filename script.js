@@ -23,6 +23,20 @@ function toggleTheme() {
     }
 }
 
+// script.js
+function toggleSidebar() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+}
+
+// Tutup sidebar saat overlay diklik
+document.getElementById('sidebar-overlay')?.addEventListener('click', toggleSidebar);
+
+// Ekspor fungsi toggleSidebar ke global
+window.toggleSidebar = toggleSidebar;
+
 // ===== LOGOUT =====
 function logout() {
     if (confirm('Apakah Anda yakin ingin keluar?')) {
