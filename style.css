@@ -645,3 +645,36 @@ body.dark ::-webkit-scrollbar-thumb:hover {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 </style>
+/* ===== NAVIGASI GLOBAL ===== */
+.nav-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Pastikan di atas elemen lain */
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Saat di-scroll: menjadi lebih solid dan tidak tembus pandang */
+.nav-top.scrolled {
+    background: rgba(255, 255, 255, 0.95) !important; /* hampir putih solid */
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode */
+.dark .nav-top {
+    background: rgba(9, 15, 30, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .nav-top.scrolled {
+    background: rgba(9, 15, 30, 0.95) !important; /* hampir hitam solid */
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
