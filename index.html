@@ -129,7 +129,7 @@
             pointer-events: auto;
         }
 
-        /* Sidebar link aktif */
+        /* Sidebar link */
         .sidebar-link {
             display: flex;
             align-items: center;
@@ -167,7 +167,7 @@
             text-align: center;
         }
 
-        /* ===== NAV-TOP DENGAN HAMBURGER ===== */
+        /* ===== NAV-TOP DENGAN IKON MENU STATIS ===== */
         .nav-top {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(16px);
@@ -222,49 +222,31 @@
             background: rgba(244, 63, 94, 0.15);
         }
 
-        /* Hamburger button */
-        .hamburger-btn {
+        /* Tombol menu (tanpa animasi hamburger) */
+        .menu-btn {
             width: 2.25rem;
             height: 2.25rem;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
             border-radius: 0.75rem;
             background: transparent;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            font-size: 1.5rem;
+            color: #475569;
+            transition: background 0.2s ease;
             padding: 0;
+            line-height: 1;
         }
-        .hamburger-btn:hover {
+        .menu-btn:hover {
             background: rgba(255, 255, 255, 0.3);
         }
-        .dark .hamburger-btn:hover {
+        .dark .menu-btn {
+            color: #cbd5e1;
+        }
+        .dark .menu-btn:hover {
             background: rgba(255, 255, 255, 0.05);
-        }
-        .hamburger-btn span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            border-radius: 4px;
-            background: #475569;
-            transition: all 0.25s ease;
-            transform-origin: center;
-        }
-        .dark .hamburger-btn span {
-            background: #cbd5e1;
-        }
-        .hamburger-btn.open span:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-        }
-        .hamburger-btn.open span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .hamburger-btn.open span:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
         }
 
         /* Desktop nav links (disembunyikan di mobile) */
@@ -297,12 +279,13 @@
                 <span class="text-2xl">🧭</span>
                 <span class="font-space font-bold text-sm text-slate-800 dark:text-white">Kompas Tumbuh</span>
             </div>
+            <!-- Tombol close hanya di mobile -->
             <button onclick="closeSidebar()" class="md:hidden p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
 
-        <!-- Navigasi Sidebar -->
+        <!-- Navigasi Sidebar (tanpa footer) -->
         <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
             <a href="index.html" class="sidebar-link active">
                 <span class="icon">🏠</span> Beranda
@@ -320,27 +303,19 @@
                 <span class="icon">📘</span> Buku Saku
             </a>
         </nav>
-
-        <!-- Footer Sidebar (Info) -->
-        <div class="p-4 border-t border-slate-200/50 dark:border-slate-800/50 text-[10px] text-slate-400 dark:text-slate-500 space-y-1">
-            <p>Psychosophia Behavioral Lab</p>
-            <p>IAIN SAS Bangka Belitung</p>
-            <p class="text-[9px]">v1.0 · LPKA Pangkalpinang</p>
-        </div>
+        <!-- Footer di sidebar dihilangkan -->
     </aside>
 
     <!-- ===== OVERLAY (untuk menutup sidebar di mobile) ===== -->
     <div id="sidebar-overlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden md:hidden" onclick="closeSidebar()"></div>
 
-    <!-- ===== NAV-TOP (sticky, dengan hamburger) ===== -->
+    <!-- ===== NAV-TOP (sticky, dengan ikon menu statis) ===== -->
     <nav class="nav-top sticky top-0 z-30 transition-all duration-300 no-print">
         <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
-            <!-- Kiri: Hamburger + Brand -->
+            <!-- Kiri: Menu Icon + Brand -->
             <div class="flex items-center gap-3 flex-shrink-0">
-                <button onclick="toggleSidebar()" class="hamburger-btn md:hidden" aria-label="Buka menu" id="hamburgerBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button onclick="toggleSidebar()" class="menu-btn md:hidden" aria-label="Buka menu" id="menuBtn">
+                    ☰
                 </button>
                 <a href="index.html" class="flex items-center gap-2 font-space font-bold text-sm text-slate-800 dark:text-white hover:text-cyan-500 transition-colors">
                     <span class="text-xl">🧭</span>
@@ -587,7 +562,7 @@
             <p class="text-center text-[10px] text-slate-500 mt-6">Butuh akses baru? Silakan komunikasikan permohonan lisensi akun kepada Dosen Pembimbing Lapangan (DPL) masing-masing.</p>
         </div>
 
-        <!-- ===== FOOTER ===== -->
+        <!-- ===== FOOTER (HANYA DI HALAMAN UTAMA) ===== -->
         <footer class="mt-12 pt-6 border-t border-slate-200/50 dark:border-slate-800/50 text-center text-[10px] text-slate-400 dark:text-slate-500 space-y-1">
             <p>&copy; 2026 · Psychosophia Behavioral Lab, Program Studi Psikologi Islam · Program Studi Bimbingan dan Konseling Islam · Fakultas Dakwah dan Komunikasi Islam IAIN SAS Babel</p>
             <p>Sistem ini dilindungi hak cipta intelektual atas kolaborasi strategis bersama LPKA Pangkalpinang.</p>
@@ -653,31 +628,21 @@
         window.logout = logout;
 
         // ================================================================
-        // SIDEBAR TOGGLE
+        // SIDEBAR TOGGLE (Tanpa animasi hamburger)
         // ================================================================
         function toggleSidebar() {
             const sidebar = document.getElementById('mobile-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            const hamburger = document.getElementById('hamburgerBtn');
-
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
-
-            // Animate hamburger
-            if (hamburger) {
-                hamburger.classList.toggle('open');
-            }
         }
 
         function closeSidebar() {
             const sidebar = document.getElementById('mobile-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            const hamburger = document.getElementById('hamburgerBtn');
-
             if (!sidebar.classList.contains('-translate-x-full')) {
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
-                if (hamburger) hamburger.classList.remove('open');
             }
         }
 
@@ -897,7 +862,6 @@
         // ================================================================
         // INIT: Aktifkan tab pertama
         // ================================================================
-        // Secara default tab 'tentang' aktif
         switchPortalTab('tentang');
     </script>
 </body>
