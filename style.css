@@ -37,7 +37,37 @@ body.dark {
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c1929 100%);
     color: #e2e8f0;
 }
+/* ===== BACKGROUND UTAMA DENGAN GRADASI + POLA ===== */
+body {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 30%, #f8fafc 70%, #f1f5f9 100%);
+    background-attachment: fixed;
+    position: relative;
+}
 
+/* Pola halus (grid/pattern) untuk memberikan kedalaman */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+/* Dark mode */
+.dark body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #0c1929 70%, #020617 100%);
+}
+
+.dark body::before {
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
 /* ============================================================
    GLASSMORPHISM CORE
    ============================================================ */
@@ -595,6 +625,32 @@ body.dark ::-webkit-scrollbar-thumb:hover {
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-top {
+    background: rgba(255, 255, 255, 0.6); /* tingkatkan opacity dari 0.4 ke 0.6 */
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-top.scrolled {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dark .nav-top {
+    background: rgba(9, 15, 30, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .nav-top.scrolled {
+    background: rgba(9, 15, 30, 0.95) !important;
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
 }
 
 /* Saat di-scroll: lebih solid dan ada shadow */
