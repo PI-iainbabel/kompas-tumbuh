@@ -883,6 +883,7 @@
         // ================================================================
         // CHECK AUTH
         // ================================================================
+        /*
         async function checkAuth() {
             try {
                 if (typeof supabase === 'undefined') {
@@ -899,6 +900,16 @@
                 window.location.href = 'index.html';
             }
         }
+        */
+        
+        // ===== PAKAI LOGIN SEDERHANA (LOCALSTORAGE) =====
+    const isLoggedIn = localStorage.getItem('kompas_login') === 'true';
+    if (!isLoggedIn) {
+        window.location.href = 'index.html';
+        return;
+    }
+    console.log('✅ Login terdeteksi, akses dashboard diizinkan.');
+}
 
         // ================================================================
         // NEURAL BACKGROUND CANVAS
