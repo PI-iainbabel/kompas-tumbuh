@@ -8,7 +8,9 @@
    Versi            : 1.0
    ============================================================ */
 
-/* ===== RESET & DASAR ===== */
+/* ============================================================
+   RESET & DASAR
+   ============================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -22,7 +24,7 @@ html {
 body {
     font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 50%, #fef3c7 100%);
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 30%, #f8fafc 70%, #f1f5f9 100%);
     background-attachment: fixed;
     color: #1e293b;
     transition: background-color 0.5s ease, color 0.5s ease;
@@ -30,17 +32,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* ===== DARK MODE ===== */
-body.dark {
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0c1929 100%);
-    color: #e2e8f0;
-}
-/* ===== BACKGROUND UTAMA DENGAN GRADASI + POLA ===== */
-body {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 30%, #f8fafc 70%, #f1f5f9 100%);
-    background-attachment: fixed;
     position: relative;
 }
 
@@ -50,24 +41,25 @@ body::before {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background-image: 
+    background-image:
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
 }
 
-/* Dark mode */
+/* ===== DARK MODE ===== */
 .dark body {
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #0c1929 70%, #020617 100%);
 }
 
 .dark body::before {
-    background-image: 
+    background-image:
         linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 40px 40px;
 }
+
 /* ============================================================
    GLASSMORPHISM CORE
    ============================================================ */
@@ -91,8 +83,7 @@ body::before {
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode glass card */
-body.dark .glass-card {
+.dark .glass-card {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -100,7 +91,7 @@ body.dark .glass-card {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-body.dark .glass-card:hover {
+.dark .glass-card:hover {
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
 
@@ -128,9 +119,9 @@ body.dark .glass-card:hover {
     font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
 }
 
-body.dark .glass-input,
-body.dark .glass-select,
-body.dark .glass-textarea {
+.dark .glass-input,
+.dark .glass-select,
+.dark .glass-textarea {
     background: rgba(15, 23, 42, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: #f1f5f9;
@@ -145,9 +136,9 @@ body.dark .glass-textarea {
     box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
 }
 
-body.dark .glass-input:focus,
-body.dark .glass-select:focus,
-body.dark .glass-textarea:focus {
+.dark .glass-input:focus,
+.dark .glass-select:focus,
+.dark .glass-textarea:focus {
     background: rgba(15, 23, 42, 0.7);
     border-color: #06b6d4;
     box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.25);
@@ -169,7 +160,7 @@ body.dark .glass-textarea:focus {
     letter-spacing: 0.02em;
 }
 
-body.dark .glass-label {
+.dark .glass-label {
     color: #cbd5e1;
 }
 
@@ -201,17 +192,17 @@ body.dark .glass-label {
     color: #991b1b;
 }
 
-body.dark .glass-badge-tinggi {
+.dark .glass-badge-tinggi {
     background: rgba(16, 185, 129, 0.25);
     color: #6ee7b7;
 }
 
-body.dark .glass-badge-sedang {
+.dark .glass-badge-sedang {
     background: rgba(245, 158, 11, 0.25);
     color: #fcd34d;
 }
 
-body.dark .glass-badge-rendah {
+.dark .glass-badge-rendah {
     background: rgba(239, 68, 68, 0.25);
     color: #fca5a5;
 }
@@ -245,12 +236,12 @@ body.dark .glass-badge-rendah {
     box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
 }
 
-body.dark .btn-glass-primary {
+.dark .btn-glass-primary {
     background: rgba(37, 99, 235, 0.15);
     color: #93c5fd;
 }
 
-body.dark .btn-glass-primary:hover {
+.dark .btn-glass-primary:hover {
     background: rgba(37, 99, 235, 0.3);
 }
 
@@ -277,13 +268,13 @@ body.dark .btn-glass-primary:hover {
     transform: scale(1.02);
 }
 
-body.dark .btn-glass-secondary {
+.dark .btn-glass-secondary {
     background: rgba(30, 41, 59, 0.4);
     color: #94a3b8;
     border-color: rgba(255, 255, 255, 0.05);
 }
 
-body.dark .btn-glass-secondary:hover {
+.dark .btn-glass-secondary:hover {
     background: rgba(30, 41, 59, 0.6);
 }
 
@@ -310,12 +301,12 @@ body.dark .btn-glass-secondary:hover {
     transform: scale(1.02);
 }
 
-body.dark .btn-glass-green {
+.dark .btn-glass-green {
     background: rgba(22, 163, 74, 0.15);
     color: #6ee7b7;
 }
 
-body.dark .btn-glass-green:hover {
+.dark .btn-glass-green:hover {
     background: rgba(22, 163, 74, 0.3);
 }
 
@@ -341,7 +332,7 @@ body.dark .btn-glass-green:hover {
     border-radius: 12px 12px 0 0;
 }
 
-body.dark .glass-table th {
+.dark .glass-table th {
     color: #94a3b8;
     background: rgba(255, 255, 255, 0.05);
 }
@@ -354,7 +345,7 @@ body.dark .glass-table th {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-body.dark .glass-table td {
+.dark .glass-table td {
     background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.05);
 }
@@ -363,7 +354,7 @@ body.dark .glass-table td {
     background: rgba(255, 255, 255, 0.2);
 }
 
-body.dark .glass-table tr:hover td {
+.dark .glass-table tr:hover td {
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -396,16 +387,16 @@ body.dark .glass-table tr:hover td {
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
 }
 
-body.dark .tab-btn {
+.dark .tab-btn {
     background: rgba(255, 255, 255, 0.05);
     color: #94a3b8;
 }
 
-body.dark .tab-btn:hover {
+.dark .tab-btn:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
-body.dark .tab-btn.active {
+.dark .tab-btn.active {
     background: rgba(37, 99, 235, 0.2);
     color: #93c5fd;
     border-color: rgba(37, 99, 235, 0.3);
@@ -438,12 +429,12 @@ body.dark .tab-btn.active {
     background: rgba(255, 255, 255, 0.25);
 }
 
-body.dark .dev-card {
+.dark .dev-card {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.05);
 }
 
-body.dark .dev-card:hover {
+.dark .dev-card:hover {
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -461,7 +452,7 @@ body.dark .dev-card:hover {
     border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
-body.dark .badge-lab {
+.dark .badge-lab {
     background: rgba(99, 102, 241, 0.15);
     color: #a5b4fc;
 }
@@ -485,27 +476,64 @@ body.dark .badge-lab {
 }
 
 /* ============================================================
+   NAVIGASI GLOBAL (NAV-TOP)
+   ============================================================ */
+.nav-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Saat di-scroll: menjadi lebih solid */
+.nav-top.scrolled {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode */
+.dark .nav-top {
+    background: rgba(9, 15, 30, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .nav-top.scrolled {
+    background: rgba(9, 15, 30, 0.95) !important;
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 640px) {
     body {
         padding: 12px;
     }
-    
+
     .glass-card {
         padding: 20px !important;
         border-radius: 24px;
     }
-    
+
     .landing-card {
         padding: 28px 20px !important;
     }
-    
+
     .tab-btn {
         padding: 8px 14px;
         font-size: 0.75rem;
     }
-    
+
     .glass-input,
     .glass-select,
     .glass-textarea {
@@ -518,12 +546,12 @@ body.dark .badge-lab {
     body {
         padding: 8px;
     }
-    
+
     .glass-card {
         padding: 16px !important;
         border-radius: 20px;
     }
-    
+
     .btn-glass-primary,
     .btn-glass-secondary,
     .btn-glass-green {
@@ -542,7 +570,7 @@ body.dark .badge-lab {
         padding: 0 !important;
         color: black !important;
     }
-    
+
     .glass-card {
         box-shadow: none !important;
         border-radius: 0 !important;
@@ -553,28 +581,28 @@ body.dark .badge-lab {
         padding: 32px !important;
         max-width: 100% !important;
     }
-    
+
     .glass-card:hover {
         transform: none !important;
     }
-    
+
     .no-print {
         display: none !important;
     }
-    
+
     .glass-table td,
     .glass-table th {
         background: #f8fafc !important;
         border: 1px solid #e2e8f0 !important;
         color: black !important;
     }
-    
+
     .glass-badge {
         background: #f1f5f9 !important;
         border: 1px solid #cbd5e1 !important;
         color: #1e293b !important;
     }
-    
+
     .glass-badge-tinggi {
         background: #d1fae5 !important;
         color: #065f46 !important;
@@ -587,10 +615,23 @@ body.dark .badge-lab {
         background: #fecaca !important;
         color: #991b1b !important;
     }
+
+    .nav-top {
+        background: white !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    .dark .nav-top {
+        background: white !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
 }
 
 /* ============================================================
-   SCROLLBAR STYLING (OPSIONAL)
+   SCROLLBAR STYLING
    ============================================================ */
 ::-webkit-scrollbar {
     width: 6px;
@@ -610,127 +651,10 @@ body.dark .badge-lab {
     background: rgba(148, 163, 184, 0.5);
 }
 
-body.dark ::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
     background: rgba(148, 163, 184, 0.15);
 }
 
-body.dark ::-webkit-scrollbar-thumb:hover {
+.dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(148, 163, 184, 0.3);
-}
-
-/* Default: transparan dengan blur */
-.nav-top {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nav-top {
-    background: rgba(255, 255, 255, 0.6); /* tingkatkan opacity dari 0.4 ke 0.6 */
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nav-top.scrolled {
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(4px) saturate(100%);
-    -webkit-backdrop-filter: blur(4px) saturate(100%);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.dark .nav-top {
-    background: rgba(9, 15, 30, 0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.dark .nav-top.scrolled {
-    background: rgba(9, 15, 30, 0.95) !important;
-    backdrop-filter: blur(4px) saturate(100%);
-    -webkit-backdrop-filter: blur(4px) saturate(100%);
-}
-
-/* Saat di-scroll: lebih solid dan ada shadow */
-.nav-top.scrolled {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Dark mode */
-.dark .nav-top {
-    background: rgba(9, 15, 30, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.dark .nav-top.scrolled {
-    background: rgba(9, 15, 30, 0.92);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-<style>
-    /* ... kode style yang sudah ada ... */
-
-    /* ===== NAVIGASI TOP BAR ===== */
-    .nav-top {
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        transition: background 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .nav-top.scrolled {
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .dark .nav-top {
-        background: rgba(9, 15, 30, 0.5);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .dark .nav-top.scrolled {
-        background: rgba(9, 15, 30, 0.92);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-</style>
-/* ===== NAVIGASI GLOBAL ===== */
-.nav-top {
-    position: sticky;
-    top: 0;
-    z-index: 1000; /* Pastikan di atas elemen lain */
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* Saat di-scroll: menjadi lebih solid dan tidak tembus pandang */
-.nav-top.scrolled {
-    background: rgba(255, 255, 255, 0.95) !important; /* hampir putih solid */
-    backdrop-filter: blur(4px) saturate(100%);
-    -webkit-backdrop-filter: blur(4px) saturate(100%);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-/* Dark mode */
-.dark .nav-top {
-    background: rgba(9, 15, 30, 0.5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.dark .nav-top.scrolled {
-    background: rgba(9, 15, 30, 0.95) !important; /* hampir hitam solid */
-    backdrop-filter: blur(4px) saturate(100%);
-    -webkit-backdrop-filter: blur(4px) saturate(100%);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
