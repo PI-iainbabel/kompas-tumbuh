@@ -29,8 +29,7 @@ let allData = [];
 async function loadAllData() {
     try {
         // Aktifkan kode di bawah jika sudah siap menggunakan Supabase
-        /*
-        const { data, error } = await supabase
+          const { data, error } = await supabase
             .from('profil_kompas_tumbuh')
             .select('*')
             .order('created_at', { ascending: false });
@@ -38,8 +37,7 @@ async function loadAllData() {
         if (error) throw error;
         allData = data;
         return data;
-        */
-
+        
         // ===== SEMENTARA: SIMULASI DATA DUMMY =====
         allData = dummyData();
         return allData;
