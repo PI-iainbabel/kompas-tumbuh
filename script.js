@@ -509,3 +509,23 @@ window.addEventListener('scroll', function() {
         }
     }
 });
+
+// ===== LOGOUT =====
+function logout() {
+    if (confirm('Apakah Anda yakin ingin keluar dari sistem?')) {
+        // Hapus session di localStorage (jika ada)
+        localStorage.removeItem('supabase_session');
+        localStorage.removeItem('kompas_db'); // opsional, jika Anda menyimpan data lokal
+        
+        // Jika menggunakan Supabase Auth, panggil signOut
+        // if (supabase) {
+        //     supabase.auth.signOut();
+        // }
+        
+        // Redirect ke halaman login (index.html)
+        window.location.href = 'index.html';
+    }
+}
+
+// Ekspos fungsi ke global (agar bisa dipanggil dari HTML)
+window.logout = logout;
