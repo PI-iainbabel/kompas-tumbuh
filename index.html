@@ -608,13 +608,51 @@
             document.getElementById('stat-terluka-bar').style.width = `${r4}%`;
         }
 
-        // Login Logic with Feedback Transitions & Error Shaking
-        document.getElementById('portal-login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('portal-email').value.trim();
-            const password = document.getElementById('portal-password').value.trim();
-            const feedback = document.getElementById('login-feedback');
-            const formContainer = this.parentElement;
+        // ===== LOGIN DENGAN SUAPABASE AUTH =====
+document.getElementById('portal-login-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('portal-email').value.trim();
+    const password = document.getElementById('portal-password').value.trim();
+    const feedback = document.getElementById('login-feedback');
+    const formContainer = this.parentElement;
+
+    if (!email || !password) {
+        feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+        feedback.innerText = "⚠️ Email dan password wajib diisi!";
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+            feedback.innerText = `❌ ${error.message}`;
+            formContainer.classList.add('shake-element');
+            setTimeout(() => formContainer.classList.remove('shake-element'), 400);
+            return;
+        }
+
+        // Login berhasil
+        feedback.className = "text-center text-[11px] font-bold text-emerald-500 mt-2";
+        feedback.innerText = "✅ Login berhasil! Mengarahkan...";
+        formContainer.classList.add('ring-2', 'ring-emerald-500', 'transition-all', 'duration-500');
+
+        // Simpan session (opsional, Supabase sudah menyimpan cookie)
+        localStorage.setItem('supabase_session', JSON.stringify(data.session));
+
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1000);
+
+    } catch (err) {
+        feedback.className = "text-center text-[11px] font-bold text-rose-500 mt-2";
+        feedback.innerText = "❌ Terjadi kesalahan: " + err.message;
+    }
+});
 
             // Simple validation simulation
             if (email === 'dpl@iain.ac.id' && password === 'kompastumbuh') {
