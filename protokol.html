@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protokol Wawancara · Kompas Tumbuh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            50: '#f0f9ff',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            950: '#083344',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+        .glass-panel {
+            background: rgba(9, 15, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        @media print {
+            body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-page { box-shadow: none !important; border: none !important; background: white !important; padding: 0 !important; }
+            .glass-panel { background: white !important; color: black !important; border: 1px solid #cbd5e1 !important; backdrop-filter: none !important; }
+            text-white { color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen py-8 px-4 md:px-8">
+
+    <div class="w-full max-w-4xl mx-auto space-y-8 print-page">
+        
+        <!-- ===== HEADER MONITOR NO-PRINT ===== -->
+        <header class="flex flex-wrap items-center justify-between gap-4 p-6 glass-panel rounded-3xl border border-slate-800 no-print">
+            <div class="flex items-center gap-4">
+                <span class="text-3xl">📖</span>
+                <div>
+                    <h1 class="text-lg md:text-xl font-black font-space tracking-tight text-white">Manual Panduan Lapangan Enumerator</h1>
+                    <p class="text-xs text-slate-400">Kompas Tumbuh v1.5 · Psychosophia Behavioral Lab</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-bold font-space text-slate-200 border border-slate-800 transition-all">
+                    🖨️ Cetak Panduan (Fisik)
+                </button>
+                <a href="dashboard.html" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold font-space text-xs hover:opacity-90 transition-all">
+                    🧭 Ke Dashboard
+                </a>
+            </div>
+        </header>
+
+        <!-- ===== SEKSI 1: INTRO & GOLDEN RULES ===== -->
+        <section class="glass-panel rounded-[28px] p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest font-space">Bagian I</span>
+                <h2 class="text-xl font-bold text-white font-space">🛑 3 Prinsip Emas Enumerator (Golden Rules)</h2>
+                <p class="text-xs text-slate-400 mt-1">Wajib dipahami dan diinternalisasi oleh mahasiswa PPL BKI sebelum berhadapan dengan Anak Binaan di LPKA Kelas II Pangkalpinang.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <div class="text-lg">⚖️</div>
+                    <h4 class="text-xs font-bold text-white uppercase font-space tracking-wider">Bukan Interogator / Terapis</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Posisi Anda adalah <strong>Socio-Analyst Assistant</strong>. Jangan menginterogasi seperti penyidik hukum, dan jangan melakukan intervensi konseling klinis di tengah-tengah pengisian instrumen.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <div class="text-lg">😐</div>
+                    <h4 class="text-xs font-bold text-white uppercase font-space tracking-wider">Datar dan Netral (Zero-Leading)</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Jangan memberikan kode tubuh, anggukan berlebihan, atau kerutan dahi yang memberi kesan bahwa salah satu pilihan jawaban lebih baik atau lebih benar dari jawaban lainnya.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <div class="text-lg">🪑</div>
+                    <h4 class="text-xs font-bold text-white uppercase font-space tracking-wider">Bahasa Tubuh Setara</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Duduklah dengan posisi condong tubuh yang rileks. Jangan memegang papan ujian terlalu tinggi seolah membentengi diri. Pertahankan kontak mata yang hangat dan bersahabat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SEKSI 2: INTEGRATED BEHAVIORAL PROFILES (MAP REFERENSI) ===== -->
+        <section class="glass-panel rounded-[28px] p-6 md:p-8 space-y-6 bg-gradient-to-br from-slate-950 via-slate-950 to-cyan-950/20">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest font-space">Bagian II</span>
+                <h2 class="text-xl font-bold text-white font-space">🧭 Peta Mental: 4 Klasifikasi Tipe Orientasi Perilaku</h2>
+                <p class="text-xs text-slate-400 mt-1">Gunakan tabel referensi ini untuk mendeteksi arah kecenderungan psikologis subjek secara cepat selama wawancara berlangsung.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Tipe Pionir -->
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-emerald-500/20 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-emerald-400 font-space tracking-wide">🌟 TIPE PIONIR (GM Tinggi &amp; Harapan Kuat)</span>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-space">INTERVENSI: SOCIAL PROOF</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300"><strong class="text-slate-400">Arsitektur Nudge:</strong> Jadikan anak ini sebagai influencer positif atau mentor sebaya (peer-mentor). Berikan ia tanggung jawab publik (misal: memimpin barisan, ketua kelas) untuk mengunci identitas barunya sebagai agen perubahan.</p>
+                </div>
+
+                <!-- Tipe Pencari -->
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-amber-500/20 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-amber-400 font-space tracking-wide">🔍 TIPE PENCARI (GM Rendah &amp; Harapan Kuat)</span>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 font-space">INTERVENSI: SHAPING</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300"><strong class="text-slate-400">Arsitektur Nudge:</strong> Anak ini punya harapan tapi tidak percaya diri bisa berubah. Gunakan taktik shaping: pecah program pembinaan menjadi modul-modul mikro yang mudah diselesaikan, lalu beri apresiasi instan untuk memupuk efikasi dirinya.</p>
+                </div>
+
+                <!-- Tipe Pejuang -->
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-blue-500/20 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-blue-400 font-space tracking-wide">⚔️ TIPE PEJUANG (GM Tinggi &amp; Harapan Lemah)</span>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 font-space">INTERVENSI: IF-THEN PLANNING</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300"><strong class="text-slate-400">Arsitektur Nudge:</strong> Subjek tahu dia bisa berubah, tapi tersesat arah atau cemas akan lingkungan luar. Bantu menyusun jembatan niat menggunakan formula <em>Implementation Intentions</em> ("Jika saya menghadapi hambatan A, maka aksi nyata saya adalah B").</p>
+                </div>
+
+                <!-- Tipe Terluka -->
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-rose-500/20 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-rose-400 font-space tracking-wide">💔 TIPE TERLUKA (GM Rendah &amp; Harapan Lemah)</span>
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20 font-space">PRIORITAS INTERVENSI TERTINGGI</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300"><strong class="text-slate-400">Arsitektur Nudge:</strong> Subjek mengalami kelangkaan kapasitas mental (cognitive bandwidth scarcity) akibat trauma. Hilangkan semua target kompetitif agresif. Fokus murni pada membangun <em>psychological safety scaffolding</em> (ruang aman) melalui empati penuh.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SEKSI 3: ALUR INTERVIEW MANDATORI ===== -->
+        <section class="glass-panel rounded-[28px] p-6 md:p-8 space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-purple-400 uppercase tracking-widest font-space">Bagian III</span>
+                <h2 class="text-xl font-bold text-white font-space">⏳ Protokol Operasional Langkah Demi Langkah</h2>
+                <p class="text-xs text-slate-400 mt-1">Ikuti pembagian kronologis berikut secara disiplin selama sesi pengumpulan data.</p>
+            </div>
+
+            <!-- TAHAP 1 -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 font-space">Tahap 1: Kondisioning &amp; Rapport (Durasi: 3 – 5 Menit)</h3>
+                <p class="text-xs text-slate-300">Sebelum menyodorkan pertanyaan, bangun jembatan empati untuk meminimalkan *social desirability bias*.</p>
+                <blockquote class="p-4 rounded-xl bg-slate-900 border-l-4 border-cyan-500 text-[11px] italic leading-relaxed text-slate-300 font-medium">
+                    "Halo [Sebut Nama Anak Binaan], perkenalkan saya [Nama Anda] dari IAIN SAS Babel. Hari ini kita santai saja ya, saya ke sini bukan untuk menguji atau menilai kamu. Kami sedang menjalankan program 'Kompas Tumbuh' untuk mengobrol santai tentang harapan dan pandangan kamu ke depan. Semua cerita dan jawaban kamu di sini 100% rahasia, tidak akan memengaruhi masa hukuman, dan tidak akan dilaporkan ke petugas lapas sebagai pelanggaran. Jadi, jawab saja se-jujur dan senyaman mungkin ya."
+                </blockquote>
+            </div>
+
+            <hr class="border-slate-900">
+
+            <!-- TAHAP 2 -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-400 font-space">Tahap 2: Eksekusi Skala Kuantitatif Growth Mindset (4 Item)</h3>
+                <p class="text-xs text-slate-300">Jangan sebutkan skor angka (1-5) kepada anak, melainkan bacakan gradasi pilihannya: <em>Sangat Setuju, Setuju, Biasa Saja (Netral), Tidak Setuju, atau Sangat Tidak Setuju</em>.</p>
+                
+                <div class="overflow-hidden rounded-xl border border-slate-800">
+                    <table class="w-full text-left border-collapse text-[11px]">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-300 font-space uppercase border-b border-slate-800">
+                                <th class="p-3 w-16 text-center">Item</th>
+                                <th class="p-3">Pernyataan Konten</th>
+                                <th class="p-3">Protokol Kendali Bias Lapangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-bold text-center bg-slate-900/30">Item 1</td>
+                                <td class="p-3">"Saya yakin saya bisa menjadi pribadi yang jauh lebih baik kedepannya."</td>
+                                <td class="p-3 text-slate-400">Tekankan kata <strong>"Yakin"</strong>. Jika anak ragu, tanyakan: "Apakah ragu-ragu atau sebenarnya tahu tapi tidak yakin?"</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center bg-slate-900/30">Item 2</td>
+                                <td class="p-3">"Saya meyakini rentetan kesalahan di masa lalu adalah pelajaran berharga."</td>
+                                <td class="p-3 text-slate-400">Gunakan nada reflektif, bukan menghakimi. Fokuskan pada pemaknaan kata <strong>"pelajaran"</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center bg-slate-900/30">Item 3</td>
+                                <td class="p-3">"Saya percaya bahwa usaha militan dan kerja keras sanggup mengubah garis nasib."</td>
+                                <td class="p-3 text-slate-400">Sederhanakan jika bingung: "Maksudnya, usaha yang <strong>sungguh-sungguh atau habis-habisan</strong>."</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center bg-slate-900/30">Item 4</td>
+                                <td class="p-3">"Saya berkomitmen tinggi untuk menolak menyerah seberat apa pun tantangannya."</td>
+                                <td class="p-3 text-slate-400">Amati jeda respon ego remaja. Validasi ulang lembut: "Benar nih? Walaupun nanti di luar terasa berat?"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <hr class="border-slate-900">
+
+            <!-- TAHAP 3 -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-pink-400 font-space">Tahap 3: Eksekusi Dialog Reflektif Extended TPB (Kualitatif)</h3>
+                <p class="text-xs text-slate-300">Bertindaklah sebagai pendengar aktif. Tugas Anda adalah memicu jawaban naratif deskriptif yang kaya dengan pertanyaan pemantik di bawah ini:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px]">
+                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                        <span class="font-bold text-indigo-400 block mb-1">1. Sikap Terhadap Perubahan (Attitude)</span>
+                        <p class="italic text-slate-400 mb-2">"Menurutmu, berubah jadi orang bener di lingkungan seperti sekarang ini berharga atau berguna gak sih buat kamu? Kenapa?"</p>
+                        <span class="text-[10px] text-slate-500 block font-semibold">🎯 GOAL: Deteksi apakah perubahan itu motivasi internal atau topeng formalitas.</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                        <span class="font-bold text-pink-400 block mb-1">2. Proyeksi Harapan 2 Tahun Kedepan (Intentions)</span>
+                        <p class="italic text-slate-400 mb-2">"Bayangkan 2 tahun dari sekarang kamu sudah di luar. Kamu lagi ngapain? Pengennya jadi kayak gimana?"</p>
+                        <span class="text-[10px] text-slate-500 block font-semibold">🎯 GOAL: Mengukur kekuatan niat. Jika jawabannya "Gak tahu, jalani aja", catat sebagai proyeksi lemah.</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                        <span class="font-bold text-emerald-400 block mb-1">3. Persepsi Kontrol &amp; Hambatan (Control)</span>
+                        <p class="italic text-slate-400 mb-2">"Nanti kalau sudah keluar, menurutmu apa hal paling berat yang bakal bikin kamu susah buat bertahan jadi orang baik? Temen kah, keluarga kah?"</p>
+                        <span class="text-[10px] text-slate-500 block font-semibold">🎯 GOAL: Memetakan pengenalan terhadap hambatan sosial dan locus of control diri.</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                        <span class="font-bold text-amber-400 block mb-1">4. Komitmen Aksi Nyata Besok (Commitment)</span>
+                        <p class="italic text-slate-400 mb-2">"Oke, kalau targetnya sukses di masa depan, kira-kira langkah kecil apa yang mau kamu mulai lakuin besok pagi di dalam lapas?"</p>
+                        <span class="text-[10px] text-slate-500 block font-semibold">🎯 GOAL: Menguji apakah komitmen sudah turun ke level tindakan operasional mikro.</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-slate-900">
+
+            <!-- TAHAP 4 -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 font-space">Tahap 4: Pascawawancara &amp; De-eskalasi</h3>
+                <p class="text-xs text-slate-300">Tutup sesi dengan hangat guna menurunkan ketegangan emosional anak binaan. Sampaikan apresiasi mendalam atas kejujuran mereka.</p>
+                <div class="p-4 rounded-xl bg-slate-900/30 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+                    <strong class="text-amber-500">Catatan Non-Verbal Penting:</strong> Segera setelah anak meninggalkan ruangan, enumerator wajib mengisi bagian <span class="text-slate-200 font-semibold">"Catatan Tambahan Enumerator"</span> pada sistem aplikasi terkait dinamika psikologi subjek (misal: gelisah, menghindari kontak mata pada item tertentu, atau sangat antusias saat membahas cita-cita).
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>
